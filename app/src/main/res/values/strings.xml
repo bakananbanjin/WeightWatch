@@ -7,9 +7,21 @@
     <string name="menu_delete">Delete Data</string>
     <string name="tollbar_welcome">Welcome </string>
 
+    <!--- Reusable Strings -->
+    <string name="ok"> OK </string>
+    <string name="cancel"> Cancel </string>
+
     <!--- Overview Strings!-->
     <string name="overview_cal_day">Calories day \n5000</string>
     <string name="overview_cal_left">Calories left \n3000</string>
     <string name="overview_bmi">BMI: \n50</string>
     <string name="overview_weight">Weight: \n50kg</string>
+
+
+    <!--- InsertWindow Strings!-->
+    <string name="insert_meal">Please insert your meal and calories:</string>
+    <string name="hint_insert_what">Please insert description</string>
+    <string name="hint_insert_cal">Please insert cal amount</string>
+    <string name="insert_date_format">Date (YYYY-MM-DD)</string>
+    <string name="insert_time_format">Time (HH:mm)</string>
 </resources>
