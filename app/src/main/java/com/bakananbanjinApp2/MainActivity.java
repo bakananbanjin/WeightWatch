@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         //2.Toolbar Textcolor dynamisch anpassen oder eigenen Theme schreiben
         //3.Icon fuer toolbar anpassen
         //4.Filewriter fertig programmieren
+        //5. git hup pull testen? diese Line ist in online in git geschrieben worden
         TextView textViewToolbar = findViewById(R.id.toolbar_textview);
         textViewToolbar.setText(getString(R.string.tollbar_welcome) + " Name");
         toolbar.setTitle("");
