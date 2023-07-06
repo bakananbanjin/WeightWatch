@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WeightWatch</string>
+    <string name="menu_profil">Profil</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_info">Info</string>
+    <string name="menu_backup">Backup</string>
+    <string name="menu_delete">Delete Data</string>
+    <string name="tollbar_welcome">Welcome </string>
+
+    <!--- Overview Strings!-->
+    <string name="overview_cal_day">Calories day \n5000</string>
+    <string name="overview_cal_left">Calories left \n3000</string>
+    <string name="overview_bmi">BMI: \n50</string>
+    <string name="overview_weight">Weight: \n50kg</string>
+</resources>

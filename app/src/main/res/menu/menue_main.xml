@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/Profil"
+        android:title="@string/menu_profil">
+    </item>
+    <item
+        android:id="@+id/Edit"
+        android:title="@string/menu_edit">
+    </item>
+    <item
+        android:id="@+id/Info"
+        android:title="@string/menu_info">
+    </item>
+    <item
+        android:id="@+id/Backup"
+        android:title="@string/menu_backup">
+    </item>
+    <item
+        android:id="@+id/Delete"
+        android:title="@string/menu_delete">
+    </item>
+
+</menu>

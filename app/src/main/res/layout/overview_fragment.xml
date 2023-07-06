@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="1dp">
+
+
+    <TextView
+        android:id="@+id/overview_bmi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:layout_weight="0.25"
+        android:background="@drawable/round_corner_view"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/overview_bmi" />
+
+    <TextView
+        android:id="@+id/overview_weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:layout_weight="0.25"
+        android:background="@drawable/round_corner_view"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/overview_weight" />
+
+    <TextView
+        android:id="@+id/overview_cal_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:layout_weight="0.25"
+        android:background="@drawable/round_corner_view"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/overview_cal_day" />
+
+    <TextView
+        android:id="@+id/overview_cal_left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:layout_weight="0.25"
+        android:background="@drawable/round_corner_view"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/overview_cal_left" />
+</LinearLayout>
