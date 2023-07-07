@@ -24,6 +24,12 @@ public class DataItem {
         mCalendar = Calendar.getInstance();
         mCalendar.set(Calendar.getInstance().get(Calendar.YEAR), month, day, hour, min, 0 );
     }
+    public  DataItem(String itemName, int cal, int year, int month, int day, int hour, int min) {
+        this.mItemName = itemName;
+        this.mCal = cal;
+        mCalendar = Calendar.getInstance();
+        mCalendar.set(year, month, day, hour, min, 0 );
+    }
 
     public String getmItemName() {
         return mItemName;

@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("WRITE FAILED", "Write failed");
             }
 
+            DataReaderWriter.readFileData("", this.getApplicationContext());
+
 
         //FAB
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);

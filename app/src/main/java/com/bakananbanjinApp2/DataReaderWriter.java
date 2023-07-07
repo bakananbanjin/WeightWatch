@@ -2,9 +2,11 @@ package com.bakananbanjinApp2;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,30 +25,51 @@ public class DataReaderWriter {
 
     }
     //read Database from file
-    public static void readFileData(String file, Context context){
-        List<String> fileLines = new ArrayList<String>();
+    public static List<DataItem> readFileData(String file, Context context){
+
+        //Temp Root direction maybe replaced later
+        List<String> fileLines = new ArrayList<>();
+        List<DataItem> dataItemList = new ArrayList<>();
+
+        String folderName = "Data";
+        File file12 = new File(context.getFilesDir() + File.separator + folderName, "test");
             try {
+                FileInputStream fis = new FileInputStream(file12);
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader br = new BufferedReader(isr);
+
                 String line;
-                br = new BufferedReader(new InputStreamReader(context.getAssets().open(file), "UTF-8"));
                 while((line = br.readLine()) != null){
+                    Log.i("LINE", line);
                     fileLines.add(line);
                 }
             } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                   Log.i("FILE NOT FOUND", "Reader could not find File");
             } catch (IOException e) {
                     e.printStackTrace();
             }
             //Dataset has to be in one line and sepereted by ;
-            for(int i = 0; i < fileLines.size(); i++) {
-                    String[] tempString = fileLines.get(i).split(";");
+            for(String i : fileLines) {
+                    String[] tempString = i.split(";");
+                    //if String length is correct create new DataItem and pass add it to List
+                    if(tempString.length == 8) {
+                        DataItem tempDataItem =
+                                new DataItem(tempString[1], Integer.parseInt(tempString[2]),
+                                        Integer.parseInt(tempString[3]), Integer.parseInt(tempString[4]),
+                                        Integer.parseInt(tempString[5]), Integer.parseInt(tempString[6]),
+                                        Integer.parseInt(tempString[5]));
+                        //item toSting to check delete at relase
+                        tempDataItem.toString();
+                        dataItemList.add(tempDataItem);
+                    } else {
+                        Log.i("READ ERROR", "Read dataItem wrong length");
+                    }
             }
-            /*Enhanced For loop same as above not in use atm
-            for(String i : fileLines){
-                String[] tempString = i.split(";");
-            }
-            */
+
+        return dataItemList;
     }
-    //write Dataset as File need to add List Object in arguments
+
+
     public boolean writeFileData(String file, Context context, List<DataItem> dataItemList){
 
         //get Applicatin storage
