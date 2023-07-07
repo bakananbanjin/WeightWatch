@@ -47,27 +47,31 @@ public class DataReaderWriter {
             */
     }
     //write Dataset as File need to add List Object in arguments
-    public boolean writeFileData(String file, Context context){
-        //get app root
-        File root = Environment.getExternalStorageDirectory();
-        File dir = new File(root.getAbsolutePath() + "/Dataset");
-        //make Folder Dataset if not present
+    public boolean writeFileData(String file, Context context, List<DataItem> dataItemList){
+
+        //get Applicatin storage
+        //add own Folder Data
+        //and create file
+        File root = context.getFilesDir();
+        File dir = new File(root + "/Data");
         dir.mkdir();
+
         File newFile = new File(dir, file);
         //Write file.
         try {
             FileOutputStream f = new FileOutputStream(newFile);
             PrintWriter pw = new PrintWriter(f);
 
-            //here we have to write the file with a loop implemented later
-
+            for(DataItem i: dataItemList){
+                f.write(i.toStringtoFile().getBytes());
+            }
             //close writer
             f.close();
 
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 }

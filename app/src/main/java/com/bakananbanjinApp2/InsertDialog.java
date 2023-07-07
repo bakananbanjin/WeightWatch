@@ -34,7 +34,7 @@ public class InsertDialog extends DialogFragment {
         //make a calendar to get date and time set it as pretext to insert Time and Date field
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
 
         etInsertDate.setText(dateFormat.format(calendar.getTime()));
         etInsertTime.setText(timeFormat.format(calendar.getTime()));
