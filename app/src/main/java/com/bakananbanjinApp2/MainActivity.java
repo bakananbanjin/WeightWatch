@@ -71,34 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         //DataItem test later to be deleted
 
-           DataItem tempItem = new DataItem("Steak", 500);
-            tempItem.toString();
-            tempItem.setTime(15, 30);
-            tempItem.toString();
-            tempItem.setDate(2002, 5, 15);
-            tempItem.toString();
-            tempItem.setTimeDate(2025, 11, 17, 23, 12);
-            tempItem.toString();
-            tempItem.setTimeDate(2025, 13, 55, 70, 500);
-            tempItem.toString();
-            DataItem temItem2 = new DataItem("Piza", 800, 7,7,15,32);
-            temItem2.toString();
-            temItem2.toStringtoFile();
-
-            List<DataItem> dataItemList = new ArrayList<DataItem>();
-            dataItemList.add(tempItem);
-            dataItemList.add(temItem2);
-            dataItemList.add(tempItem);
-            dataItemList.add(temItem2);
-            DataReaderWriter writer = new DataReaderWriter();
-            if(writer.writeFileData("test", this.getApplicationContext(), dataItemList)){
-                Log.i("WRITE WAS SUCCESSFUL", "Write was successful");
-            } else {
-                Log.i("WRITE FAILED", "Write failed");
-            }
-
-            DataReaderWriter.readFileData("", this.getApplicationContext());
-
+        DataSet dataSet = new DataSet(this.getApplicationContext());
+        dataSet.query();
 
         //FAB
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);

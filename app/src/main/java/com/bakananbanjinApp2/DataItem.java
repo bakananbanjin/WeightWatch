@@ -30,6 +30,13 @@ public class DataItem {
         mCalendar = Calendar.getInstance();
         mCalendar.set(year, month, day, hour, min, 0 );
     }
+    public  DataItem(int id, String itemName, int cal, int year, int month, int day, int hour, int min) {
+        this.mItemName = itemName;
+        this.mCal = cal;
+        this.mId = id;
+        mCalendar = Calendar.getInstance();
+        mCalendar.set(year, month, day, hour, min, 0 );
+    }
 
     public String getmItemName() {
         return mItemName;
@@ -53,9 +60,23 @@ public class DataItem {
     public void setmCal(int mCal) {
         this.mCal = mCal;
     }
-
     public Calendar getmCalendar() {
         return mCalendar;
+    }
+    public int getYear(){
+        return mCalendar.get(Calendar.YEAR);
+    }
+    public int getMonth(){
+        return mCalendar.get(Calendar.MONTH);
+    }
+    public int getDay(){
+        return mCalendar.get(Calendar.DATE);
+    }
+    public int getHour(){
+        return mCalendar.get(Calendar.HOUR);
+    }
+    public int getMin(){
+        return mCalendar.get(Calendar.MINUTE);
     }
     public void setmCalendar(Calendar mCalendar) {
         this.mCalendar = mCalendar;
@@ -69,7 +90,6 @@ public class DataItem {
     public void setTimeDate(int year, int month, int day, int hour, int min){
         mCalendar.set(year, month, day, hour, min, 0);
     }
-
     @Override
     public String toString() {
         String output = "DataItem{" +
