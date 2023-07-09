@@ -49,6 +49,7 @@ public class DataSet {
         for(DataItem i : dataItemList){
             Log.i("DATABASE", i.toString());
         }
+        DataReaderWriter.writeFileDB("DataDB", mContext, cursor);
 
     }
 }

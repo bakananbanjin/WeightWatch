@@ -1,6 +1,7 @@
 package com.bakananbanjinApp2;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Environment;
 import android.util.Log;
 
@@ -72,7 +73,7 @@ public class DataReaderWriter {
 
     public boolean writeFileData(String file, Context context, List<DataItem> dataItemList){
 
-        //get Applicatin storage
+        //get Application storage
         //add own Folder Data
         //and create file
         File root = context.getFilesDir();
@@ -96,5 +97,34 @@ public class DataReaderWriter {
             e.printStackTrace();
             return false;
         }
+    }
+    public static boolean writeFileDB(String file, Context context,  Cursor cursor){
+        File root = context.getFilesDir();
+        File dir = new File(root + "/Data");
+        dir.mkdir();
+
+        File newFile = new File(dir, file);
+
+        try {
+            FileOutputStream f = new FileOutputStream(newFile);
+            PrintWriter pw = new PrintWriter(f);
+
+            while(cursor.moveToNext()){
+                String writeString = "";
+                for(int i = 0; i < DataSetDB.TABEL_ROW_SIZE; i++){
+                    writeString += cursor.getString(i) + ";";
+                }
+                writeString += "\n";
+                f.write(writeString.getBytes());
+            }
+            //close writer
+            f.close();
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }

@@ -25,6 +25,7 @@ public class DataSetDB  {
     public static final String DB_ROW_DAY = "day";
     public static final String DB_ROW_HOUR= "hour";
     public static final String DB_ROW_MIN = "min";
+    public static final int TABEL_ROW_SIZE = 8;
 
     private Context mContext;
     private DataSetDBHelper mDBHelper;
