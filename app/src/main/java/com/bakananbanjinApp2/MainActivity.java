@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
+        //initialised Engine
+        Engine engine = new Engine(this.getApplicationContext());
+
 
         TextView textViewToolbar = findViewById(R.id.toolbar_textview);
         textViewToolbar.setText(getString(R.string.tollbar_welcome) + " Name");

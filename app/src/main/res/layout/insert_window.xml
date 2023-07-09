@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TimePicker
+        android:id="@+id/insert_timePicker"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="-15dp"
+        android:layout_marginTop="-10dp"
+        android:layout_marginEnd="-15dp"
+        android:timePickerMode="spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/insert_cal" />
+
+
+    <DatePicker
+        android:id="@+id/insert_datePicker"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="-15dp"
+        android:layout_marginTop="-20dp"
+        android:layout_marginEnd="-15dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/insert_timePicker" />
 
     <EditText
         android:id="@+id/insert_what"
@@ -16,6 +41,7 @@
         android:background="@drawable/round_corner_view"
         android:ems="10"
         android:hint="@string/hint_insert_what"
+        android:maxLines="1"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,52 +58,23 @@
         android:ems="10"
         android:hint="@string/hint_insert_cal"
         android:inputType="number"
+        android:maxLines="1"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/insert_what" />
-
-    <EditText
-        android:id="@+id/insert_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/round_corner_view"
-        android:ems="10"
-        android:inputType="date"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/insert_date_format"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/insert_time" />
-
-    <EditText
-        android:id="@+id/insert_time"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/round_corner_view"
-        android:ems="10"
-        android:inputType="time"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/insert_time_format"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/insert_cal" />
 
     <Button
         android:id="@+id/insert_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="32dp"
         android:text="@string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/insert_date" />
+        app:layout_constraintTop_toBottomOf="@+id/insert_datePicker" />
 
     <Button
         android:id="@+id/insert_ok"
@@ -89,28 +86,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/insert_cancel" />
 
-    <TextView
-        android:id="@+id/insert_time_format"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@color/background_round_corner_view"
-        android:text="@string/insert_time_format"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/insert_time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/insert_date_format"
-        app:layout_constraintTop_toTopOf="@+id/insert_time" />
-
-    <TextView
-        android:id="@+id/insert_date_format"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@color/background_round_corner_view"
-        android:text="@string/insert_date_format"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/insert_date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/insert_date" />
 </androidx.constraintlayout.widget.ConstraintLayout>

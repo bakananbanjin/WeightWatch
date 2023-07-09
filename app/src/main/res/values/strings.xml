@@ -24,4 +24,5 @@
     <string name="hint_insert_cal">Please insert cal amount</string>
     <string name="insert_date_format">Date (YYYY-MM-DD)</string>
     <string name="insert_time_format">Time (HH:mm)</string>
+    <string name="insert_no_input">Please enter name and calorie</string>
 </resources>

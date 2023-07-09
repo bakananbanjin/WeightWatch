@@ -73,7 +73,7 @@ public class DataItem {
         return mCalendar.get(Calendar.DATE);
     }
     public int getHour(){
-        return mCalendar.get(Calendar.HOUR);
+        return mCalendar.get(Calendar.HOUR_OF_DAY);
     }
     public int getMin(){
         return mCalendar.get(Calendar.MINUTE);
@@ -99,7 +99,6 @@ public class DataItem {
                 ", mCalendar=" + mCalendar.getTime() +
                 '}';
 
-        Log.i( "DataItem: ", output);
         return output;
     }
     public String toStringtoFile(){
@@ -109,10 +108,9 @@ public class DataItem {
                 + ";" + this.mCalendar.get(Calendar.YEAR)
                 + ";" + mCalendar.get(Calendar.MONTH)
                 + ";" + mCalendar.get(Calendar.DATE)
-                + ";" + mCalendar.get(Calendar.HOUR)
+                + ";" + mCalendar.get(Calendar.HOUR_OF_DAY)
                 + ";" + mCalendar.get(Calendar.MINUTE)
                 + "\n";
-        Log.i( "ToStringToFile: ", output);
         return output;
     }
 }

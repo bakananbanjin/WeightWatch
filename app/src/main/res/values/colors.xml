@@ -5,9 +5,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#FF00FF00</color>
     <color name="red">#FFFF0000</color>
+    <color name="lightblue">#FF55BBFF</color>
+    <color name="lightblue2">#FF2299FF</color>
 
 
     <color name="background_round_corner_view">#FF2299FF</color>
     <color name="boarder_round_corner_view">#FF2299FF</color>
+
+
 
 </resources>
