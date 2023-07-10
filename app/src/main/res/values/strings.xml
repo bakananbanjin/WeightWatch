@@ -25,4 +25,15 @@
     <string name="insert_date_format">Date (YYYY-MM-DD)</string>
     <string name="insert_time_format">Time (HH:mm)</string>
     <string name="insert_no_input">Please enter name and calorie</string>
+
+    <!--- CreateUser window Strings !-->
+    <string name="createUser_Title">Create new user</string>
+    <string name="createUser_name">Please insert Name</string>
+    <string name="createUser_weight">Please insert weight in Kg</string>
+    <string name="createUser_CalUse">Basal rate of calories</string>
+    <string name="createUser_CalTarget"></string>
+    <string name="createUser_height">Please insert height in cm</string>
+    <string name="createUser_Age">Please insert Age</string>
+    <string name="createUser_Bmi">Your BMI is: </string>
+    <string name="createUser_Man">man</string>
 </resources>

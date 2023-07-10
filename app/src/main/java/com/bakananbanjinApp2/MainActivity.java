@@ -2,12 +2,14 @@ package com.bakananbanjinApp2;
 
 import static android.util.Log.DEBUG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -29,6 +31,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,40 +55,47 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
-        //initialised Engine
+        //initialise  Engine
         Engine engine = new Engine(this.getApplicationContext());
 
-
+        //initialise Toolbar
         TextView textViewToolbar = findViewById(R.id.toolbar_textview);
         textViewToolbar.setText(getString(R.string.tollbar_welcome) + " Name");
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
+        //initialise Fragment for information overview
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment frag = fragmentManager.findFragmentById(R.id.fragment_container);
-
-        //insert Fragment for information overview
         if(frag == null){
             frag = new Overview();
             fragmentManager.beginTransaction().add(R.id.fragment_container, frag).commit();
         }
-        //insert Fragment for graphs and table
-        tempSetLineChart();
-
-        //DataItem test later to be deleted
-
-        DataSet dataSet = new DataSet(this.getApplicationContext());
-        dataSet.query();
-
-        //FAB
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InsertDialog insertDialog = new InsertDialog();
-                insertDialog.show(getSupportFragmentManager(),"");
+               InsertDialog insertDialog = new InsertDialog();
+               insertDialog.show(getSupportFragmentManager(),"");
             }
         });
+
+        /*
+        +
+        + TEST CODE ONLY BELOW
+        +
+         */
+
+        //insert Fragment for graphs and table will be deleted later
+        tempSetLineChart();
+
+        //Testclass needs to be deleted
+
+        DataSet dataSet = new DataSet(this.getApplicationContext());
+        dataSet.query();
+
+        ////initialise FAB
+
     }
 
     @Override
@@ -93,8 +103,42 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menue_main, menu);
         return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int selectedId = item.getItemId();
+        if(selectedId == R.id.menu_Profil){
+            Log.i("MENU", "Profil selected");
+            /*
+            +
+            +TEST Layout
+            +
+             */
+            CreateUser createUser = new CreateUser();
+            createUser.show(getSupportFragmentManager(),"");
+            return true;
+        } else if (selectedId == R.id.menu_Info) {
+            Log.i("MENU", "Info selected");
+            return true;
+        } else if (selectedId == R.id.menu_Edit) {
+            Log.i("MENU", "Edit selected");
+            return true;
+        } else if (selectedId == R.id.menu_Backup) {
+            Log.i("MENU", "Backup selected");
+            return true;
+        } else if (selectedId == R.id.menu_Delete) {
+            Log.i("MENU", "Delete selected");
+            return true;
+        }
+        return false;
+    }
 
-    //Temp function to test Linechart from git
+    /*
+    +
+    +  TEST CODE ONLY BELOW
+    +
+     */
+
+    //Temp function to test Linechart from git should be deleted or moved
     private void addDataEntry(float value) {
         LineData lineData = lineChart.getData();
 
@@ -127,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
             return "";
         }
     }
+    //needs to be deleted on finishing progarmm
     private void tempSetLineChart()
     {
         lineChart = findViewById(R.id.line_chart);
@@ -162,16 +207,11 @@ public class MainActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new CustomXAxisValueFormatter(customLabels));
 
 
-
-
-
         Legend legend = lineChart.getLegend();
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
-
-
 
         addDataEntry(85f);
         addDataEntry(83f);

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/Profil"
+        android:id="@+id/menu_Profil"
         android:title="@string/menu_profil">
     </item>
     <item
-        android:id="@+id/Edit"
+        android:id="@+id/menu_Edit"
         android:title="@string/menu_edit">
     </item>
     <item
-        android:id="@+id/Info"
+        android:id="@+id/menu_Info"
         android:title="@string/menu_info">
     </item>
     <item
-        android:id="@+id/Backup"
+        android:id="@+id/menu_Backup"
         android:title="@string/menu_backup">
     </item>
     <item
-        android:id="@+id/Delete"
+        android:id="@+id/menu_Delete"
         android:title="@string/menu_delete">
     </item>
 

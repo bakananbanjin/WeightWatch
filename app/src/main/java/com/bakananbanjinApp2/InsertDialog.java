@@ -2,6 +2,7 @@ package com.bakananbanjinApp2;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import androidx.appcompat.widget.TooltipCompat;
+
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -54,7 +58,7 @@ public class InsertDialog extends DialogFragment {
         Button btnInsertCancel = insertView.findViewById(R.id.insert_cancel);
         Button btnInsertOk = insertView.findViewById(R.id.insert_ok);
 
-        builder.setView(insertView).setMessage(R.string.insert_meal);
+
 
         btnInsertCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +103,21 @@ public class InsertDialog extends DialogFragment {
            }
         });
 
+
+        /*
+        +
+        +TEST ONLY DELETE LATER
+        */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            etInsertCal.setTooltipText("TEST");
+            btnInsertOk.setTooltipText("TEST");
+        } else {
+            TooltipCompat.setTooltipText(etInsertCal, "ELSE");
+            TooltipCompat.setTooltipText(btnInsertOk, "ELSE");
+        }
+
+        //setview and retrun Dialog window
+        builder.setView(insertView).setMessage(R.string.insert_meal);
         return builder.create();
     }
 }

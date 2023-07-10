@@ -23,4 +23,29 @@ public class Engine {
         mDB.insert(dataItem);
         return true;
     }
+    public static int calcBMI(int weight, int height){
+        //BMI = weight (kg) / (height (m))^2
+        //height is in cm so we have to convert it to meter
+        float heightinm = (float) height / 100.0f;
+
+        //test if divide by 0
+        float bmi = 0;
+        if(height != 0) {
+            bmi = (float) weight / ((float) heightinm * (float) heightinm);
+        }
+        return (int) bmi;
+    }
+    public static int calcCalNeed(boolean men, int height, int weight, int age){
+        //For Men:
+        //BMR = 66.5 + (13.75 × weight in kg) + (5.003 × height in cm) - (6.755 × age in years)
+        //For Women:
+        //BMR = 655.1 + (9.563 × weight in kg) + (1.850 × height in cm) - (4.676 × age in years)
+        double calNeed = 0;
+        if(men){
+            calNeed = 66.5 + (13.75 * (float) weight) + (5.003 * (float)height) - (6.755 * (float) age);
+            return (int) calNeed;
+        }
+        calNeed = 655.1 + (9.563* (float) weight) + (1.850 * (float)height) - (4.676 * (float) age);
+        return (int) calNeed;
+    }
 }

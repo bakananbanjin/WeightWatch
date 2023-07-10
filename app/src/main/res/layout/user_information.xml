@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_round_corner_view">
+
+    <TextView
+        android:id="@+id/userInformation_TV_BMI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/createUser_Bmi"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userInformation_TV_caluse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/createUser_CalUse"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userInformation_TV_BMI" />
+
+    <TextView
+        android:id="@+id/userinformationIntBmi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/userInformation_TV_BMI"
+        app:layout_constraintStart_toEndOf="@+id/userInformation_TV_BMI"
+        app:layout_constraintTop_toTopOf="@+id/userInformation_TV_BMI" />
+
+    <TextView
+        android:id="@+id/userInformation_intCal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/userInformation_TV_caluse"
+        app:layout_constraintStart_toEndOf="@+id/userInformation_TV_caluse"
+        app:layout_constraintTop_toTopOf="@+id/userInformation_TV_caluse" />
+</androidx.constraintlayout.widget.ConstraintLayout>
