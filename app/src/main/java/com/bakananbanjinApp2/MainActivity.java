@@ -5,6 +5,7 @@ import static android.util.Log.DEBUG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
@@ -41,13 +42,17 @@ public class MainActivity extends AppCompatActivity {
 
     //tempvariable for linechart from git
     LineChart lineChart;
+    public static SharedPreferences mPrefs;
+    public static SharedPreferences.Editor mEditor;
+    private User user;
+
+
 
 
     //1.Ersetze Name mit dem vom user eingegebenen Namen aus DB oder anderer Quelle
     //2.Toolbar Textcolor dynamisch anpassen oder eigenen Theme schreiben
     //3.Icon fuer toolbar anpassen
-    //4.Filewriter fertig programmieren
-    //5.Make own Graph Class
+    //4. Make own Graph Class
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +60,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
+        //shardePreferences for user data
+        mPrefs = getSharedPreferences("WeightWatch", MODE_PRIVATE);
+        mEditor = mPrefs.edit();
+
         //initialise  Engine
         Engine engine = new Engine(this.getApplicationContext());
+
+
 
         //initialise Toolbar
         TextView textViewToolbar = findViewById(R.id.toolbar_textview);
@@ -80,6 +91,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //if no user is present ask to create one
+        if(!mPrefs.contains("user")){
+            CreateUser createUserDialog = new CreateUser();
+            createUserDialog.show(getSupportFragmentManager(), "");
+
+        }
+        try {
+           user = new User(mPrefs.getString("user", "user"),
+                   mPrefs.getInt("weight", 50),
+                   mPrefs.getInt("height", 170),
+                   mPrefs.getInt("age", 30),
+                   mPrefs.getInt("targetWeight", 0));
+        } catch (Exception e){
+            Log.e("NOUSER", "no user found");
+        }
+
+
         /*
         +
         + TEST CODE ONLY BELOW
@@ -93,8 +121,6 @@ public class MainActivity extends AppCompatActivity {
 
         DataSet dataSet = new DataSet(this.getApplicationContext());
         dataSet.query();
-
-        ////initialise FAB
 
     }
 
@@ -126,11 +152,15 @@ public class MainActivity extends AppCompatActivity {
             Log.i("MENU", "Backup selected");
             return true;
         } else if (selectedId == R.id.menu_Delete) {
+            Engine.deleteData();
+            Engine.getPref();
             Log.i("MENU", "Delete selected");
             return true;
         }
         return false;
     }
+
+
 
     /*
     +

@@ -48,4 +48,20 @@ public class Engine {
         calNeed = 655.1 + (9.563* (float) weight) + (1.850 * (float)height) - (4.676 * (float) age);
         return (int) calNeed;
     }
+    public static void createUserPref(String name, boolean man, int height, int weight, int age, int targetWeight){
+        MainActivity.mEditor.putString("user", name);
+        MainActivity.mEditor.putBoolean("man", man);
+        MainActivity.mEditor.putInt("height", height);
+        MainActivity.mEditor.putInt("weight", weight);
+        MainActivity.mEditor.putInt("age", age);
+        MainActivity.mEditor.putInt("targetWeight", targetWeight);
+        MainActivity.mEditor.commit();
+    }
+    public static void deleteData(){
+        MainActivity.mEditor.clear().commit();
+        mDB.deleteAll();
+    }
+    public static void getPref(){
+        Log.i("PREFERENCE", MainActivity.mPrefs.getAll().toString());
+    }
 }
