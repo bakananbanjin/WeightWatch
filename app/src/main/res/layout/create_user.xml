@@ -102,7 +102,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
 
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -110,7 +109,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createUser_TV_height"></include>
+        app:layout_constraintTop_toBottomOf="@+id/rg_createuser_activity"></include>
 
     <Button
         android:id="@+id/createUser_BT_ok"
@@ -123,5 +122,46 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/rg_createuser_activity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/createUser_activity_label"
+        app:layout_constraintTop_toBottomOf="@+id/createUser_TV_height">
+
+        <RadioButton
+            android:id="@+id/rb_lowactivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createUser_activity_low" />
+
+        <RadioButton
+            android:id="@+id/rb_activitymedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createUser_activity_medium" />
+
+        <RadioButton
+            android:id="@+id/rb_activityhigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/createUser_activity_high" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/createUser_activity_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/createUser_activity_label"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/rg_createuser_activity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rg_createuser_activity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

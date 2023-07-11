@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class Engine {
-    private static DataSetDB mDB;
+    public static DataSetDB mDB;
     private static Engine engine;
     private Context mContext;
     public Engine(Context context) {
@@ -35,7 +35,7 @@ public class Engine {
         }
         return (int) bmi;
     }
-    public static int calcCalNeed(boolean men, int height, int weight, int age){
+    public static int calcCalNeed(boolean men, int height, int weight, int age, float activity){
         //For Men:
         //BMR = 66.5 + (13.75 × weight in kg) + (5.003 × height in cm) - (6.755 × age in years)
         //For Women:
@@ -46,15 +46,16 @@ public class Engine {
             return (int) calNeed;
         }
         calNeed = 655.1 + (9.563* (float) weight) + (1.850 * (float)height) - (4.676 * (float) age);
-        return (int) calNeed;
+        return (int) (calNeed * activity);
     }
-    public static void createUserPref(String name, boolean man, int height, int weight, int age, int targetWeight){
-        MainActivity.mEditor.putString("user", name);
-        MainActivity.mEditor.putBoolean("man", man);
-        MainActivity.mEditor.putInt("height", height);
-        MainActivity.mEditor.putInt("weight", weight);
-        MainActivity.mEditor.putInt("age", age);
-        MainActivity.mEditor.putInt("targetWeight", targetWeight);
+    public static void createUserPref(String name, boolean man, int height, int weight, int age, int targetWeight, float activity){
+        MainActivity.mEditor.putString(MainActivity.USER, name);
+        MainActivity.mEditor.putBoolean(MainActivity.ISMAN, man);
+        MainActivity.mEditor.putInt(MainActivity.HEIGHT, height);
+        MainActivity.mEditor.putInt(MainActivity.WEIGHT, weight);
+        MainActivity.mEditor.putInt(MainActivity.AGE, age);
+        MainActivity.mEditor.putInt(MainActivity.TARGETWEIGHT, targetWeight);
+        MainActivity.mEditor.putFloat(MainActivity.ACTIVITYLEVEL, activity);
         MainActivity.mEditor.commit();
     }
     public static void deleteData(){

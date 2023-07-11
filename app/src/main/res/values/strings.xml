@@ -12,10 +12,10 @@
     <string name="cancel"> Cancel </string>
 
     <!--- Overview Strings!-->
-    <string name="overview_cal_day">Calories day \n5000</string>
-    <string name="overview_cal_left">Calories left \n3000</string>
-    <string name="overview_bmi">BMI: \n50</string>
-    <string name="overview_weight">Weight: \n50kg</string>
+    <string name="overview_cal_day">Calories day</string>
+    <string name="overview_cal_left">Calories left</string>
+    <string name="overview_bmi">BMI:</string>
+    <string name="overview_weight">Weight:</string>
 
 
     <!--- InsertWindow Strings!-->
@@ -30,10 +30,23 @@
     <string name="createUser_Title">Create new user</string>
     <string name="createUser_name">Please insert Name</string>
     <string name="createUser_weight">Please insert weight in Kg</string>
-    <string name="createUser_CalUse">Basal rate of calories</string>
+    <string name="createUser_CalUse">Estimated calories \nneeded per day:</string>
     <string name="createUser_CalTarget"></string>
     <string name="createUser_height">Please insert height in cm</string>
     <string name="createUser_Age">Please insert Age</string>
     <string name="createUser_Bmi">Your BMI is: </string>
     <string name="createUser_Man">man</string>
+    <string name="createUser_activity_low">low</string>
+    <string name="createUser_activity_medium">medium</string>
+    <string name="createUser_activity_high">high</string>
+    <string name="createUser_activity_label">activity:</string>
+    <string name="title_activity_edit">EditActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <!-- Edite Activity Strings !-->
+    <string name="editActivity_toolbarMessage">Edit</string>
 </resources>

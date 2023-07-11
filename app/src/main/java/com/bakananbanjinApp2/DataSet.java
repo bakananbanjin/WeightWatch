@@ -16,7 +16,8 @@ public class DataSet {
     }
 
     public void query(){
-       /* List<DataItem> dataItemList = new ArrayList<DataItem>();
+        /*
+       List<DataItem> dataItemList = new ArrayList<DataItem>();
         DataItem tempItem = new DataItem("Steak", 500);
         DataItem temItem2 = new DataItem("Piza", 800, 7,7,15,32);
         for(int i = 0; i < 10 ; i++){
@@ -41,15 +42,15 @@ public class DataSet {
             i.toString();
         }
         //dataSetDB.deleteAll();
-        //dataSetDB.drop();*/
-        DataSetDB dataSetDB = new DataSetDB(this.mContext);
-        Cursor cursor = dataSetDB.selectAll();
-        List<DataItem> dataItemList = dataSetDB.selectAllDataItem();
+        //dataSetDB.drop();
+        //DataSetDB dataSetDB = new DataSetDB(this.mContext);
+        //Cursor cursor = dataSetDB.selectAll();
+        //List<DataItem> dataItemList = dataSetDB.selectAllDataItem();
 
         for(DataItem i : dataItemList){
             Log.i("DATABASE", i.toString());
         }
-        DataReaderWriter.writeFileDB("DataDB", mContext, cursor);
+        DataReaderWriter.writeFileDB("DataDB", mContext, cursor);*/
 
     }
 }

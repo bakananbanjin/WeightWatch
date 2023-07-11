@@ -5,6 +5,7 @@ import static android.util.Log.DEBUG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Debug;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -40,19 +42,31 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String USER = "user";
+    public static final String WEIGHT = "weight";
+    public static final String HEIGHT = "height";
+    public static final String AGE = "age";
+    public static final String ISMAN = "isMan";
+    public static final String TARGETWEIGHT = "targetWeight";
+    public static final String ACTIVITYLEVEL = "activity";
+
     //tempvariable for linechart from git
     LineChart lineChart;
     public static SharedPreferences mPrefs;
     public static SharedPreferences.Editor mEditor;
-    private User user;
-
-
+    public static User user;
+    private Toolbar toolbar;
+    private TextView textViewToolbar;
+    private FragmentManager fragmentManager;
 
 
     //1.Ersetze Name mit dem vom user eingegebenen Namen aus DB oder anderer Quelle
     //2.Toolbar Textcolor dynamisch anpassen oder eigenen Theme schreiben
     //3.Icon fuer toolbar anpassen
     //4. Make own Graph Class
+    //5. Make Toolbar name first time user is created
+    //6. Make Edit list sorted by date
+    //7. letzter Eintrag in edit wird nicht angezeigt
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,18 +84,23 @@ public class MainActivity extends AppCompatActivity {
 
 
         //initialise Toolbar
-        TextView textViewToolbar = findViewById(R.id.toolbar_textview);
-        textViewToolbar.setText(getString(R.string.tollbar_welcome) + " Name");
+        textViewToolbar = findViewById(R.id.toolbar_textview);
+        textViewToolbar.setText(getString(R.string.tollbar_welcome));
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         //initialise Fragment for information overview
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         Fragment frag = fragmentManager.findFragmentById(R.id.fragment_container);
         if(frag == null){
             frag = new Overview();
             fragmentManager.beginTransaction().add(R.id.fragment_container, frag).commit();
         }
+
+
+
+
+
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,17 +114,20 @@ public class MainActivity extends AppCompatActivity {
         if(!mPrefs.contains("user")){
             CreateUser createUserDialog = new CreateUser();
             createUserDialog.show(getSupportFragmentManager(), "");
-
         }
         try {
-           user = new User(mPrefs.getString("user", "user"),
-                   mPrefs.getInt("weight", 50),
-                   mPrefs.getInt("height", 170),
-                   mPrefs.getInt("age", 30),
-                   mPrefs.getInt("targetWeight", 0));
+           user = new User(mPrefs.getString(USER, "user"),
+                   mPrefs.getInt( WEIGHT, 50),
+                   mPrefs.getInt(HEIGHT, 170),
+                   mPrefs.getInt(AGE, 30),
+                   mPrefs.getInt(TARGETWEIGHT, 0),
+                   mPrefs.getBoolean(ISMAN, true),
+                   mPrefs.getFloat(ACTIVITYLEVEL, 1.2f));
+            textViewToolbar.setText(getString(R.string.tollbar_welcome) + " " + user.getUserName());
         } catch (Exception e){
             Log.e("NOUSER", "no user found");
         }
+
 
 
         /*
@@ -122,6 +144,14 @@ public class MainActivity extends AppCompatActivity {
         DataSet dataSet = new DataSet(this.getApplicationContext());
         dataSet.query();
 
+        /*
+        +
+        +TESTCODE
+        +
+        +add second fragment for main content
+        */
+
+
     }
 
     @Override
@@ -134,19 +164,16 @@ public class MainActivity extends AppCompatActivity {
         int selectedId = item.getItemId();
         if(selectedId == R.id.menu_Profil){
             Log.i("MENU", "Profil selected");
-            /*
-            +
-            +TEST Layout
-            +
-             */
-            CreateUser createUser = new CreateUser();
-            createUser.show(getSupportFragmentManager(),"");
+
             return true;
         } else if (selectedId == R.id.menu_Info) {
+
             Log.i("MENU", "Info selected");
             return true;
         } else if (selectedId == R.id.menu_Edit) {
             Log.i("MENU", "Edit selected");
+            Intent intent = new Intent(this, EditActivity.class);
+            startActivity(intent);
             return true;
         } else if (selectedId == R.id.menu_Backup) {
             Log.i("MENU", "Backup selected");
@@ -155,18 +182,25 @@ public class MainActivity extends AppCompatActivity {
             Engine.deleteData();
             Engine.getPref();
             Log.i("MENU", "Delete selected");
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
             return true;
         }
         return false;
     }
-
-
 
     /*
     +
     +  TEST CODE ONLY BELOW
     +
      */
+
+    private void replaceFragment(Fragment fragment){
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
+    }
 
     //Temp function to test Linechart from git should be deleted or moved
     private void addDataEntry(float value) {
@@ -254,4 +288,6 @@ public class MainActivity extends AppCompatActivity {
 
         lineChart.invalidate();
     }
+
+
 }

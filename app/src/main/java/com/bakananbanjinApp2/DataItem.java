@@ -113,4 +113,10 @@ public class DataItem {
                 + "\n";
         return output;
     }
+
+    public String getDateTime() {
+        String dateTime = this.getYear() + "/" + this.getMonth() + "/" + this.getDay() + "\n" + this.getHour()
+                + ":" + this.getMin();
+        return dateTime;
+    }
 }

@@ -2,6 +2,7 @@ package com.bakananbanjinApp2;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -25,6 +28,16 @@ public class CreateUser extends DialogFragment {
     private int mBmi = -1;
     private int mCalNeed = -1;
     private boolean mMan = true;
+
+    /*+
+    Low activity (little to no exercise): BMR × 1.2
+    Medium active (light exercise/sports 1-3 days per week): BMR × 1.4
+    High active (moderate exercise/sports 3-5 days per week): BMR × 1.6
+     */
+    private float mActivityLevelmultiplier = 1.2f;
+    private static float LOWACTIVITY = 1.2f;
+    private static float MEDIUMACTIVITY = 1.4f;
+    private static float HIGHACTIVITY = 1.6f;
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -32,10 +45,21 @@ public class CreateUser extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View insertView = inflater.inflate(R.layout.create_user, null);
 
+        //Get Information textview
+        TextView informationCalNeed = insertView.findViewById(R.id.userInformation_intCal);
+        TextView informationBMI = insertView.findViewById(R.id.userinformationIntBmi);
+
+
         EditText etUserName = insertView.findViewById(R.id.createUser_ET_Name);
         mUserName = etUserName.getText().toString();
         Switch switchIsMan = insertView.findViewById(R.id.createUser_Switch_sex);
         mMan = switchIsMan.isActivated();
+
+        RadioGroup rgActivityLevel = insertView.findViewById(R.id.rg_createuser_activity);
+        RadioButton rbLowActivity = insertView.findViewById(R.id.rb_lowactivity);
+        RadioButton rbMediumActivity = insertView.findViewById(R.id.rb_activitymedium);
+        RadioButton rbHighActivity = insertView.findViewById(R.id.rb_activityhigh);
+        rbLowActivity.setChecked(true);
 
         //GET Pickers and set values
         NumberPicker npWeight = insertView.findViewById(R.id.createUser_NP_weight);
@@ -59,25 +83,22 @@ public class CreateUser extends DialogFragment {
             @Override
             public void onClick(View view) {
                 mUserName = etUserName.getText().toString();
-                Engine.createUserPref(mUserName, mMan, mHeight, mWeight, mAge, 0);
+                Engine.createUserPref(mUserName, mMan, mHeight, mWeight, mAge, 0, mActivityLevelmultiplier);
                 Engine.getPref();
+                //restart Activity to update overview with new data
+                Intent intent = getActivity().getIntent();
+                getActivity().finish();
+                startActivity(intent);
                 dismiss();
             }
         });
-
-        //Get Information textview
-        TextView informationCalNeed = insertView.findViewById(R.id.userInformation_intCal);
-        TextView informationBMI = insertView.findViewById(R.id.userinformationIntBmi);
-
-
-
 
         //Numberpicker on Value ChangeListner
         npWeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
                 mWeight = npWeight.getValue();
-                informationCalNeed.setText(" " + Engine.calcCalNeed(mMan, mHeight, mWeight, mAge));
+                informationCalNeed.setText(" " + Engine.calcCalNeed(mMan, mHeight, mWeight, mAge, mActivityLevelmultiplier));
                 informationBMI.setText(" " + Engine.calcBMI(mWeight, mHeight));
             }
         });
@@ -86,7 +107,7 @@ public class CreateUser extends DialogFragment {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
                 mAge = npAge.getValue();
-                informationCalNeed.setText(" " + Engine.calcCalNeed(mMan, mHeight, mWeight, mAge));
+                informationCalNeed.setText(" " + Engine.calcCalNeed(mMan, mHeight, mWeight, mAge, mActivityLevelmultiplier));
                 informationBMI.setText(" " + Engine.calcBMI(mWeight, mHeight));
             }
         });
@@ -95,7 +116,7 @@ public class CreateUser extends DialogFragment {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
                 mHeight = npHeight.getValue();
-                informationCalNeed.setText(" " + Engine.calcCalNeed(mMan, mHeight, mWeight, mAge));
+                informationCalNeed.setText(" " + Engine.calcCalNeed(mMan, mHeight, mWeight, mAge, mActivityLevelmultiplier));
                 informationBMI.setText(" " + Engine.calcBMI(mWeight, mHeight));
             }
         });
@@ -109,7 +130,22 @@ public class CreateUser extends DialogFragment {
                 } else {
                     mMan = false;
                 }
-                informationCalNeed.setText(" " + Engine.calcCalNeed(mMan, mHeight, mWeight, mAge));
+                informationCalNeed.setText(" " + Engine.calcCalNeed(mMan, mHeight, mWeight, mAge, mActivityLevelmultiplier));
+                informationBMI.setText(" " + Engine.calcBMI(mWeight, mHeight));
+            }
+        });
+
+        rgActivityLevel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i){
+                if(i == R.id.rb_lowactivity){
+                    mActivityLevelmultiplier = LOWACTIVITY;
+                } else if(i == R.id.rb_activitymedium){
+                    mActivityLevelmultiplier = MEDIUMACTIVITY;
+                } else if(i == R.id.rb_activityhigh){
+                    mActivityLevelmultiplier = HIGHACTIVITY;
+                }
+                informationCalNeed.setText(" " + Engine.calcCalNeed(mMan, mHeight, mWeight, mAge, mActivityLevelmultiplier));
                 informationBMI.setText(" " + Engine.calcBMI(mWeight, mHeight));
             }
         });

@@ -66,7 +66,9 @@ public class DataSetDB  {
         }
     }
     public Cursor selectAll(){
-        Cursor cursor = mDB.rawQuery("SELECT *  from " + DB_TABLE_NAME, null);
+        String orderBy = DB_ROW_YEAR + " DESC," + DB_ROW_MONTH + " DESC," + DB_ROW_DAY + " DESC,"
+                + DB_ROW_HOUR + " DESC," + DB_ROW_MIN + " DESC";
+        Cursor cursor = mDB.query(DB_TABLE_NAME, null, null, null, null, null, orderBy);
         if (cursor != null) {
                 cursor.moveToFirst();
         }
@@ -101,6 +103,7 @@ public class DataSetDB  {
     public List<DataItem> selectAllDataItem(){
         List<DataItem> tempList = new ArrayList<>();
         Cursor cursor = this.selectAll();
+        cursor.moveToFirst();
         while (cursor.moveToNext()){
             tempList.add(new DataItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
                     cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
