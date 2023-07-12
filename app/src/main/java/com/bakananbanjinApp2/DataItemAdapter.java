@@ -14,6 +14,7 @@ import java.util.List;
 public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ListItemHolder> {
     private List<DataItem> dataItemList;
     private Context context;
+    private RecyclerViewInterface recyclerViewInterface;
 
 
     public DataItemAdapter(Context context, List<DataItem> dataItemList) {
@@ -40,6 +41,9 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ListIt
     public int getItemCount() {
         return dataItemList.size();
     }
+    public void setItemClickListener(RecyclerViewInterface recyclerViewInterface){
+        this.recyclerViewInterface = recyclerViewInterface;
+    }
     public class ListItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView mDataItemTitle;
         TextView mDataItemDate;
@@ -49,10 +53,13 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ListIt
             mDataItemTitle = itemView.findViewById(R.id.tv_dataitem_title);
             mDataItemDate = itemView.findViewById(R.id.tv_dataitem_date);
             mDataItemCal = itemView.findViewById(R.id.tv_dataitem_cal );
+            itemView.setOnClickListener(this);
         }
         @Override
         public void onClick(View view) {
-
+            if(recyclerViewInterface != null){
+                recyclerViewInterface.onItemClick(getAdapterPosition());
+            }
         }
 
     }

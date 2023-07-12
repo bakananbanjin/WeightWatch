@@ -3,6 +3,7 @@ package com.bakananbanjinApp2;
 import static android.util.Log.DEBUG;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -57,16 +58,13 @@ public class MainActivity extends AppCompatActivity {
     public static User user;
     private Toolbar toolbar;
     private TextView textViewToolbar;
-    private FragmentManager fragmentManager;
+    public static FragmentManager fragmentManager;
 
 
-    //1.Ersetze Name mit dem vom user eingegebenen Namen aus DB oder anderer Quelle
+    //1.
     //2.Toolbar Textcolor dynamisch anpassen oder eigenen Theme schreiben
     //3.Icon fuer toolbar anpassen
     //4. Make own Graph Class
-    //5. Make Toolbar name first time user is created
-    //6. Make Edit list sorted by date
-    //7. letzter Eintrag in edit wird nicht angezeigt
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +94,6 @@ public class MainActivity extends AppCompatActivity {
             frag = new Overview();
             fragmentManager.beginTransaction().add(R.id.fragment_container, frag).commit();
         }
-
-
-
 
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
@@ -190,11 +185,20 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Overview fragment = (Overview) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment != null) {
+            fragment.updateOverview();
+        }
+    }
     /*
     +
     +  TEST CODE ONLY BELOW
     +
      */
+
 
     private void replaceFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

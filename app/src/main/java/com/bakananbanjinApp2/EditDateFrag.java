@@ -1,6 +1,7 @@
 package com.bakananbanjinApp2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditDateFrag extends Fragment{
+public class EditDateFrag extends Fragment implements RecyclerViewInterface{
 
     private RecyclerView mRecyclerViewEdit;
+    private List<DataItem> dataItemList;
+    public static DataItemAdapter myAdapter;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,16 +33,32 @@ public class EditDateFrag extends Fragment{
 
         mRecyclerViewEdit = view.findViewById(R.id.recyclerview);
         mRecyclerViewEdit.setHasFixedSize(true);
-        List DataItemList = new ArrayList();
-        DataItemList = Engine.mDB.selectAllDataItem();
+
+        dataItemList = new ArrayList<DataItem>();
+        dataItemList = Engine.mDB.selectAllDataItem();
         mRecyclerViewEdit.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerViewEdit.setHasFixedSize(true);
-        DataItemAdapter myAdapter = new DataItemAdapter(getContext(), DataItemList);
-        mRecyclerViewEdit.setAdapter( myAdapter);
+        myAdapter = new DataItemAdapter(getContext(), dataItemList);
+        myAdapter.setItemClickListener(this);
+        mRecyclerViewEdit.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
 
 
 
         return view;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        if(dataItemList.get(position) != null) {
+            EditDialog insertDialog = new EditDialog(dataItemList.get(position));
+            insertDialog.show(getParentFragmentManager(), null);
+        }
+
+        Log.i("ITEM CLICK", "Item on Position " + position + " got clicked");
+    }
+    public void notifyChange(){
+        myAdapter.notifyDataSetChanged();
+
     }
 }

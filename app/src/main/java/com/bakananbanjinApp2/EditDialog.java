@@ -15,17 +15,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.fragment.app.DialogFragment;
 
-import androidx.appcompat.widget.TooltipCompat;
-
-
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
-public class InsertDialog extends DialogFragment {
+public class EditDialog extends DialogFragment {
+    private DataItem mDataItem;
+
+    public EditDialog(DataItem dataItem) {
+        mDataItem = dataItem;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -34,11 +35,11 @@ public class InsertDialog extends DialogFragment {
         View insertView = inflater.inflate(R.layout.insert_window, null);
 
         Calendar calendar = Calendar.getInstance();
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        int month = Calendar.getInstance().get(Calendar.MONTH);
-        int day = Calendar.getInstance().get(Calendar.DATE);
-        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        int min = Calendar.getInstance().get(Calendar.MINUTE);
+        int year = mDataItem.getYear();
+        int month = mDataItem.getMonth();
+        int day = mDataItem.getDay();
+        int hour = mDataItem.getHour();
+        int min = mDataItem.getMin();
 
 
         //preset time in insert Window
@@ -54,11 +55,11 @@ public class InsertDialog extends DialogFragment {
 
         EditText etInsertWhat = insertView.findViewById(R.id.insert_what);
         EditText etInsertCal = insertView.findViewById(R.id.insert_cal);
+        etInsertWhat.setText(mDataItem.getmItemName());
+        etInsertCal.setText(mDataItem.getmCal() + "");
 
         Button btnInsertCancel = insertView.findViewById(R.id.insert_cancel);
         Button btnInsertOk = insertView.findViewById(R.id.insert_ok);
-
-
 
         btnInsertCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,42 +71,30 @@ public class InsertDialog extends DialogFragment {
         btnInsertOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DataItem userEnteredDataItem;
-                String itemName;
-                Integer itemYear;
-                Integer itemMonth;
-                Integer itemDay;
-                Integer itemHour;
-                Integer itemMin;
-
-                //Textfields needs to be casted to Integer
+                //update mDataItem with new user input
                 try {
-                    itemName = etInsertWhat.getText().toString();
-                    if(itemName.isEmpty()){
+
+                    if(etInsertWhat.getText().toString().isEmpty()){
                         throw new Exception();
                     }
-                    itemYear = dpDatepicker.getYear();
-                    itemMonth = dpDatepicker.getMonth();;
-                    itemDay = dpDatepicker.getDayOfMonth();
-                    itemHour = tpTimepicker.getHour();
-                    itemMin = tpTimepicker.getMinute();
+                    mDataItem.setmItemName(etInsertWhat.getText().toString());
+                    mDataItem.setmCalendar(dpDatepicker.getYear(), dpDatepicker.getMonth(), dpDatepicker.getDayOfMonth(),
+                            tpTimepicker.getHour(), tpTimepicker.getMinute());
 
-                    Integer itemCal = Integer.parseInt(etInsertCal.getText().toString());
+                    mDataItem.setmCal(Integer.parseInt(etInsertCal.getText().toString()));
 
-                    userEnteredDataItem = new DataItem(itemName, itemCal, itemYear, itemMonth, itemDay, itemHour, itemMin);
-                    Engine.insertNewDataItem(userEnteredDataItem);
+                    Engine.mDB.updateItem(mDataItem);
                     //get reference to Overview and update cal left
-                    Overview fragment = (Overview) getParentFragmentManager().findFragmentById(R.id.fragment_container);
-                    if (fragment != null) {
-                        fragment.updateOverview();
-                    }
+
+                    EditDateFrag.myAdapter.notifyDataSetChanged();
                     dismiss();
                 } catch (Exception e) {
                     Log.e("INSERT WRONG TYPE", "insert wrong type in INSERT FIELD");
                     String message = getResources().getString(R.string.insert_no_input);
                     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
                 }
-           }
+
+            }
         });
 
 

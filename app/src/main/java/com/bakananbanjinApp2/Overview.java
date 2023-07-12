@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class Overview extends Fragment {
+    private TextView overviewCalLeft;
+    private int intCal;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,7 @@ public class Overview extends Fragment {
         TextView overviewBMI = view.findViewById(R.id.overview_bmi);
         TextView overviewCal = view.findViewById(R.id.overview_cal_day);
         TextView overviewWeight = view.findViewById(R.id.overview_weight);
+        overviewCalLeft = view.findViewById(R.id.overview_cal_left);
 
         //calculate BMI and set overview item
         int userWeight = MainActivity.mPrefs.getInt(MainActivity.WEIGHT, -1);
@@ -37,7 +40,7 @@ public class Overview extends Fragment {
         String stringOverviewBMI = getText(R.string.overview_bmi) + "\n" + intBMI;
         overviewBMI.setText(stringOverviewBMI);
 
-        int intCal = Engine.calcCalNeed(userIsMan, userHeight, userWeight, userAge, userActivity);
+        intCal = Engine.calcCalNeed(userIsMan, userHeight, userWeight, userAge, userActivity);
         String stringOverviewCal = getText(R.string.overview_cal_day) + "\n" + intCal;
         overviewCal.setText(stringOverviewCal);
 
@@ -45,9 +48,17 @@ public class Overview extends Fragment {
         String stringOverviewWeight = getText(R.string.overview_weight) + "\n" + intWeight;
         overviewWeight.setText(stringOverviewWeight);
 
-
+        int intCalLeft = intCal - Engine.calcUsedToday();
+        String stringOverviewCalLeft = getText(R.string.overview_cal_left) + "\n" + intCalLeft;
+        overviewCalLeft.setText(stringOverviewCalLeft);
 
         return view;
+    }
+    //update ovreview cal left called when new item is added or edited
+    public void updateOverview(){
+        int intCalLeft = intCal - Engine.calcUsedToday();
+        String stringOverviewCalLeft = getText(R.string.overview_cal_left) + "\n" + intCalLeft;
+        overviewCalLeft.setText(stringOverviewCalLeft);
     }
 
 }

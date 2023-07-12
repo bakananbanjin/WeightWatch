@@ -1,10 +1,7 @@
 package com.bakananbanjinApp2;
 
 
-import android.util.Log;
-
 import java.util.Calendar;
-import java.util.TimeZone;
 
 //class for a DataItem
 public class DataItem {
@@ -63,6 +60,7 @@ public class DataItem {
     public Calendar getmCalendar() {
         return mCalendar;
     }
+
     public int getYear(){
         return mCalendar.get(Calendar.YEAR);
     }
@@ -80,6 +78,9 @@ public class DataItem {
     }
     public void setmCalendar(Calendar mCalendar) {
         this.mCalendar = mCalendar;
+    }
+    public void setmCalendar(int year, int month, int day, int hour, int min){
+        mCalendar.set(year, month, day, hour, min);
     }
     public void setDate(int year, int month, int day){
         mCalendar.set(year, month, day);
@@ -115,8 +116,24 @@ public class DataItem {
     }
 
     public String getDateTime() {
-        String dateTime = this.getYear() + "/" + this.getMonth() + "/" + this.getDay() + "\n" + this.getHour()
-                + ":" + this.getMin();
+
+        //check if hour or min is only single digit and add a 0 before
+        String tempTime ="";
+        if(getHour()< 10){
+            tempTime = "0" + this.getHour() + ":";
+        } else {
+           tempTime = this.getHour() + ":";
+        }
+        if (getMin() < 10) {
+            tempTime += "0";
+
+        }
+        tempTime += getMin();
+        String dateTime = this.getYear() + "/" + this.getMonth() + "/" + this.getDay() + "\n" + tempTime;
         return dateTime;
+    }
+
+    public int getId() {
+        return this.mId;
     }
 }

@@ -9,6 +9,9 @@ public class User {
     private boolean mIsMan;
     private float userActivity;
 
+    public User(String userName, int userWeight, int userHeight, int userAge, int userTargetWeight, boolean isMan) {
+        new User(userName, userWeight, userHeight, userAge, userTargetWeight, isMan, 1.2f);
+    }
 
     public User(String userName, int userWeight, int userHeight, int userAge, int userTargetWeight, boolean isMan, float userActivity) {
         this.userName = userName;

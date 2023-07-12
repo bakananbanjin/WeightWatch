@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +35,14 @@ public class EditActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().add(R.id.edit_fragmentcontainer, frag).commit();
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("updatedText", "New Text");
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
