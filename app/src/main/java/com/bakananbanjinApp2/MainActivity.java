@@ -79,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
         //initialise  Engine
         Engine engine = new Engine(this.getApplicationContext());
 
-
-
         //initialise Toolbar
         textViewToolbar = findViewById(R.id.toolbar_textview);
         textViewToolbar.setText(getString(R.string.tollbar_welcome));
@@ -159,7 +157,8 @@ public class MainActivity extends AppCompatActivity {
         int selectedId = item.getItemId();
         if(selectedId == R.id.menu_Profil){
             Log.i("MENU", "Profil selected");
-
+            Intent intent = new Intent(this, ProfilActivity.class);
+            startActivity(intent);
             return true;
         } else if (selectedId == R.id.menu_Info) {
 

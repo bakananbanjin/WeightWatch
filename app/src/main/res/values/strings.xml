@@ -10,6 +10,7 @@
     <!--- Reusable Strings -->
     <string name="ok"> OK </string>
     <string name="cancel"> Cancel </string>
+    <string name="edit"> Edit </string>
 
     <!--- Overview Strings!-->
     <string name="overview_cal_day">Calories day</string>
@@ -49,4 +50,14 @@
 
     <!-- Edite Activity Strings !-->
     <string name="editActivity_toolbarMessage">Edit</string>
+    <!-- Profile Activity Strings !-->
+    <string name="profilActivity_toolbarMessage">Profil</string>
+    <string name="profile_target">Your target is:</string>
+    <string name="profile_calroies">Your daily Cal use is:</string>
+    <string name="profile_bmi">Your Bmi is:</string>
+    <string name="profile_advice">Here should come some advice text autogenereted from bits.
+                                    But i dont know what to write for now. Maybe text like this:\n
+                                    Your Bmi is BMI and you should try to get it to 25. \nIf you can
+                                    generate a 500Cal deficit a day you will reach you target in around
+                                    DAY. \nThis is only a approximate.</string>
 </resources>

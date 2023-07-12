@@ -67,8 +67,16 @@ public class Engine {
         MainActivity.mEditor.clear().commit();
         mDB.deleteAll();
     }
-    public static void getPref(){
+    public static User getPref(){
+
         Log.i("PREFERENCE", MainActivity.mPrefs.getAll().toString());
+        return new User(MainActivity.mPrefs.getString(MainActivity.USER, "ERROR"),
+                MainActivity.mPrefs.getInt(MainActivity.WEIGHT, 0),
+                MainActivity.mPrefs.getInt(MainActivity.HEIGHT, 0),
+                MainActivity.mPrefs.getInt(MainActivity.AGE, 0),
+                MainActivity.mPrefs.getInt(MainActivity.TARGETWEIGHT, 0),
+                MainActivity.mPrefs.getBoolean(MainActivity.ISMAN, true),
+                MainActivity.mPrefs.getFloat(MainActivity.ACTIVITYLEVEL, 1.2f));
     }
     public static int calcUsedToday(){
         Calendar cToday = Calendar.getInstance();

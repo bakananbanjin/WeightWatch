@@ -23,6 +23,30 @@ public class User {
         this.userActivity = userActivity;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setUserHeight(int userHeight) {
+        this.userHeight = userHeight;
+    }
+
+    public void setUserAge(int userAge) {
+        this.userAge = userAge;
+    }
+
+    public void setUserTargetWeight(int userTargetWeight) {
+        this.userTargetWeight = userTargetWeight;
+    }
+
+    public boolean ismIsMan() {
+        return mIsMan;
+    }
+
+    public void setmIsMan(boolean mIsMan) {
+        this.mIsMan = mIsMan;
+    }
+
     public float getUserActivity() {
         return userActivity;
     }

@@ -38,18 +38,30 @@ public class Overview extends Fragment {
 
         int intBMI = Engine.calcBMI(userWeight,userHeight);
         String stringOverviewBMI = getText(R.string.overview_bmi) + "\n" + intBMI;
+        if(intBMI > 25){
+            overviewBMI.setBackgroundResource(R.drawable.round_corner_view_red);
+        } else {
+            overviewBMI.setBackgroundResource(R.drawable.round_corner_view);
+        }
         overviewBMI.setText(stringOverviewBMI);
 
         intCal = Engine.calcCalNeed(userIsMan, userHeight, userWeight, userAge, userActivity);
         String stringOverviewCal = getText(R.string.overview_cal_day) + "\n" + intCal;
+        overviewCal.setBackgroundResource(R.drawable.round_corner_view);
         overviewCal.setText(stringOverviewCal);
 
         int intWeight = MainActivity.mPrefs.getInt(MainActivity.WEIGHT, -1);
         String stringOverviewWeight = getText(R.string.overview_weight) + "\n" + intWeight;
+        overviewWeight.setBackgroundResource(R.drawable.round_corner_view);
         overviewWeight.setText(stringOverviewWeight);
 
         int intCalLeft = intCal - Engine.calcUsedToday();
         String stringOverviewCalLeft = getText(R.string.overview_cal_left) + "\n" + intCalLeft;
+        if(intCalLeft < 0){
+            overviewCalLeft.setBackgroundResource(R.drawable.round_corner_view_red);
+        } else {
+            overviewCalLeft.setBackgroundResource(R.drawable.round_corner_view);
+        }
         overviewCalLeft.setText(stringOverviewCalLeft);
 
         return view;
@@ -57,6 +69,11 @@ public class Overview extends Fragment {
     //update ovreview cal left called when new item is added or edited
     public void updateOverview(){
         int intCalLeft = intCal - Engine.calcUsedToday();
+        if(intCalLeft < 0){
+            overviewCalLeft.setBackgroundResource(R.drawable.round_corner_view_red);
+        } else {
+            overviewCalLeft.setBackgroundResource(R.drawable.round_corner_view);
+        }
         String stringOverviewCalLeft = getText(R.string.overview_cal_left) + "\n" + intCalLeft;
         overviewCalLeft.setText(stringOverviewCalLeft);
     }
