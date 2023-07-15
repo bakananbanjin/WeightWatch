@@ -8,11 +8,12 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_profil"
-        android:layout_width="411dp"
+        android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.Toolbar>
 
@@ -99,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_profile_Calorie" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/bt_profile_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -116,7 +117,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/bt_profile_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_profile_bmi" />

@@ -1,6 +1,7 @@
 package com.bakananbanjinApp2;
 
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,35 +12,38 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ListItemHolder> {
-    private List<DataItem> dataItemList;
+public class WeightItemAdapter extends RecyclerView.Adapter<WeightItemAdapter.ListItemHolder> {
+    private List<Weight> weightList;
     private Context context;
     private RecyclerViewInterface recyclerViewInterface;
 
-
-    public DataItemAdapter(Context context, List<DataItem> dataItemList) {
-        this.dataItemList = dataItemList;
+    public WeightItemAdapter(Context context, List<Weight> weightList) {
+        this.weightList = weightList;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public DataItemAdapter.ListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public WeightItemAdapter.ListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.dataitem, parent, false);
-        return new ListItemHolder(view);
+        return new WeightItemAdapter.ListItemHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull DataItemAdapter.ListItemHolder holder, int position) {
-        DataItem dataItem = dataItemList.get(position);
-        holder.mDataItemTitle.setText(dataItem.getmItemName() + "\n");
-        holder.mDataItemDate.setText(dataItem.getDateTime());
-        holder.mDataItemCal.setText(dataItem.getmCal() + "\n");
+
+    public void onBindViewHolder(@NonNull WeightItemAdapter.ListItemHolder holder, int position) {
+        Weight dataItem = weightList.get(position);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = dateFormat.format(dataItem.getCalendar().getTime());
+
+        holder.mDataItemTitle.setText(dataItem.getWeight() + "");
+        holder.mDataItemDate.setText(dateString);
+        holder.mDataItemCal.setText("");
     }
 
     @Override
     public int getItemCount() {
-        return dataItemList.size();
+        return weightList.size();
     }
     public void setItemClickListener(RecyclerViewInterface recyclerViewInterface){
         this.recyclerViewInterface = recyclerViewInterface;

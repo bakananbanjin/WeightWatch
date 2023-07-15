@@ -1,26 +1,24 @@
 package com.bakananbanjinApp2;
 
+import java.util.Calendar;
+
 public class User {
     private String userName;
-    private int userWeight;
+    private float userWeight;
     private int userHeight;
     private int userAge;
     private int userTargetWeight;
     private boolean mIsMan;
     private float userActivity;
 
-    public User(String userName, int userWeight, int userHeight, int userAge, int userTargetWeight, boolean isMan) {
-        new User(userName, userWeight, userHeight, userAge, userTargetWeight, isMan, 1.2f);
-    }
-
-    public User(String userName, int userWeight, int userHeight, int userAge, int userTargetWeight, boolean isMan, float userActivity) {
-        this.userName = userName;
-        this.userWeight = userWeight;
-        this.userHeight = userHeight;
-        this.userAge = userAge;
-        this.userTargetWeight = userTargetWeight;
-        this.mIsMan = isMan;
-        this.userActivity = userActivity;
+    public User(String name, boolean man, int age, int height, float weight, int targetWeight, float activity) {
+        this.userName = name;
+        this.userWeight = weight;
+        this.userHeight = height;
+        this.userAge = age;
+        this.userTargetWeight = targetWeight;
+        this.mIsMan = man;
+        this.userActivity = activity;
     }
 
     public void setUserName(String userName) {
@@ -55,7 +53,7 @@ public class User {
         this.userActivity = userActivity;
     }
 
-    public int getUserWeight() {
+    public float getUserWeight() {
         return userWeight;
     }
     public void setUserWeight(int userWeight) {
@@ -79,6 +77,28 @@ public class User {
     }
 
     public void saveUserToPreference(){
-        Engine.createUserPref(userName, mIsMan, userHeight, userWeight, userAge, userTargetWeight, userActivity);
+        Engine.createUserPref(userName, mIsMan, userAge, userAge, userWeight, userTargetWeight, userActivity);
+    }
+    public String toStringtoFile(){
+        String output = this.userName + ";"
+                + this.mIsMan + ";"
+                + this.userAge + ";"
+                + this.userHeight + ";"
+                + this.userWeight + ";"
+                + this.userTargetWeight + ";"
+                + this.userActivity
+                + "\n";
+        return output;
+    }
+
+    public void updateUser(String name, boolean man, int age, int height, float weight, int targetWeight, float activity) {
+        this.userName = name;
+        this.userWeight = weight;
+        this.userHeight = height;
+        this.userAge = age;
+        this.userTargetWeight = targetWeight;
+        this.mIsMan = man;
+        this.userActivity = activity;
+
     }
 }

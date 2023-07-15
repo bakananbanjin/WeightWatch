@@ -3,16 +3,15 @@ package com.bakananbanjinApp2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
-import android.media.Image;
+
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ProfilActivity extends AppCompatActivity {
     private Toolbar toolbar;
-    private TextView textViewToolbar;
-    private ImageView imageViewToolbar;
     private ImageView imageViewProfile;
     private TextView textViewProfileName;
     private TextView textViewProfileAge;
@@ -22,6 +21,7 @@ public class ProfilActivity extends AppCompatActivity {
     private TextView textViewProfileCalDay;
     private TextView textViewProfileBMI;
     private TextView textViewProfileAdvice;
+    private Button btViewProfileEdit;
     private User mUser;
     private int mCalDay;
     private int mBmi;
@@ -43,7 +43,12 @@ public class ProfilActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         imageViewProfile = findViewById(R.id.imageview_profil);
-        imageViewProfile.setImageDrawable(getDrawable(R.drawable.user));
+        if(!mUser.ismIsMan()){
+            imageViewProfile.setImageDrawable(getDrawable(R.drawable.usermale));
+        } else {
+            imageViewProfile.setImageDrawable(getDrawable(R.drawable.userfemale));
+        }
+
 
         textViewProfileName = findViewById(R.id.tv_profile_name);
         textViewProfileName.setText(mUser.getUserName());
@@ -68,6 +73,15 @@ public class ProfilActivity extends AppCompatActivity {
 
         textViewProfileAdvice = findViewById(R.id.tv_profile_advise);
         textViewProfileAdvice.setText(getString(R.string.profile_advice));
+
+        btViewProfileEdit = findViewById(R.id.bt_profile_edit);
+        btViewProfileEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreateUser createUserDialog = new CreateUser();
+                createUserDialog.show(getSupportFragmentManager(), "");
+            }
+        });
     }
     public void onBackPressed() {
         super.onBackPressed();

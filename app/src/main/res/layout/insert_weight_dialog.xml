@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_insert_weight_gram"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/insert_weight_gram"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/np_insert_weight_floatvalue"
+        app:layout_constraintStart_toEndOf="@+id/np_insert_weight_number" />
+
+    <NumberPicker
+        android:id="@+id/np_insert_weight_number"
+        android:layout_width="50dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="-50dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/dp_insert_weight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <NumberPicker
+        android:id="@+id/np_insert_weight_floatvalue"
+        android:layout_width="50dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="@+id/np_insert_weight_number"
+        app:layout_constraintStart_toEndOf="@+id/np_insert_weight_number"
+        app:layout_constraintTop_toTopOf="@+id/np_insert_weight_number" />
+
+    <DatePicker
+        android:id="@+id/dp_insert_weight"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="16dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        app:layout_constraintBottom_toTopOf="@+id/insert_weight_ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/insert_weight_ok"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_insert_weight_kg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/insert_weight_kg"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/np_insert_weight_number"
+        app:layout_constraintEnd_toEndOf="@+id/np_insert_weight_number"
+        app:layout_constraintStart_toStartOf="@+id/np_insert_weight_number" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

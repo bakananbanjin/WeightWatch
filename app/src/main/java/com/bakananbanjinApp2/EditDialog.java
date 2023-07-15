@@ -41,17 +41,14 @@ public class EditDialog extends DialogFragment {
         int hour = mDataItem.getHour();
         int min = mDataItem.getMin();
 
-
         //preset time in insert Window
         TimePicker tpTimepicker = insertView.findViewById(R.id.insert_timePicker);
         tpTimepicker.setIs24HourView(true);
         tpTimepicker.setHour(hour);
         tpTimepicker.setMinute(min);
-
         //preset date in insert Window
         DatePicker dpDatepicker = insertView.findViewById(R.id.insert_datePicker);
         dpDatepicker.init(year, month, day, null);
-
 
         EditText etInsertWhat = insertView.findViewById(R.id.insert_what);
         EditText etInsertCal = insertView.findViewById(R.id.insert_cal);
@@ -73,7 +70,6 @@ public class EditDialog extends DialogFragment {
             public void onClick(View view) {
                 //update mDataItem with new user input
                 try {
-
                     if(etInsertWhat.getText().toString().isEmpty()){
                         throw new Exception();
                     }

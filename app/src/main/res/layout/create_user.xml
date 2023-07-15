@@ -37,6 +37,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/createUser_TV_height" />
 
+    <NumberPicker
+        android:id="@+id/createUser_NP_target_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="-12dp"
+        android:layout_marginBottom="-12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/createUser_target_weight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/createUser_target_weight" />
+
     <EditText
         android:id="@+id/createUser_ET_Name"
         android:layout_width="0dp"
@@ -98,30 +108,33 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <include
+        android:id="@+id/include2"
         layout="@layout/user_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
 
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/createUser_BT_ok"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rg_createuser_activity"></include>
+        app:layout_constraintTop_toBottomOf="@+id/createUser_NP_target_weight"></include>
 
     <Button
         android:id="@+id/createUser_BT_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/lightblue"
         android:text="@string/ok"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include2"
+        app:layout_constraintVertical_bias="1.0" />
 
     <RadioGroup
         android:id="@+id/rg_createuser_activity"
@@ -163,5 +176,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/rg_createuser_activity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/rg_createuser_activity" />
+
+    <TextView
+        android:id="@+id/createUser_target_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/boarder_round_corner_view"
+        android:text="@string/createUser_target_weight"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rg_createuser_activity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

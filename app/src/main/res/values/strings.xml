@@ -1,22 +1,43 @@
 <resources>
-    <string name="app_name">WeightWatch</string>
-    <string name="menu_profil">Profil</string>
-    <string name="menu_edit">Edit</string>
-    <string name="menu_info">Info</string>
-    <string name="menu_backup">Backup</string>
-    <string name="menu_delete">Delete Data</string>
-    <string name="tollbar_welcome">Welcome </string>
-
     <!--- Reusable Strings -->
     <string name="ok"> OK </string>
     <string name="cancel"> Cancel </string>
     <string name="edit"> Edit </string>
+    <string name="app_name">WeightWatch</string>
+
+
+
+
+    <string name="menu_profil">Profil</string>
+    <string name="menu_info">Info</string>
+    <string name="tollbar_welcome">Welcome </string>
+    <string name="menu_edit">Edit</string>
+
+    <!-- toolbar menu -->
+    <string name="menu_delete">Delete Data</string>
+    <string name="menu_backup">Backup</string>
+
+    <!-- insert Weight -->
+    <string name="insert_weight_title">Pls insert new weight value!</string>
+    <string name="insert_weight_kg">kilo</string>
+    <string name="insert_weight_gram">,  gram </string>
+
+    <!-- Navigation Menu MainActivity -->
+    <string name="backup_information_title">Backup succesfull</string>
+    <string name="backup_information">The Data was writen int the Application dir/Data.</string>
+    <string name="backup_information_fail">The backup failed, pls try again. Check that all needed permissions are given.</string>
+
+
 
     <!--- Overview Strings!-->
     <string name="overview_cal_day">Calories day</string>
     <string name="overview_cal_left">Calories left</string>
     <string name="overview_bmi">BMI:</string>
     <string name="overview_weight">Weight:</string>
+
+    <!--- edit Strings!-->
+    <string name="edit_weight">weight</string>
+    <string name="edit_meals">meals</string>
 
 
     <!--- InsertWindow Strings!-->
@@ -34,19 +55,27 @@
     <string name="createUser_CalUse">Estimated calories \nneeded per day:</string>
     <string name="createUser_CalTarget"></string>
     <string name="createUser_height">Please insert height in cm</string>
+    <string name="createUser_target_weight">Please insert target weight</string>
     <string name="createUser_Age">Please insert Age</string>
     <string name="createUser_Bmi">Your BMI is: </string>
+    <string name="createUser_targetBmi">Your BMI at target weight is: </string>
     <string name="createUser_Man">man</string>
     <string name="createUser_activity_low">low</string>
     <string name="createUser_activity_medium">medium</string>
     <string name="createUser_activity_high">high</string>
     <string name="createUser_activity_label">activity:</string>
     <string name="title_activity_edit">EditActivity</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
+    <!-- Delete Data Dialogbox Strings !-->
+    <string name="delet_dialogbox_warning">Are you sure that you want to delete User and all data? Data can not be recovered.\n
+    (Backup data wont be deleted and must be deleted from Application folder /Data)</string>
+    <string name="delet_dialogbox_title">Delete Data Warning</string>
 
     <!-- Edite Activity Strings !-->
     <string name="editActivity_toolbarMessage">Edit</string>
@@ -60,4 +89,17 @@
                                     Your Bmi is BMI and you should try to get it to 25. \nIf you can
                                     generate a 500Cal deficit a day you will reach you target in around
                                     DAY. \nThis is only a approximate.</string>
+
+    <!--Info Activity Strings-->
+    <string name="info_toolbar_text">Info</string>
+
+    <string name="essay_weight_loss">
+        The Key to Effective Weight Loss: Calorie Deficit and the 16+8 Approach\n\nIn today\'s fast-paced world, weight loss has become a prevailing concern for many individuals seeking to improve their health and well-being. While various methods and strategies exist, two crucial aspects stand out as fundamental contributors to successful weight loss: maintaining a calorie deficit and following the 16+8 intermittent fasting approach.\n\n1. Calorie Deficit:\n\na. Energy balance:\nWeight loss occurs when the body\'s energy expenditure surpasses its energy intake. This prompts the body to utilize stored fat as a source of fuel, ultimately leading to weight loss.
+        \n\nb. Calorie tracking:\nMonitoring daily caloric intake and expenditure is essential for maintaining a calorie deficit. By accurately assessing the nutritional content of food and tracking physical activity, individuals can make informed decisions to ensure a sustained deficit.\n\nc. Balanced nutrition:\nWhile it\'s crucial to create a calorie deficit, it is equally important to maintain a balanced diet. Prioritizing nutrient-dense foods, including lean proteins, whole grains, fruits, and vegetables, can support overall health and provide essential vitamins and minerals while keeping calorie intake in check.\n\n2. 16+8 Intermittent Fasting:
+        \n\na. Enhanced fat burning:\nBy extending the fasting period, the body exhausts its readily available energy from food, prompting the utilization of stored fat for fuel. This promotes fat burning and aids in weight loss.\n\nb. Insulin regulation:\nIntermittent fasting can improve insulin sensitivity, which helps regulate blood sugar levels. This, in turn, reduces the risk of insulin resistance and supports better weight management.\n\nc. Appetite control:\nRestricting the eating window to 8 hours can help regulate hunger hormones and curb excessive snacking. This can result in better portion control, reduced calorie intake, and ultimately contribute to weight loss goals.
+        \n\nAchieving sustainable weight loss requires a multifaceted approach that includes creating a calorie deficit and implementing effective strategies. Maintaining a calorie deficit through mindful calorie tracking and a balanced diet is essential for consistent weight loss. Additionally, the 16+8 intermittent fasting approach offers a beneficial framework for enhancing fat burning, regulating insulin levels, and controlling appetite.\n\nIt is important to note that weight loss journeys are individualized, and what works for one person may not work for another. Consulting a healthcare professional or a registered dietitian is recommended to personalize weight loss plans and ensure overall well-being. With dedication, patience, and a holistic approach, achieving and maintaining a healthy weight becomes an attainable goal for everyone.
+    </string>
+    <string name="update">update</string>
+
+
 </resources>

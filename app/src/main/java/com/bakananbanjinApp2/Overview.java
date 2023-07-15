@@ -1,10 +1,13 @@
 package com.bakananbanjinApp2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +15,8 @@ import androidx.fragment.app.Fragment;
 
 public class Overview extends Fragment {
     private TextView overviewCalLeft;
+    private ImageView ivAddWeight;
+    private ImageView ivAddCal;
     private int intCal;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,9 +33,12 @@ public class Overview extends Fragment {
         TextView overviewCal = view.findViewById(R.id.overview_cal_day);
         TextView overviewWeight = view.findViewById(R.id.overview_weight);
         overviewCalLeft = view.findViewById(R.id.overview_cal_left);
+        ivAddWeight = view.findViewById(R.id.iv_overview_add_weight);
+        ivAddCal = view.findViewById(R.id.iv_overview_add_cal);
+        ivAddCal.setVisibility(View.INVISIBLE);
 
         //calculate BMI and set overview item
-        int userWeight = MainActivity.mPrefs.getInt(MainActivity.WEIGHT, -1);
+        float userWeight = MainActivity.mPrefs.getFloat(MainActivity.WEIGHT, -1f);
         int userHeight = MainActivity.mPrefs.getInt(MainActivity.HEIGHT, -1);
         int userAge = MainActivity.mPrefs.getInt(MainActivity.AGE, -1);
         boolean userIsMan = MainActivity.mPrefs.getBoolean(MainActivity.ISMAN, true);
@@ -43,16 +51,19 @@ public class Overview extends Fragment {
         } else {
             overviewBMI.setBackgroundResource(R.drawable.round_corner_view);
         }
+        overviewBMI.setPadding(0, 0, 0, 10);
         overviewBMI.setText(stringOverviewBMI);
 
         intCal = Engine.calcCalNeed(userIsMan, userHeight, userWeight, userAge, userActivity);
         String stringOverviewCal = getText(R.string.overview_cal_day) + "\n" + intCal;
         overviewCal.setBackgroundResource(R.drawable.round_corner_view);
+        overviewCal.setPadding(0, 0, 0, 10);
         overviewCal.setText(stringOverviewCal);
-
-        int intWeight = MainActivity.mPrefs.getInt(MainActivity.WEIGHT, -1);
+        // Log.i("MPREFS WEIGHT", MainActivity.mPrefs.getAll().toString());
+        int intWeight = Math.round(MainActivity.mPrefs.getFloat(MainActivity.WEIGHT, -1.0f));
         String stringOverviewWeight = getText(R.string.overview_weight) + "\n" + intWeight;
         overviewWeight.setBackgroundResource(R.drawable.round_corner_view);
+        overviewWeight.setPadding(0, 0, 0, 10);
         overviewWeight.setText(stringOverviewWeight);
 
         int intCalLeft = intCal - Engine.calcUsedToday();
@@ -63,6 +74,23 @@ public class Overview extends Fragment {
             overviewCalLeft.setBackgroundResource(R.drawable.round_corner_view);
         }
         overviewCalLeft.setText(stringOverviewCalLeft);
+        overviewCalLeft.setPadding(0, 0, 0, 10);
+
+        ivAddWeight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InsertWeightDialog insertWeightDialog = new InsertWeightDialog();
+                insertWeightDialog.show(getParentFragmentManager(),"");
+                Log.i("ADDWEIGHT", "add weight pressed");
+            }
+        });
+
+        ivAddCal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("ADDCAL", "add cal pressed");
+            }
+        });
 
         return view;
     }

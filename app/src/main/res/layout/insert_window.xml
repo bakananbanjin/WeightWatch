@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/insert_timePicker" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/insert_what"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

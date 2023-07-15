@@ -4,8 +4,10 @@ import static android.util.Log.DEBUG;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -61,10 +64,13 @@ public class MainActivity extends AppCompatActivity {
     public static FragmentManager fragmentManager;
 
 
-    //1.
-    //2.Toolbar Textcolor dynamisch anpassen oder eigenen Theme schreiben
-    //3.Icon fuer toolbar anpassen
+    //1. DB WEIGHT insert read
+    //2. Toolbar Textcolor dynamisch anpassen oder eigenen Theme schreiben
+    //3. Icon fuer toolbar anpassen
     //4. Make own Graph Class
+    //5. Advise in Engine
+    //6. button to add weight and additonal cal
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,11 +116,11 @@ public class MainActivity extends AppCompatActivity {
         }
         try {
            user = new User(mPrefs.getString(USER, "user"),
-                   mPrefs.getInt( WEIGHT, 50),
-                   mPrefs.getInt(HEIGHT, 170),
-                   mPrefs.getInt(AGE, 30),
-                   mPrefs.getInt(TARGETWEIGHT, 0),
                    mPrefs.getBoolean(ISMAN, true),
+                   mPrefs.getInt(AGE, 30),
+                   mPrefs.getInt(HEIGHT, 170),
+                   mPrefs.getFloat( WEIGHT, 50f),
+                   mPrefs.getInt(TARGETWEIGHT, 0),
                    mPrefs.getFloat(ACTIVITYLEVEL, 1.2f));
             textViewToolbar.setText(getString(R.string.tollbar_welcome) + " " + user.getUserName());
         } catch (Exception e){
@@ -161,24 +167,46 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         } else if (selectedId == R.id.menu_Info) {
-
-            Log.i("MENU", "Info selected");
+            Intent intent = new Intent(this, InfoActivity.class);
+            startActivity(intent);
             return true;
         } else if (selectedId == R.id.menu_Edit) {
-            Log.i("MENU", "Edit selected");
             Intent intent = new Intent(this, EditActivity.class);
             startActivity(intent);
             return true;
         } else if (selectedId == R.id.menu_Backup) {
+            if(Engine.backupAll(user)){
+                Toast.makeText(this, getText(R.string.backup_information), Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, getText(R.string.backup_information_fail), Toast.LENGTH_LONG).show();
+            }
+
             Log.i("MENU", "Backup selected");
             return true;
         } else if (selectedId == R.id.menu_Delete) {
-            Engine.deleteData();
-            Engine.getPref();
-            Log.i("MENU", "Delete selected");
-            Intent intent = getIntent();
-            finish();
-            startActivity(intent);
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(getString(R.string.delet_dialogbox_title));
+            builder.setMessage(getString(R.string.delet_dialogbox_warning));
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Engine.deleteData();
+                    Engine.getPref();
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
             return true;
         }
         return false;
@@ -192,6 +220,12 @@ public class MainActivity extends AppCompatActivity {
             fragment.updateOverview();
         }
     }
+
+    public void restartApp() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
     /*
     +
     +  TEST CODE ONLY BELOW
@@ -204,6 +238,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
+
+
 
     //Temp function to test Linechart from git should be deleted or moved
     private void addDataEntry(float value) {
@@ -250,7 +286,6 @@ public class MainActivity extends AppCompatActivity {
         lineChart.getXAxis().setEnabled(true);
         lineChart.getAxisRight().setEnabled(false);
         lineChart.getLegend().setEnabled(true);
-
 
 
         YAxis  yAxis = lineChart.getAxisLeft();

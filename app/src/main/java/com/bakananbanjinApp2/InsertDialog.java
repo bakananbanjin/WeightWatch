@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -26,12 +28,16 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class InsertDialog extends DialogFragment {
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View insertView = inflater.inflate(R.layout.insert_window, null);
+
+        String [] autofillWhatadapter = Engine.getStringAdaptar();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, autofillWhatadapter);
 
         Calendar calendar = Calendar.getInstance();
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -52,7 +58,8 @@ public class InsertDialog extends DialogFragment {
         dpDatepicker.init(year, month, day, null);
 
 
-        EditText etInsertWhat = insertView.findViewById(R.id.insert_what);
+        AutoCompleteTextView etInsertWhat = insertView.findViewById(R.id.insert_what);
+        etInsertWhat.setAdapter(adapter);
         EditText etInsertCal = insertView.findViewById(R.id.insert_cal);
 
         Button btnInsertCancel = insertView.findViewById(R.id.insert_cancel);

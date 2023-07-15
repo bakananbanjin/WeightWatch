@@ -2,6 +2,7 @@ package com.bakananbanjinApp2;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,11 +20,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Calendar;
+
 public class CreateUser extends DialogFragment {
     //default values for age height weight
     private int mAge = 30;
-    private int mWeight = 70;
+    private float mWeight = 70f;
     private int mHeight = 170;
+    private int mTargetWeight = 65;
     private String mUserName = "";
     private int mBmi = -1;
     private int mCalNeed = -1;
@@ -38,6 +42,8 @@ public class CreateUser extends DialogFragment {
     private static float LOWACTIVITY = 1.2f;
     private static float MEDIUMACTIVITY = 1.4f;
     private static float HIGHACTIVITY = 1.6f;
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -48,6 +54,7 @@ public class CreateUser extends DialogFragment {
         //Get Information textview
         TextView informationCalNeed = insertView.findViewById(R.id.userInformation_intCal);
         TextView informationBMI = insertView.findViewById(R.id.userinformationIntBmi);
+        TextView informationTargetBMI = insertView.findViewById((R.id.userInformation_int_target_BMI));
 
 
         EditText etUserName = insertView.findViewById(R.id.createUser_ET_Name);
@@ -65,7 +72,7 @@ public class CreateUser extends DialogFragment {
         NumberPicker npWeight = insertView.findViewById(R.id.createUser_NP_weight);
         npWeight.setMaxValue(200);
         npWeight.setMinValue(30);
-        npWeight.setValue(mWeight);
+        npWeight.setValue((int)mWeight);
 
         NumberPicker npAge = insertView.findViewById(R.id.createUser_NP_age);
         npAge.setMaxValue(100);
@@ -77,19 +84,32 @@ public class CreateUser extends DialogFragment {
         npHeight.setMinValue(100);
         npHeight.setValue(mHeight);
 
+        NumberPicker npTargetWeight = insertView.findViewById(R.id.createUser_NP_target_weight);
+        npTargetWeight.setMaxValue(200);
+        npTargetWeight.setMinValue(40);
+        npTargetWeight.setValue(mTargetWeight);
+
         //GET Button
         Button btOk = insertView.findViewById(R.id.createUser_BT_ok);
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mUserName = etUserName.getText().toString();
-                Engine.createUserPref(mUserName, mMan, mHeight, mWeight, mAge, 0, mActivityLevelmultiplier);
+                Engine.createUserPref(mUserName, mMan, mAge, mHeight, mWeight, mTargetWeight, mActivityLevelmultiplier);
+                Engine.insertWeightFromCreateUser(mWeight, Calendar.getInstance());
                 Engine.getPref();
+
                 //restart Activity to update overview with new data
-                Intent intent = getActivity().getIntent();
+                //restart app to update overlay
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                getActivity().finish();
+
+               /* Intent intent = getActivity().getIntent();
                 getActivity().finish();
                 startActivity(intent);
-                dismiss();
+                dismiss();*/
             }
         });
 
@@ -97,7 +117,7 @@ public class CreateUser extends DialogFragment {
         npWeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                mWeight = npWeight.getValue();
+                mWeight = (float)npWeight.getValue();
                 informationCalNeed.setText(" " + Engine.calcCalNeed(mMan, mHeight, mWeight, mAge, mActivityLevelmultiplier));
                 informationBMI.setText(" " + Engine.calcBMI(mWeight, mHeight));
             }
@@ -121,6 +141,13 @@ public class CreateUser extends DialogFragment {
             }
         });
 
+        npTargetWeight.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                mTargetWeight = npTargetWeight.getValue();
+                informationTargetBMI.setText(" " + Engine.calcBMI(mTargetWeight, mHeight));
+            }
+        });
         switchIsMan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
