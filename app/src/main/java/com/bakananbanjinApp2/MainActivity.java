@@ -24,21 +24,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.components.AxisBase;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,23 +40,22 @@ public class MainActivity extends AppCompatActivity {
     public static final String ISMAN = "isMan";
     public static final String TARGETWEIGHT = "targetWeight";
     public static final String ACTIVITYLEVEL = "activity";
-
-    //tempvariable for linechart from git
-    LineChart lineChart;
     public static SharedPreferences mPrefs;
     public static SharedPreferences.Editor mEditor;
     public static User user;
     private Toolbar toolbar;
     private TextView textViewToolbar;
+    private Graph graph;
     public static FragmentManager fragmentManager;
 
 
-    //1. DB WEIGHT insert read
+    //1.
     //2. Toolbar Textcolor dynamisch anpassen oder eigenen Theme schreiben
     //3. Icon fuer toolbar anpassen
     //4. Make own Graph Class
     //5. Advise in Engine
     //6. button to add weight and additonal cal
+    //7. Update Cal need per day on current weight
 
 
     @Override
@@ -126,31 +112,38 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e){
             Log.e("NOUSER", "no user found");
         }
-
-
-
         /*
-        +
-        + TEST CODE ONLY BELOW
-        +
-         */
-
-        //insert Fragment for graphs and table will be deleted later
-        tempSetLineChart();
-
-        //Testclass needs to be deleted
-
-        DataSet dataSet = new DataSet(this.getApplicationContext());
-        dataSet.query();
-
-        /*
-        +
-        +TESTCODE
-        +
-        +add second fragment for main content
+        * TEST CODE
+        *
         */
 
+        graphQuery();
+    }
 
+    private void graphQuery() {
+        graph = findViewById(R.id.graph);
+        List<Float> xValues = new ArrayList<>();
+        List<Integer> calList = new ArrayList<>();
+        List<Integer> xAValues = new ArrayList<>();
+        List<Integer> yAValues = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            xValues.add((float)i);
+            calList.add(1000 + (int) (Math.random()*1000));
+            xAValues.add(i);
+            yAValues.add(i);
+        }
+
+        //Test Data 8 weight data
+
+        List<Float> weightList = new ArrayList<>();
+        weightList.add(82.0f);
+        weightList.add(82.3f);
+        weightList.add(82.1f);
+        weightList.add(81.7f);
+        weightList.add(81.0f);
+        weightList.add(81.3f);
+        weightList.add(80.8f);
+        graph.setData(xAValues, xValues, weightList, calList, 1500);
     }
 
     @Override
@@ -238,94 +231,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
-
-
-
-    //Temp function to test Linechart from git should be deleted or moved
-    private void addDataEntry(float value) {
-        LineData lineData = lineChart.getData();
-
-        if (lineData != null) {
-            LineDataSet lineDataSet = (LineDataSet) lineData.getDataSetByIndex(0);
-            if (lineDataSet == null) {
-                lineDataSet = new LineDataSet(null, "Weight");
-                lineData.addDataSet(lineDataSet);
-            }
-
-            Entry entry = new Entry(lineDataSet.getEntryCount(), value);
-            lineDataSet.setLineWidth(5f);
-            lineData.addEntry(entry, 0);
-            lineData.notifyDataChanged();
-        }
-    }
-    private class CustomXAxisValueFormatter extends ValueFormatter {
-        private final List<String> labels;
-
-        public CustomXAxisValueFormatter(List<String> labels) {
-            this.labels = labels;
-        }
-
-        @Override
-        public String getAxisLabel(float value, AxisBase axis) {
-            int index = (int) value;
-            if (index >= 0 && index < labels.size()) {
-                return labels.get(index);
-            }
-            return "";
-        }
-    }
-    //needs to be deleted on finishing progarmm
-    private void tempSetLineChart()
-    {
-        lineChart = findViewById(R.id.line_chart);
-        LineData lineData = new LineData();
-
-        lineChart.setData(lineData);
-
-        lineChart.getDescription().setEnabled(false);
-        lineChart.getXAxis().setEnabled(true);
-        lineChart.getAxisRight().setEnabled(false);
-        lineChart.getLegend().setEnabled(true);
-
-
-        YAxis  yAxis = lineChart.getAxisLeft();
-        yAxis.setTextSize(12f);
-        yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-        yAxis.setAxisMaximum(90f);
-        yAxis.setAxisMinimum(80f);
-
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        List<String> customLabels = new ArrayList<>();
-        customLabels.add("Mo 01/12");
-        customLabels.add("Tue 02/12");
-        customLabels.add("Wed 03/12");
-        customLabels.add("Thu 04/12");
-        customLabels.add("Fri 05/12");
-        customLabels.add("Sat 06/12");
-        customLabels.add("Sun 07/12");
-
-
-        xAxis.setValueFormatter(new CustomXAxisValueFormatter(customLabels));
-
-
-        Legend legend = lineChart.getLegend();
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        legend.setDrawInside(false);
-
-        addDataEntry(85f);
-        addDataEntry(83f);
-        addDataEntry(82f);
-        addDataEntry(84f);
-        addDataEntry(85f);
-        addDataEntry(83f);
-        addDataEntry(82f);
-        addDataEntry(84f);
-
-        lineChart.invalidate();
-    }
-
-
 }

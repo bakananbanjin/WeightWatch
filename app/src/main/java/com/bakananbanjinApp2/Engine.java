@@ -188,7 +188,6 @@ public class Engine {
             }
         }
     }
-
     public static boolean insertIntoDBFromFiles(){
 
         List<DataItem> dataItemList = DataReaderWriter.readFileData(engine.mContext);
@@ -214,11 +213,9 @@ public class Engine {
 
         return true;
     }
-
     private static void createUserPref(User user) {
         createUserPref(user.getUserName(), user.ismIsMan(), user.getUserAge(), user.getUserHeight(), user.getUserWeight(), user.getUserTargetWeight(), user.getUserActivity());
     }
-
     public static boolean updateWeight(int id, float weight, Calendar calendar) {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
