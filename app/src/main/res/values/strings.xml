@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--- Reusable Strings -->
     <string name="ok"> OK </string>
     <string name="cancel"> Cancel </string>
@@ -26,6 +26,21 @@
     <string name="backup_information_title">Backup succesfull</string>
     <string name="backup_information">The Data was writen int the Application dir/Data.</string>
     <string name="backup_information_fail">The backup failed, pls try again. Check that all needed permissions are given.</string>
+
+    <!--- Graph Strings!-->
+    <string name="graph_legend_weight">WEIGHT</string>
+    <string name="graph_legend_base_cal">DAILY CAL. BURN</string>
+
+    <!--- Weekplaner Strings !-->
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="weekplaner_time">time</string>
+    <string name="planner_time_date">Time/Date</string>
 
 
 

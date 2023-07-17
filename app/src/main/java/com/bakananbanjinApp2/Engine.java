@@ -2,11 +2,13 @@ package com.bakananbanjinApp2;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.icu.text.DateFormat;
+import android.icu.text.SimpleDateFormat;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Engine {
@@ -157,7 +159,7 @@ public class Engine {
         }
     }
     public static boolean insertWeightFromCreateUser(float weight, Calendar calendar) {
-        Cursor cursor = mDB.getAllWeight();
+        Cursor cursor = mDB.selectAllWeight();
         //WEIGHT Table is not empty use date from first entry for the new weight the date the user was created
         if (cursor != null && cursor.moveToFirst()) {
             cursor.moveToFirst();
@@ -231,5 +233,48 @@ public class Engine {
             Log.e("INSERT WEIGHT", "error insert weight");
             return false;
         }
+    }
+    public static void initGraphFromDB(){
+
+        //how many days (items) will be shown (xAxis Labels) 7 = one week
+        int graphDays = 7;
+        //List for last graphDays dates
+        List<YearMonthDay> lastDaysList = new ArrayList<>();
+        lastDaysList = getLastdays(graphDays);
+        //list for all weights of the last graphDays
+        List<Float> weightList = new ArrayList<>();
+        //List for all call used of the last graphDays
+        List<Float> calList = new ArrayList<>();
+        //List for xAxisLabel
+        List<String> xAxisLabelList = new ArrayList<>();
+
+        for (YearMonthDay i : lastDaysList){
+            xAxisLabelList.add(i.toString());
+            calList.add(mDB.calculateSumByDate(2023, 6, 16, DataSetDB.DB_TABLE_NAME, DataSetDB.DB_ROW_CAL));
+            weightList.add(mDB.calculateSumByDate(2023, 6, 16, DataSetDB.DB_TABLE_NAME, DataSetDB.DB_ROW_CAL));
+        }
+        //MainActivity.graph.setData(xAxisLabelList, weightList, calList, 2000);
+    }
+    public static List<YearMonthDay> getLastdays(int dayCount){
+        List<YearMonthDay> yearMonthDay = new ArrayList();
+        Calendar calendar = Calendar.getInstance();
+
+        // Create a list to store the dates of the last 7 days
+        List<String> last7Days = new ArrayList<>();
+
+        // Subtract dayCount days from the current date
+        calendar.add(Calendar.DAY_OF_YEAR, -dayCount);
+
+        //iterate through days and insert new value into retun object
+        for (int i = 0; i <= dayCount; i++) {
+            yearMonthDay.add(new YearMonthDay(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)));
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            //Log.i("GETLASTDAYS", yearMonthDay.get(i).toString());
+        }
+        return yearMonthDay;
+    }
+
+    public static int calcCalNeed(User user) {
+       return calcCalNeed(user.ismIsMan(), user.getUserHeight(), user.getUserWeight(), user.getUserAge(), user.getUserActivity());
     }
 }

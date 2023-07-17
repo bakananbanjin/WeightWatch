@@ -64,6 +64,7 @@ public class InsertWeightDialog extends DialogFragment{
                     int day = calendar.get(Calendar.DAY_OF_MONTH);
                     int hour = calendar.get(Calendar.HOUR_OF_DAY);
                     int minute = calendar.get(Calendar.MINUTE);
+
                     Engine.mDB.updatetWeightData(mDataItem.getId(), weighttoinsert, year, month, day, hour, minute);
                     //workaround because adapter wouldnt update view should be corrected
                     EditDateFrag.tv_edit_weight.performClick();
@@ -108,6 +109,9 @@ public class InsertWeightDialog extends DialogFragment{
         npInsertWeightGram = insertView.findViewById(R.id.np_insert_weight_floatvalue);
         dpInsertWeightDate = insertView.findViewById(R.id.dp_insert_weight);
         btInsertWeightOk = insertView.findViewById(R.id.insert_weight_ok);
+
+        dpInsertWeightDate.updateDate( year, month, day);
+
         btInsertWeightOk.setText(R.string.update);
 
         npInsertWeightGram.setMaxValue(9);

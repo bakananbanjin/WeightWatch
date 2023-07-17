@@ -45,7 +45,7 @@ public class EditDateFrag extends Fragment implements RecyclerViewInterface{
               dataItemView = false;
               weightView(mView);
               reloadFragment();
-              Log.i("TVEDITWEIGHT", "weight pressed");
+              //Log.i("TVEDITWEIGHT", "weight pressed");
             }
         });
         tv_edit_meals.setOnClickListener(new View.OnClickListener() {

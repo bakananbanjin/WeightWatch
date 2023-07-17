@@ -14,6 +14,13 @@ import java.util.Calendar;
 import java.util.List;
 
 public class DataSetDB {
+    public static final int WEIGHTTABELID = 0;
+    public static final int WEIGHTTABELWEIGHT = 1;
+    public static final int WEIGHTTABELYEAR = 2;
+    public static final int WEIGHTTABELMONTH = 3;
+    public static final int WEIGHTTABELDAY= 4;
+    public static final int WEIGHTTABELHOUR = 5;
+    public static final int WEIGHTTABELMIN= 6;
 
     private static final String DATABASE_NAME = "Data.db";
     private static final int DATABASE_VERSION = 1;
@@ -241,13 +248,14 @@ public class DataSetDB {
         if (!mDB.isOpen()) {
             mDB = mDBHelper.getWritableDatabase();
         }
-        //String query = "SELECT * FROM " + DB_TABLE_NAME_WEIGHT;
+        String orderBy = DB_ROW_YEAR + " DESC," + DB_ROW_MONTH + " DESC," + DB_ROW_DAY + " DESC,"
+                + DB_ROW_HOUR + " DESC," + DB_ROW_MIN + " DESC";
         Cursor cursor = mDB.query(DB_TABLE_NAME_WEIGHT, null, null, null, null, null, null);
         return cursor;
     }
 
     public List<Weight> selectAllWeightList(){
-        Cursor cursor = selectAllWeight();
+        Cursor cursor = getAllWeightOrderdByDate();
         cursor.moveToFirst();
         List<Weight> tempList2 = new ArrayList<>();
         for (int i = 0; i < cursor.getCount(); i++) {
@@ -373,9 +381,44 @@ public class DataSetDB {
 
         mDB.insert(DB_TABLE_NAME_WEIGHT, null, values);
     }
-    public Cursor getAllWeight(){
-        String query = "SELECT * FROM " + DB_TABLE_NAME_WEIGHT;
-        return mDB.rawQuery(query, null, null);
+    public Cursor getAllWeightOrderdByDate(){
+        String orderBy = DB_ROW_YEAR + " DESC," + DB_ROW_MONTH + " DESC," + DB_ROW_DAY + " DESC,"
+                + DB_ROW_HOUR + " DESC," + DB_ROW_MIN + " DESC";
+
+        return mDB.query(DB_TABLE_NAME_WEIGHT, null, null, null, null, null, orderBy);
+    }
+
+    public float calculateSumByDate(int year, int month, int day, String tableName, String sumFiled) {
+        if (!mDB.isOpen()) {
+            mDB = mDBHelper.getWritableDatabase();
+        }
+        String query = "SELECT SUM(" + sumFiled + ") FROM " + tableName + " WHERE year = ? AND month = ? AND day = ?";
+        String[] selectionArgs = {String.valueOf(year), String.valueOf(month), String.valueOf(day)};
+        Cursor cursor = mDB.rawQuery(query, selectionArgs);
+
+        float sum = 0;
+        if(true){
+            if (cursor.moveToFirst()) {
+                sum = cursor.getFloat(0);
+            }
+        }
+        return sum;
+    }
+    public float calculateAvgByDate(int year, int month, int day, String tableName, String sumFiled) {
+        if (!mDB.isOpen()) {
+            mDB = mDBHelper.getWritableDatabase();
+        }
+        String query = "SELECT AVG(" + sumFiled + ") FROM " + tableName + " WHERE year = ? AND month = ? AND day = ?";
+        String[] selectionArgs = {String.valueOf(year), String.valueOf(month), String.valueOf(day)};
+        Cursor cursor = mDB.rawQuery(query, selectionArgs);
+
+        float sum = 0;
+        if(true){
+            if (cursor.moveToFirst()) {
+                sum = cursor.getFloat(0);
+            }
+        }
+        return sum;
     }
 
 

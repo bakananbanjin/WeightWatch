@@ -1,13 +1,15 @@
 package com.bakananbanjinApp2;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.icu.text.DecimalFormat;
 import android.util.AttributeSet;
-import android.util.Log;
+;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -16,20 +18,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+
 public class Graph extends View {
     private static final float YAXISLABELSETPS = 10f;
     private static final int NUMBEROFLABELS = 10;
+    private static final int FIRSTCOLUMN = 1;
+    private static final int LEGENDWIDTH = 150;
+    private static final int LEGENDEHEIGHT = 75;
+    private static final int MINYVALUE = 30;
     private static float XAXISOFSET = 40f;
-    private static float YAXISOFSET = 30F;
-    private static float YAXISSPACEBOT = 1f;
-    private static float YAXISSPACETOP = 0.5f;
-
+    private static float YAXISOFSET = 20f;
+    private static float YAXISSPACEBOT = 2.00f;
+    private static float YAXISSPACETOP = 2.00f;
     private float yAxisLabelDifference = 1f;
-    private List<Float> xValues;
+    private float yAxisMinValue;
     private List<Float> yValues;
-    private List<Integer> xAxisValues;
+    private List<String> xAxisValues;
     private List<Float> yAxisValues;
-    private List<Integer> columnValues;
+    private List<Float> columnValues;
+    private List<Double> xTrendLine;
+    private List<Double> yTrendLine;
     private int columnBase;
     private int lineColor;
     private float lineWidth;
@@ -38,6 +48,10 @@ public class Graph extends View {
     private Paint guidelinePaint;
     private Paint columnPaint;
     private Paint borderPaint;
+    private Paint dottedLinePaint;
+    private Paint linePaint;
+    private Paint legendPaint;
+    private Paint legendLabelPaint;
 
 
     public Graph(Context context) {
@@ -50,12 +64,14 @@ public class Graph extends View {
     }
     private void init() {
         // Initialize member variables and perform any setup tasks
-        xValues = new ArrayList<>();
         yValues = new ArrayList<>();
 
         xAxisValues = new ArrayList<>();
         yAxisValues = new ArrayList<>();
         columnValues = new ArrayList<>();
+
+        xTrendLine = new ArrayList<>();
+        yTrendLine = new ArrayList<>();
 
         lineColor = Color.BLUE;
         lineWidth = 4f;
@@ -70,6 +86,11 @@ public class Graph extends View {
         labelPaint.setTextSize(16f);
         labelPaint.setTextAlign(Paint.Align.CENTER);
 
+        legendLabelPaint = new Paint();
+        legendLabelPaint.setColor(Color.BLACK);
+        legendLabelPaint.setTextSize(16f);
+        legendLabelPaint.setTextAlign(Paint.Align.LEFT);
+
         guidelinePaint = new Paint();
         guidelinePaint.setColor(Color.GRAY);
         guidelinePaint.setAlpha(50);
@@ -81,28 +102,27 @@ public class Graph extends View {
         borderPaint = new Paint();
         borderPaint.setColor(Color.BLACK);
 
+        dottedLinePaint = new Paint();
+        dottedLinePaint.setColor(Color.RED);
+        dottedLinePaint.setStyle(Paint.Style.STROKE);
+        dottedLinePaint.setStrokeWidth(4);
+        dottedLinePaint.setPathEffect(new DashPathEffect(new float[]{5, 5}, 0));
 
+        legendPaint = new Paint();
+        legendPaint.setColor(Color.WHITE);
+
+        linePaint = new Paint();
+        linePaint.setColor(lineColor);
+        linePaint.setStrokeWidth(lineWidth);
     }
-    public void setData(List <Integer> xAxisValues, List<Float> xValues, List<Float> yValues, List<Integer> columnValues, int columnBaseValue) {
+    public void setData(List <String> xAxisValues, List<Float> yValue, List<Float> columnValues, int columnBaseValue) {
         this.xAxisValues = xAxisValues;
-        this.yAxisValues = calcyAxis(yValues);
-
+        this.yAxisValues = calcyAxis(yValue);
         this.columnValues = columnValues;
         this.columnBase = columnBaseValue;
-
-        this.xValues = xValues;
-        this.yValues = calcyValues(yValues);
+        this.yValues = yValue;
 
         invalidate(); // Trigger redraw of the view
-    }
-    private List<Float> calcyValues(List<Float> yValues) {
-        //go through list and adjust values for new yaxis
-        float yMin = yAxisValues.get(0);
-        List <Float> transformedYValues = new ArrayList<>();
-        for(int i = 0; i < yValues.size(); i++){
-            transformedYValues.add(yValues.get(i) - yMin);
-        }
-        return transformedYValues;
     }
     private List<Float> calcyAxis(List<Float> weightList){
         //how many steps should have yAxis
@@ -114,41 +134,28 @@ public class Graph extends View {
             // Handle empty list case
             return null;
         }
-        float maxValue = weightList.get(0);
-        float minValue = weightList.get(0);
+        float maxValue = getMaxFromList(weightList);
+        float minValue = getMinFromList(weightList);
 
-        for (float value : weightList) {
-            if (value > maxValue) {
-                maxValue = value;
-            }
-            if (value < minValue) {
-                minValue = value;
-            }
+        //yAxis Startpoint minVale min weight min yaxis
+        if(minValue < MINYVALUE){
+            yAxisMinValue = maxValue * 0.9f;
+        } else {
+
+            yAxisMinValue = minValue - YAXISSPACEBOT;
         }
-
-        //yAxis Startpoint minVale - 2 kg (can be adjusted)
-        float startValue = minValue - YAXISSPACEBOT;
-        //yAxis endvalue maxVale + 2 kg
+        //yAxis endvalue maxVale
         float endValue = maxValue + YAXISSPACETOP;
         //yAxis range
-        float differenceStartEnd = endValue - startValue;
+        float differenceStartEnd = endValue - yAxisMinValue;
         //yAxis step
         yAxisLabelDifference = differenceStartEnd / steps;
         //generate yAxis label List
         for(int i = 0; i < steps; i++){
-            float addValue = startValue + (i * yAxisLabelDifference);
+            float addValue = yAxisMinValue + (i * yAxisLabelDifference);
             yAxis.add(addValue);
         }
-
         return yAxis;
-    }
-    public void setLineColor(int color) {
-        lineColor = color;
-        invalidate();
-    }
-    public void setLineWidth(float width) {
-        lineWidth = width;
-        invalidate();
     }
     private String floatToString(float value){
         DecimalFormat decimalFormat = new DecimalFormat("#.1");
@@ -156,28 +163,52 @@ public class Graph extends View {
     }
     // Method to interpolate color based on value within a range
     private int interpolateColor(int startColor, int endColor, float minValue, float maxValue, float value) {
-        float ratio = (value - minValue) / (maxValue - minValue);
+        float trueValue = value;
+        if(value > maxValue){
+            trueValue = maxValue;
+        } else if( value < minValue) {
+            trueValue = minValue;
+        }
+        float ratio = (trueValue - minValue) / (maxValue - minValue);
         int red = (int) (Color.red(startColor) * (1 - ratio) + Color.red(endColor) * ratio);
         int green = (int) (Color.green(startColor) * (1 - ratio) + Color.green(endColor) * ratio);
         int blue = (int) (Color.blue(startColor) * (1 - ratio) + Color.blue(endColor) * ratio);
         return Color.rgb(red, green, blue);
     }
+    private float getMinFromList(List<Float> yValues) {
+        float min = Float.MAX_VALUE;
+        for (float value : yValues) {
+            if (value < min) {
+                min = value;
+            }
+        }
+        return min;
+    }
+    private float getMaxFromList(List<Float> yValues) {
+        float max = 1f;
+        for (float value : yValues) {
+            if (value > max) {
+                max = value;
+            }
+        }
+        return max;
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
         //if no Grid data is avaible return
         if(yAxisValues.size() == 0 || xAxisValues.size() == 0){
             return;
         }
-
         drawGrid(canvas);
-        drawLineGraph(canvas);
         drawColumns(canvas);
+        drawLineGraph(canvas);
+        drawLegend(canvas);
+
     }
     private void drawGrid(Canvas canvas){
-        //set yAxis max and min Values
-        float maxYValue = yAxisValues.get(yAxisValues.size() - 1);
-        float minYValue = yAxisValues.get(0);
+
         // Set the desired number of labels for now fixed soon to be changed
         int numOfLabels = NUMBEROFLABELS;
         //how far from label to label
@@ -226,20 +257,23 @@ public class Graph extends View {
                     getHeight()-YAXISOFSET, guidelinePaint);
         }
 
+        // Draw labels x-axis
         for (int i = 0; i < xAxisValues.size(); i++) {
             float xPos = XAXISOFSET + (i * xStepLabel);
-            float yPos = getHeight() ; // Adjust label position below x-axis
-            Integer temp =  xAxisValues.get(i);
-            String label = String.valueOf(temp);
+            float yPos = getHeight() ;
+            String label = xAxisValues.get(i);
             canvas.drawText(label, xPos, yPos, labelPaint);
         }
 
         // Draw labels on y-axis
-        float yValueStep = (maxYValue - minYValue) / (numOfLabels - 1);
+        //set yAxis max and min Values
+        float maxYValue = yAxisValues.get(yAxisValues.size()-1);
+
+        float yValueStep = (maxYValue - yAxisMinValue) / (numOfLabels - 1);
         for (int i = 1; i < numOfLabels; i++) {
             float xPos = 20f; // Adjust the x-position of the label
             float yPos = (getHeight() - YAXISOFSET) - (i * yStepLabel); // Adjust the y-position of the label
-            float labelValue = minYValue + (i * yValueStep);
+            float labelValue = yAxisMinValue + (i * yValueStep);
             DecimalFormat decimalFormat = new DecimalFormat("#.#");
             String labelText = decimalFormat.format(labelValue); // Format the label value as desired
             canvas.drawText(labelText, xPos, yPos, labelPaint);
@@ -254,18 +288,25 @@ public class Graph extends View {
         //xAxis values
         float xStep = (getWidth() - (XAXISOFSET * 2)) / (xAxisValues.size() - 1);
         //yAxis Value must be adjusted the step size. what is the value between 2 labels
-        float yStep = ((getHeight() - (YAXISOFSET * 2)) / NUMBEROFLABELS) / yAxisLabelDifference;
-
+        float yStep = ((float)(getHeight() - (YAXISOFSET * 2)) / (float)NUMBEROFLABELS) / yAxisLabelDifference;
         for (int i = 1; i < yValues.size(); i++) {
-            float prevX = XAXISOFSET + (i - 1) * xStep;
-            float prevY = (getHeight() - YAXISOFSET) - (yValues.get(i - 1) * yStep);
-            float curX = XAXISOFSET + i * xStep;
-            float curY = (getHeight() - YAXISOFSET) - (yValues.get(i) * yStep);
+            if(true) {
+                float prevX = XAXISOFSET + (i - 1) * xStep;
+                float prevY = getHeight() - YAXISOFSET;
+                if(yValues.get(i-1) > MINYVALUE) {
+                    prevY = (getHeight() - YAXISOFSET) - ((yValues.get(i - 1) - yAxisMinValue) * yStep);
+                }
+                float curX = XAXISOFSET + i * xStep;
+                float curY = (getHeight() - YAXISOFSET);
+                if(yValues.get(i) > MINYVALUE) {
+                    curY = (getHeight() - YAXISOFSET) - ((yValues.get(i) - yAxisMinValue) * yStep);
+                }
 
-            canvas.drawLine(prevX, prevY, curX, curY, linePaint);
+                canvas.drawLine(prevX, prevY, curX, curY, linePaint);
 
-            // Draw the value text
-            canvas.drawText(floatToString(yValues.get(i) + yAxisValues.get(0)), curX, curY - 10, labelPaint);
+                // Draw the value text
+                canvas.drawText(floatToString(yValues.get(i) ), curX, curY - 10, labelPaint);
+            }
         }
     }
     private void drawColumns(Canvas canvas){
@@ -279,7 +320,7 @@ public class Graph extends View {
         float heightRatioColumn = (getHeight() - (YAXISOFSET * 2))/ (columnBase * 4);
 
         // Draw the columns
-        for (int i = 0; i < numOfColumns; i++) {
+        for (int i = FIRSTCOLUMN; i < numOfColumns; i++) {
             // Calculate the color based on the value
             // from green to read
             int startColor = Color.GREEN;
@@ -292,6 +333,7 @@ public class Graph extends View {
 
             // Set the color for the column
             columnPaint.setColor(color);
+            columnPaint.setAlpha(75);
 
             float left = i * columnWidth + (XAXISOFSET - (columnWidth/2)) + (columnWidth/6);
             float top = (getHeight() - YAXISOFSET) - (columnValues.get(i) * heightRatioColumn);
@@ -315,6 +357,66 @@ public class Graph extends View {
             float labelY = top - 10f;
             canvas.drawText(label, labelX, labelY, labelPaint);
         }
+        float x1 = XAXISOFSET;
+        float y1 = (getHeight() - YAXISOFSET) - (columnBase * heightRatioColumn);
+        float x2 = getWidth() - XAXISOFSET;
+        float y2 = y1;
+        canvas.drawLine(x1, y1, x2, y2, dottedLinePaint);
+    }
+    private void drawLegend(Canvas canvas){
+
+
+        String labelWeight = getResources().getString(R.string.graph_legend_weight);
+        String labelCalBurn = getResources().getString(R.string.graph_legend_base_cal);
+
+        int lineSpaceTopBot = 25;
+        int symbolLength = 20;
+        int textCorrectionX =  symbolLength;
+        int textCorrectionY =  lineSpaceTopBot;
+
+        //calculate legend position
+        float xStart = getWidth() - LEGENDWIDTH - XAXISOFSET;
+        float yStart = 0f;
+        float xEnd = xStart + LEGENDWIDTH;
+        float yEnd = yStart + LEGENDEHEIGHT;
+
+        //draw withe rectangle behind the label
+        canvas.drawRect(xStart, yStart, xEnd, yEnd, legendPaint);
+
+        //draw symbols and labels
+        canvas.drawLine(xStart, yStart + lineSpaceTopBot, xStart + symbolLength, yStart + lineSpaceTopBot, linePaint);
+        canvas.drawLine(xStart, yStart + lineSpaceTopBot * 2, xStart + symbolLength, yStart + lineSpaceTopBot * 2, dottedLinePaint);
+        canvas.drawText(labelWeight, xStart + textCorrectionX, yStart  + textCorrectionY + 5, legendLabelPaint);
+        canvas.drawText(labelCalBurn, xStart + textCorrectionX, yStart  + textCorrectionY * 2 + 5, legendLabelPaint);
+
+    }
+
+    public Bitmap createBitmapFromCanvas() {
+
+        // Get the default display
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+
+        // Get the screen width in pixels
+        int screenWidth = displayMetrics.widthPixels;
+        // Create bitmap
+        Bitmap bitmap = Bitmap.createBitmap(screenWidth, 1500, Bitmap.Config.ARGB_8888);
+        // Create a new canvas with the bitmap
+        Canvas bitmapCanvas = new Canvas(bitmap);
+
+        if(yAxisValues.size() == 0 || xAxisValues.size() == 0){
+            return null;
+        }
+        drawGrid(bitmapCanvas);
+        drawColumns(bitmapCanvas);
+        drawLineGraph(bitmapCanvas);
+        drawLegend(bitmapCanvas);
+
+        // Draw the original canvas onto the bitmap canvas
+        bitmapCanvas.drawBitmap(bitmap, 0, 0, null);
+
+        return bitmap;
     }
 
 }
