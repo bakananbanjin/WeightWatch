@@ -2,6 +2,7 @@ package com.bakananbanjinApp2;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.util.Log;
@@ -273,8 +274,86 @@ public class Engine {
         }
         return yearMonthDay;
     }
-
     public static int calcCalNeed(User user) {
        return calcCalNeed(user.ismIsMan(), user.getUserHeight(), user.getUserWeight(), user.getUserAge(), user.getUserActivity());
+    }
+    public static List<DataItem> getDataItemNewerThanSorted(int dayCount){
+        //retrive all items sorted by date time
+        //add to list items untill date is reached
+        //break loop
+        List<DataItem> returnDataItemList = new ArrayList<>();
+        Cursor cursor = mDB.selectAll();
+        if(cursor.getCount() < 1){
+            return null;
+        }
+        cursor.moveToFirst();
+        int dayOfMonth = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        int monthOfYear = Calendar.getInstance().get(Calendar.MONTH);
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        //day is smaller then day the we also have to go a month back
+        if((dayOfMonth - dayCount) < dayCount){
+            //get all values from current month
+            while(monthOfYear == cursor.getInt(4)){
+                returnDataItemList.add(new DataItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
+                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
+                        cursor.getInt(7)));
+                if(!cursor.moveToNext()){
+                    break;
+                }
+            }
+            if(monthOfYear == 0){
+                //day is smaller then daycount and we are in jan last year
+                //dec has always 31days calc how much days we need from dec
+                int daysNeededInDec = 31 + (dayOfMonth - dayCount);
+                while(daysNeededInDec < cursor.getInt(5)){
+                    returnDataItemList.add(new DataItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
+                            cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
+                            cursor.getInt(7)));
+                    if(!cursor.moveToNext()){
+                        break;
+                    }
+                }
+                return returnDataItemList;
+            }
+            //we are not in jan so we need to get how much days the month has
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.MONTH, monthOfYear - 1);
+            int numberOfDaysInLastMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+            int daysNeeded = numberOfDaysInLastMonth + (dayOfMonth - dayCount);
+            while(daysNeeded < cursor.getInt(5)){
+                returnDataItemList.add(new DataItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
+                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
+                        cursor.getInt(7)));
+                if(!cursor.moveToNext()){
+                    break;
+                }
+            }
+            return returnDataItemList;
+        }
+        //day of month is > daycount
+        while((dayOfMonth - dayCount) <= cursor.getInt(5)){
+            returnDataItemList.add(new DataItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
+                    cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
+                    cursor.getInt(7)));
+            if(!cursor.moveToNext()){
+                break;
+            }
+        }
+
+
+        return returnDataItemList;
+    }
+    public static int interpolateColor(int startColor, int endColor, float minValue, float maxValue, float value) {
+        float trueValue = value;
+        if(value > maxValue){
+            trueValue = maxValue;
+        } else if( value < minValue) {
+            trueValue = minValue;
+        }
+        float ratio = (trueValue - minValue) / (maxValue - minValue);
+        int red = (int) (Color.red(startColor) * (1 - ratio) + Color.red(endColor) * ratio);
+        int green = (int) (Color.green(startColor) * (1 - ratio) + Color.green(endColor) * ratio);
+        int blue = (int) (Color.blue(startColor) * (1 - ratio) + Color.blue(endColor) * ratio);
+        return Color.rgb(red, green, blue);
     }
 }

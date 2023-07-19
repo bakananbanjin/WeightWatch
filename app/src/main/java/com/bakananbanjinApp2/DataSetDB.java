@@ -9,6 +9,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -123,18 +125,6 @@ public class DataSetDB {
         }
         return cursor;
     }
-
-    public Cursor selectByDate(int year, int month, int day) {
-        if (!mDB.isOpen()) {
-            mDB = mDBHelper.getWritableDatabase();
-        }
-        String selectByDatequery = "SELECT *  from " + DB_TABLE_NAME + " WHERE "
-                + DB_ROW_YEAR + " = " + year + " AND "
-                + DB_ROW_MONTH + " = " + month + " AND "
-                + DB_ROW_DAY + " = " + day + ";";
-        return mDB.rawQuery(selectByDatequery, null);
-    }
-
     public List<DataItem> selectByDateDataItem(int year, int month, int day) {
         if (!mDB.isOpen()) {
             mDB = mDBHelper.getWritableDatabase();
@@ -155,21 +145,10 @@ public class DataSetDB {
         return tempList;
     }
 
-    public Cursor SelectByDateTime(int year, int month, int day, int hours, int min) {
-        if (!mDB.isOpen()) {
-            mDB = mDBHelper.getWritableDatabase();
-        }
-        String selectByDateTimequery = "SELECT *  from " + DB_TABLE_NAME + " WHERE "
-                + DB_ROW_YEAR + " = " + year + " AND "
-                + DB_ROW_MONTH + " = " + month + " AND "
-                + DB_ROW_DAY + " = " + day
-                + DB_ROW_HOUR + " = " + hours + " AND "
-                + DB_ROW_MIN + " = " + min + ";";
-        Cursor cursor = mDB.rawQuery(selectByDateTimequery, null);
+    public List<DataItem> getLast7DaysValuesList() {
 
-        return cursor;
+        return null;
     }
-
     //not implemented yet
     public boolean update() {
         if (!mDB.isOpen()) {
@@ -228,7 +207,6 @@ public class DataSetDB {
         }
         return tempList2;
     }
-
     //TEST METHODE TO BE DELETED
     public void drop() {
         mDB.execSQL("DROP TABLE IF EXISTS " + DB_TABLE_NAME);
@@ -243,7 +221,6 @@ public class DataSetDB {
                 + DB_ROW_HOUR + " integer not null, "
                 + DB_ROW_MIN + " integer not null);");
     }
-
     public Cursor selectAllWeight() {
         if (!mDB.isOpen()) {
             mDB = mDBHelper.getWritableDatabase();
@@ -253,7 +230,6 @@ public class DataSetDB {
         Cursor cursor = mDB.query(DB_TABLE_NAME_WEIGHT, null, null, null, null, null, null);
         return cursor;
     }
-
     public List<Weight> selectAllWeightList(){
         Cursor cursor = getAllWeightOrderdByDate();
         cursor.moveToFirst();
@@ -273,7 +249,6 @@ public class DataSetDB {
 
         return cursor;
     }
-
     public void insertWeightList(List<Weight> weightList) {
         for(Weight i : weightList){
             insertWeight(i);
@@ -303,7 +278,6 @@ public class DataSetDB {
         Log.i("INSERT INTO DB", insertquery);
         mDB.execSQL(insertquery);
     }
-
     public void updatetWeightData(int id, float weight, int year, int month, int day, int hour, int minute) {
         String updateQuery = "UPDATE " + DB_TABLE_NAME_WEIGHT + " SET "
                 + TABLEWEIGHT_ROW_WEIGHT + " = " + weight + ", "
@@ -387,7 +361,6 @@ public class DataSetDB {
 
         return mDB.query(DB_TABLE_NAME_WEIGHT, null, null, null, null, null, orderBy);
     }
-
     public float calculateSumByDate(int year, int month, int day, String tableName, String sumFiled) {
         if (!mDB.isOpen()) {
             mDB = mDBHelper.getWritableDatabase();

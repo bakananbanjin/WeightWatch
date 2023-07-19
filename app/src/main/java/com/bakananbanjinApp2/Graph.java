@@ -22,6 +22,8 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 public class Graph extends View {
+
+
     private static final float YAXISLABELSETPS = 10f;
     private static final int NUMBEROFLABELS = 10;
     private static final int FIRSTCOLUMN = 1;
@@ -141,7 +143,6 @@ public class Graph extends View {
         if(minValue < MINYVALUE){
             yAxisMinValue = maxValue * 0.9f;
         } else {
-
             yAxisMinValue = minValue - YAXISSPACEBOT;
         }
         //yAxis endvalue maxVale
@@ -161,24 +162,10 @@ public class Graph extends View {
         DecimalFormat decimalFormat = new DecimalFormat("#.1");
         return decimalFormat.format(value);
     }
-    // Method to interpolate color based on value within a range
-    private int interpolateColor(int startColor, int endColor, float minValue, float maxValue, float value) {
-        float trueValue = value;
-        if(value > maxValue){
-            trueValue = maxValue;
-        } else if( value < minValue) {
-            trueValue = minValue;
-        }
-        float ratio = (trueValue - minValue) / (maxValue - minValue);
-        int red = (int) (Color.red(startColor) * (1 - ratio) + Color.red(endColor) * ratio);
-        int green = (int) (Color.green(startColor) * (1 - ratio) + Color.green(endColor) * ratio);
-        int blue = (int) (Color.blue(startColor) * (1 - ratio) + Color.blue(endColor) * ratio);
-        return Color.rgb(red, green, blue);
-    }
     private float getMinFromList(List<Float> yValues) {
         float min = Float.MAX_VALUE;
         for (float value : yValues) {
-            if (value < min) {
+            if (value < min && value > 0) {
                 min = value;
             }
         }
@@ -217,7 +204,7 @@ public class Graph extends View {
 
         // Set the number of guidelines should be the same number as labels
         int numOfHorizontalGuidelines = NUMBEROFLABELS;
-        int numOfVerticalGuidelines = NUMBEROFLABELS;
+        int numOfVerticalGuidelines = xAxisValues.size();
 
         // Draw x and y axes
         float startX = XAXISOFSET;
@@ -294,7 +281,7 @@ public class Graph extends View {
                 float prevX = XAXISOFSET + (i - 1) * xStep;
                 float prevY = getHeight() - YAXISOFSET;
                 if(yValues.get(i-1) > MINYVALUE) {
-                    prevY = (getHeight() - YAXISOFSET) - ((yValues.get(i - 1) - yAxisMinValue) * yStep);
+                    prevY = prevY - ((yValues.get(i - 1) - yAxisMinValue) * yStep);
                 }
                 float curX = XAXISOFSET + i * xStep;
                 float curY = (getHeight() - YAXISOFSET);
@@ -329,7 +316,7 @@ public class Graph extends View {
             float minValue = columnBase / 2f;
             float maxValue = 1.5f * columnBase;
 
-            int color = interpolateColor(startColor, endColor, minValue, maxValue, columnValues.get(i));
+            int color = Engine.interpolateColor(startColor, endColor, minValue, maxValue, columnValues.get(i));
 
             // Set the color for the column
             columnPaint.setColor(color);
@@ -390,7 +377,6 @@ public class Graph extends View {
         canvas.drawText(labelCalBurn, xStart + textCorrectionX, yStart  + textCorrectionY * 2 + 5, legendLabelPaint);
 
     }
-
     public Bitmap createBitmapFromCanvas() {
 
         // Get the default display
@@ -418,5 +404,4 @@ public class Graph extends View {
 
         return bitmap;
     }
-
 }
