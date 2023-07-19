@@ -24,8 +24,14 @@ import androidx.appcompat.widget.TooltipCompat;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class InsertDialog extends DialogFragment {
 
@@ -36,8 +42,11 @@ public class InsertDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View insertView = inflater.inflate(R.layout.insert_window, null);
 
-        String [] autofillWhatadapter = Engine.getStringAdaptar();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, autofillWhatadapter);
+        //use Hashset to prevent multiple entrances in drop down menu code was added after Engine.getString was implemented
+        HashSet<String> autofillWhatSet = new HashSet<>(Arrays.asList(Engine.getStringAdaptar()));
+        List<String> autofillWhatList = new ArrayList<>(autofillWhatSet);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, autofillWhatList);
+
 
         Calendar calendar = Calendar.getInstance();
         int year = Calendar.getInstance().get(Calendar.YEAR);

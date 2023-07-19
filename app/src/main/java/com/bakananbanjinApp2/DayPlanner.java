@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.TableLayout;
@@ -20,17 +21,19 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class DayPlanner {
+    private static final int NUMROWS = 25;
+    private static final int NUMCOLS = 9;
     private static TableLayout dayPlanner;
 
     public static TableLayout generateTable(Context context) {
+        dayPlanner = null;
         dayPlanner = new TableLayout(context);
-        //24 hours + header
-        int numRows = 25;
-        //7days + time
-        int numCols = 8;
+
         //id for all cells beginning at 1 unique in tablelayout
         int cellId = 0;
-        for (int i = 0; i < numRows; i++) {
+
+        //generate view and insert into table
+        for (int i = 0; i < NUMROWS; i++) {
             // Create a new TableRow for each row
             TableRow tableRow = new TableRow(context);
             tableRow.setLayoutParams(new TableLayout.LayoutParams(
@@ -38,7 +41,7 @@ public class DayPlanner {
                     TableLayout.LayoutParams.WRAP_CONTENT
             ));
 
-            for (int j = 0; j < numCols; j++) {
+            for (int j = 0; j < NUMCOLS; j++) {
                 // Create a new TextView for each cell
                 TextView cell = new TextView(context);
                 cell.setLayoutParams(new TableRow.LayoutParams(
@@ -51,13 +54,14 @@ public class DayPlanner {
                 if(cellId > 0){
                     cell.setId(cellId);
                 } else {
-                    int temp = 201;
+                    int temp = 300;
                     cell.setId(temp);
                 }
                 cell.setTextSize(12f);
 
                 cell.setPadding(5, 3, 5, 3);
-                cell.setBackgroundResource(R.drawable.black_boarder_green_background);
+                cell.setBackgroundResource(R.drawable.black_boarder_no_background);
+                cell.setOnClickListener(new DayPlannerOnclick());
 
                 // Add the cell to the TableRow
                 tableRow.addView(cell);
@@ -67,32 +71,18 @@ public class DayPlanner {
             //init table
         }
 
-        changeCellText(201, context.getString(R.string.planner_time_date), dayPlanner);
-        changeCellFormat(201, dayPlanner);
+        generateTabelDescriptions(dayPlanner, context);
+        generateTableContent(dayPlanner, context);
 
-        //get the last 7 days
-        List<YearMonthDay> last7days = Engine.getLastdays(6);
-        // 2-8 id is the first row insert Date
-        for (int i = 1; i < 8; i++) {
-            changeCellText(i, last7days.get(i - 1).toString(), dayPlanner);
-            changeCellFormat(i, dayPlanner);
-        }
-
-        //label 10 ...240 hour column
-        int j = 0;
-        for(int i = 10; i <=240;  i = i+10){
-            int startTime = j++;
-            int endTime = startTime + 1;
-            changeCellText(i,  startTime + " to " + endTime, dayPlanner) ;
-            changeCellFormat(i, dayPlanner);
-        }
-
+        return dayPlanner;
+    }
+    private static void generateTableContent(TableLayout dayPlanner, Context context) {
         //get all Cal Items from the last 7days
         List<DataItem> dataItemListLast7days = new ArrayList<>();
         dataItemListLast7days = Engine.getDataItemNewerThanSorted(6);
 
         if(dataItemListLast7days == null || dataItemListLast7days.isEmpty()) {
-            return null;
+            return;
         }
         int dayCalBurn = Engine.calcCalNeed(MainActivity.user);
         //get current day
@@ -124,7 +114,6 @@ public class DayPlanner {
             changeCellText(id,cellCalCount + "", dayPlanner);
             //save id in treeset to calculate the hours with no food maybe take real food intake
             setCalIntakeCellId.add(id);
-            Log.i("TEST", id + " next " + getNextCellId(id));
         }
 
         while(setCalIntakeCellId.iterator().hasNext()){
@@ -132,8 +121,45 @@ public class DayPlanner {
             setCalIntakeCellId.remove(setCalIntakeCellId.iterator().next());
         }
         //go through all cells and the id list and change color based on 16 + 8
+    }
+    public static void generateTabelDescriptions(View view, Context context){
+        changeCellText(300, context.getString(R.string.planner_time_date), dayPlanner);
+        changeCellFormat(300, dayPlanner);
 
-        return dayPlanner;
+        //get the last 7 days
+        List<YearMonthDay> last7days = Engine.getLastdays(6);
+
+        //set tomorrow (code was later added)
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
+        YearMonthDay tomorrow = new YearMonthDay(calendar);
+        changeCellText(8, tomorrow.toString(), dayPlanner);
+        changeCellFormat(8, dayPlanner);
+
+
+        // 2-8 id is the first row insert Date
+        for (int i = 1; i < 8; i++) {
+            changeCellText(i, last7days.get(i - 1).toString(), dayPlanner);
+            changeCellFormat(i, dayPlanner);
+        }
+
+        //label 10 ...240 hour column
+        int j = 0;
+        for(int i = 10; i <=240;  i = i+10){
+            int startTime = j++;
+            int endTime = startTime + 1;
+            changeCellText(i,  startTime + " to " + endTime, dayPlanner) ;
+            changeCellFormat(i, dayPlanner);
+        }
+
+        //get all Cal Items from the last 7days
+        List<DataItem> dataItemListLast7days = new ArrayList<>();
+        dataItemListLast7days = Engine.getDataItemNewerThanSorted(6);
+
+
+        //set the current hour to blue
+        changeCellColor(getCurrentHourCellId(), Color.BLUE, dayPlanner, context);
+
     }
     private static int getCellCalCount(int id, View view) {
         try {
@@ -181,10 +207,7 @@ public class DayPlanner {
         }
     }
     private static int getNextCellId(int startId){
-        int rowCount = 25;
-        int columnCount = 8;
-
-        int row = startId / 10;
+         int row = startId / 10;
         int column = startId % 10;
 
         //column is 6 or bigger we have to go one row up and set column back to start
@@ -197,7 +220,32 @@ public class DayPlanner {
         }
         return (row*10 + column);
     }
-    private int getLastCellId(int startId){
-        return 0;
+    private static int getPreviousCellId(int startId){
+
+        int row = startId / 10;
+        int column = startId % 10;
+
+        //column is 1 or smaller we have to go one row up and set column back to start
+        if(column <= 1){
+            row--;
+            column = 7;
+        } else {
+            //we can add one to starId and return it
+            return --startId;
+        }
+        return (row*10 + column);
+
+    }
+    private static int getCurrentHourCellId(){
+        int column = 7; //current day is at position 7
+        int row = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) * 10;
+        return row + column;
+    }
+    //static class to handle click events on the day planer/
+    private static class DayPlannerOnclick implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            Log.i("DAYPLANNER", view.getId() +"");
+        }
     }
 }

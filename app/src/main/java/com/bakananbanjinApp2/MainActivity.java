@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String ISMAN = "isMan";
     public static final String TARGETWEIGHT = "targetWeight";
     public static final String ACTIVITYLEVEL = "activity";
-    private static final int TABELCELLCOUNT = 25 * 8 - 1;
     public static SharedPreferences mPrefs;
     public static SharedPreferences.Editor mEditor;
     public static User user;
@@ -59,18 +58,15 @@ public class MainActivity extends AppCompatActivity {
     private Graph graph;
     public static FragmentManager fragmentManager;
     private TableLayout dayPlanner;
-    private boolean tableGenerated = false;
-    private List<Integer> cellIdList = new ArrayList<>();
-
+    HorizontalScrollView horizontalScrollView;
 
     //1.
     //2. Toolbar Textcolor dynamisch anpassen oder eigenen Theme schreiben
     //3. Icon fuer toolbar anpassen
-    //4. Make own Graph Class
+    //4.
     //5. Advise in Engine
     //6. button to add weight and additonal cal
     //7. Update Cal need per day on current weight
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,12 +131,10 @@ public class MainActivity extends AppCompatActivity {
 
         Engine.initGraphFromDB();
         graphQuery();
-        generateTable();
-        HorizontalScrollView horizontalScrollView = findViewById(R.id.main_hscroll_view2);
-        TableLayout dayPlanner = DayPlanner.generateTable(this);
+        horizontalScrollView = findViewById(R.id.main_hscroll_view);
+        dayPlanner = DayPlanner.generateTable(this);
         horizontalScrollView.addView(dayPlanner);
     }
-
     private void graphQuery() {
         graph = findViewById(R.id.graph);
         //how many days (items) will be shown (xAxis Labels) 7 = one week
@@ -154,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
         List<Float> calList = new ArrayList<>();
         //List for xAxisLabel
         List<String> xAxisLabelList = new ArrayList<>();
-
         for (YearMonthDay i : lastDaysList) {
             xAxisLabelList.add(i.toString());
             calList.add(Engine.mDB.calculateSumByDate(i.year, i.month, i.day, DataSetDB.DB_TABLE_NAME, DataSetDB.DB_ROW_CAL));
@@ -163,13 +156,11 @@ public class MainActivity extends AppCompatActivity {
         graph.setData(xAxisLabelList, weightList, calList, Engine.calcCalNeed(user));
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menue_main, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int selectedId = item.getItemId();
@@ -236,15 +227,18 @@ public class MainActivity extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         graphQuery();
-        generateTable();
+        dayPlannerUpdate();
     }
-
+    private void dayPlannerUpdate() {
+        dayPlanner = DayPlanner.generateTable(this);
+        horizontalScrollView.removeAllViews();
+        horizontalScrollView.addView(dayPlanner);
+    }
     public void restartApp() {
         Intent intent = getIntent();
         finish();
         startActivity(intent);
     }
-
     /*
     +
     +  TEST CODE ONLY BELOW
@@ -256,185 +250,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    private void generateTable() {
-      /*  if (tableGenerated) {
-            return;
-        }
-        tableGenerated = true;*/
-        dayPlanner = findViewById(R.id.dayplaner);
-        dayPlanner.removeAllViews();
-        //24 hours + header
-        int numRows = 25;
-        //7days + time
-        int numCols = 8;
-        //id for all cells beginning at 1 unique in tablelayout
-        int cellId = 0;
-        for (int i = 0; i < numRows; i++) {
-            // Create a new TableRow for each row
-            TableRow tableRow = new TableRow(this);
-            tableRow.setLayoutParams(new TableLayout.LayoutParams(
-                    TableLayout.LayoutParams.MATCH_PARENT,
-                    TableLayout.LayoutParams.WRAP_CONTENT
-            ));
-
-            for (int j = 0; j < numCols; j++) {
-                // Create a new TextView for each cell
-                TextView cell = new TextView(this);
-                cell.setLayoutParams(new TableRow.LayoutParams(
-                        TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.WRAP_CONTENT
-                ));
-
-                // Set the text and other properties for the cell
-                cellId = (i * 10 + j);
-                if(cellId > 0){
-                    cell.setId(cellId);
-                } else {
-                    int temp = 201;
-                    cell.setId(temp);
-                }
-                cell.setTextSize(12f);
-
-                cell.setPadding(5, 3, 5, 3);
-                cell.setBackgroundResource(R.drawable.black_boarder_green_background);
-
-                // Add the cell to the TableRow
-                tableRow.addView(cell);
-            }
-            // Add the TableRow to the TableLayout
-            dayPlanner.addView(tableRow);
-            //init table
-        }
-
-        changeCellText(201, getString(R.string.planner_time_date));
-        changeCellFormat(201);
-
-        //get the last 7 days
-        List<YearMonthDay> last7days = Engine.getLastdays(6);
-        // 2-8 id is the first row insert Date
-        for (int i = 1; i < 8; i++) {
-            changeCellText(i, last7days.get(i - 1).toString());
-            changeCellFormat(i);
-        }
-
-        //label 10 ...240 hour column
-        int j = 0;
-        for(int i = 10; i <=240;  i = i+10){
-            int startTime = j++;
-            int endTime = startTime + 1;
-            changeCellText(i,  startTime + " to " + endTime) ;
-            changeCellFormat(i);
-        }
-
-        //get all Cal Items from the last 7days
-        List<DataItem> dataItemListLast7days = new ArrayList<>();
-        dataItemListLast7days = Engine.getDataItemNewerThanSorted(6);
-
-        if(dataItemListLast7days == null || dataItemListLast7days.isEmpty()) {
-         return;
-        }
-        int dayCalBurn = Engine.calcCalNeed(user);
-        //get current day
-        Calendar calendar = Calendar.getInstance();
-        int currentComparisonDay = calendar.get(Calendar.DAY_OF_MONTH);
-
-        //make a treeset to store unicq ids with cal intake
-        Set<Integer> setCalIntakeCellId = new TreeSet<>();
-
-        int dayColumn = 7;
-        //set all cal intake in table
-        //safe time slots and change color
-        for(DataItem i : dataItemListLast7days){
-            //set the date to the current selected item
-            while(currentComparisonDay != i.getDay()) {
-                //susbstract one day from calander
-                calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - 1);
-                currentComparisonDay = calendar.get(Calendar.DAY_OF_MONTH);
-                dayColumn--;
-            }
-            int id =(i.getHour() * 10) + dayColumn;
-            int cellCalCount = getCellCalCount(id);
-            if(cellCalCount > 0){
-                cellCalCount = cellCalCount+ i.getmCal();
-            } else {
-                cellCalCount = i.getmCal();
-            }
-            changeCellColor(id, Engine.interpolateColor(Color.GREEN, Color.RED,0, dayCalBurn, cellCalCount));
-            changeCellText(id,cellCalCount + "");
-            //save id in treeset to calculate the hours with no food maybe take real food intake
-            setCalIntakeCellId.add(id);
-            Log.i("TEST", id + " next " + getNextCellId(id));
-        }
-
-        while(setCalIntakeCellId.iterator().hasNext()){
-            Log.i("TREESET", setCalIntakeCellId.iterator().next() +"");
-            setCalIntakeCellId.remove(setCalIntakeCellId.iterator().next());
-        }
-        //go through all cells and the id list and change color based on 16 + 8
-    }
-    private int getCellCalCount(int id) {
-        try {
-            TextView cell = findViewById(id);
-            String temp = (String) cell.getText();
-            if(temp.compareTo("") == 0){
-                return 0;
-            }
-            return Integer.parseInt(temp);
-        } catch (Exception e) {
-            Log.e("GETCELLCALCOUNT", "cell not found or no value");
-            return 0;
-        }
-    }
-    private void changeCellText(int id, String text) {
-        //check if id is in range of the table 25 * 8 and at least 1
-
-        try {
-            TextView cell = findViewById(id);
-            cell.setText(text);
-        } catch (Exception e) {
-            Log.e("CHANGECELLTEXT", "cell not found");
-        }
-    }
-    private void changeCellFormat(int id){
-
-        try {
-            TextView cell = findViewById(id);
-            cell.setBackgroundResource(R.drawable.black_boarder_gray_background);
-            cell.setTypeface(null, Typeface.BOLD);
-        } catch (Exception e) {
-            Log.e("CHANGECELLFORMAT", "cell not found");
-        }
-    }
-    private void changeCellColor(int id, int color){
-        try {
-            Resources res = getResources();
-            Drawable drawable = res.getDrawable(R.drawable.black_boarder_red_background, getTheme());
-            GradientDrawable shape = (GradientDrawable) drawable;
-            shape.setColor(color);
-            TextView cell = findViewById(id);
-            cell.setBackground(shape);
-        } catch (Resources.NotFoundException e) {
-            Log.e("CHANGECELLCOLOR", "cell not found");
-        }
-    }
-    private int getNextCellId(int startId){
-        int rowCount = 25;
-        int columnCount = 8;
-
-        int row = startId / 10;
-        int column = startId % 10;
-
-        //column is 6 or bigger we have to go one row up and set column back to start
-        if(column >= 6){
-            row++;
-            column = 1;
-        } else {
-            //we can add one to starId and return it
-            return ++startId;
-        }
-        return (row*10 + column);
-    }
-    private int getLastCellId(int startId){
-        return 0;
-    }
 }

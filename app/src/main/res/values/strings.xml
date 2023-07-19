@@ -41,6 +41,10 @@
     <string name="saturday">Saturday</string>
     <string name="weekplaner_time">time</string>
     <string name="planner_time_date">Time/Date</string>
+    <string name="planner_legend_1">current hour</string>
+    <string name="planner_legend_2">normal cal intake</string>
+    <string name="planner_legend_3">high cal intake</string>
+    <string name="planner_legend_4">16hours no intake</string>
 
 
 

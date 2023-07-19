@@ -1,5 +1,7 @@
 package com.bakananbanjinApp2;
 
+import java.util.Calendar;
+
 public class YearMonthDay {
     public int year;
     public int month;
@@ -9,6 +11,11 @@ public class YearMonthDay {
         this.year = year;
         this.month = month;
         this.day = day;
+    }
+    public YearMonthDay(Calendar calendar){
+        this.year = calendar.get(Calendar.YEAR);
+        this.month = calendar.get(Calendar.MONTH);
+        this.day = calendar.get(Calendar.DAY_OF_MONTH);
     }
 
     @Override
