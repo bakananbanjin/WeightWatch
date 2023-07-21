@@ -1,5 +1,7 @@
 package com.bakananbanjinApp2;
 
+import androidx.annotation.NonNull;
+
 import java.util.Calendar;
 
 public class Weight {
@@ -38,5 +40,9 @@ public class Weight {
 
     public Calendar getCalendar() {
         return calendar;
+    }
+
+    public String toString() {
+        return (this.weight + " " + Engine.calendarToDatetoString(this.calendar));
     }
 }

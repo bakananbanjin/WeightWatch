@@ -14,10 +14,12 @@ import java.util.List;
 
 public class WeightItemAdapter extends RecyclerView.Adapter<WeightItemAdapter.ListItemHolder> {
     private List<Weight> weightList;
+    private OnItemDeleteListener deleteListener;
     private Context context;
     private RecyclerViewInterface recyclerViewInterface;
 
-    public WeightItemAdapter(Context context, List<Weight> weightList) {
+    public WeightItemAdapter(Context context, List<Weight> weightList, OnItemDeleteListener deleteListener) {
+        this.deleteListener = deleteListener;
         this.weightList = weightList;
         this.context = context;
     }
@@ -52,11 +54,22 @@ public class WeightItemAdapter extends RecyclerView.Adapter<WeightItemAdapter.Li
         TextView mDataItemTitle;
         TextView mDataItemDate;
         TextView mDataItemCal;
+        TextView mDataItemX;
         public ListItemHolder(@NonNull View itemView) {
             super(itemView);
             mDataItemTitle = itemView.findViewById(R.id.tv_dataitem_title);
             mDataItemDate = itemView.findViewById(R.id.tv_dataitem_date);
             mDataItemCal = itemView.findViewById(R.id.tv_dataitem_cal );
+            mDataItemX = itemView.findViewById(R.id.tv_dataitem_x);
+            mDataItemX.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION){
+                        deleteListener.onDeleteClick(position);
+                    }
+                }
+            });
             itemView.setOnClickListener(this);
         }
         @Override

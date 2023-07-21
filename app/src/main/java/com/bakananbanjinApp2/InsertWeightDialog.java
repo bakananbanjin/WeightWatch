@@ -83,6 +83,7 @@ public class InsertWeightDialog extends DialogFragment{
         int year = Calendar.getInstance().get(Calendar.YEAR);
         int month = Calendar.getInstance().get(Calendar.MONTH);
         int day = Calendar.getInstance().get(Calendar.DATE);
+        int kilo = (int)MainActivity.user.getUserWeight();
 
         npInsertWeightKilo = insertView.findViewById(R.id.np_insert_weight_number);
         npInsertWeightGram = insertView.findViewById(R.id.np_insert_weight_floatvalue);
@@ -95,7 +96,7 @@ public class InsertWeightDialog extends DialogFragment{
 
         npInsertWeightKilo.setMinValue(30);
         npInsertWeightKilo.setMaxValue(250);
-        npInsertWeightKilo.setValue(70);
+        npInsertWeightKilo.setValue(kilo);
     }
     private void updateWeight(View insertView){
         calendar = mDataItem.getCalendar();

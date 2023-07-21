@@ -41,7 +41,7 @@ import java.util.TreeSet;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    public static float TEXTSIZE;
     public static int DIAGRAMMDAYS = 7;
     public static final String USER = "user";
     public static final String WEIGHT = "weight";
@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //initialise  Engine
+        Engine engine = new Engine(this.getApplicationContext());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -78,12 +81,11 @@ public class MainActivity extends AppCompatActivity {
         mPrefs = getSharedPreferences("WeightWatch", MODE_PRIVATE);
         mEditor = mPrefs.edit();
 
-        //initialise  Engine
-        Engine engine = new Engine(this.getApplicationContext());
+
 
         //initialise Toolbar
         textViewToolbar = findViewById(R.id.toolbar_textview);
-        textViewToolbar.setText(getString(R.string.tollbar_welcome));
+        textViewToolbar.setText(getString(R.string.welcome));
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
@@ -118,14 +120,14 @@ public class MainActivity extends AppCompatActivity {
                     mPrefs.getFloat(WEIGHT, 50f),
                     mPrefs.getInt(TARGETWEIGHT, 0),
                     mPrefs.getFloat(ACTIVITYLEVEL, 1.2f));
-            textViewToolbar.setText(getString(R.string.tollbar_welcome) + " " + user.getUserName());
+            textViewToolbar.setText(getString(R.string.welcome) + " " + user.getUserName());
         } catch (Exception e) {
             Log.e("NOUSER", "no user found");
             mEditor.clear().commit();
             user = new User("user", true, 0, 0, 0, 0, 0);
         }
         /*
-         * TEST CODE
+         * TEST CODEf
          *
          */
 
@@ -217,15 +219,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Overview fragment = (Overview) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+       /*  20.07 21.12 test commented may needs to be reinstaded
+       Overview fragment = (Overview) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (fragment != null) {
             fragment.updateOverview();
         }
-        graphQuery();
+        graphQuery();*/
     }
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+        Overview fragment = (Overview) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment != null) {
+            fragment.updateOverview();
+        }
         graphQuery();
         dayPlannerUpdate();
     }

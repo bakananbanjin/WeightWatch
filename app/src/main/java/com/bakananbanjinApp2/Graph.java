@@ -27,10 +27,10 @@ public class Graph extends View {
     private static final float YAXISLABELSETPS = 10f;
     private static final int NUMBEROFLABELS = 10;
     private static final int FIRSTCOLUMN = 1;
-    private static final int LEGENDWIDTH = 150;
+    private static final int LEGENDWIDTH = 175;
     private static final int LEGENDEHEIGHT = 75;
     private static final int MINYVALUE = 30;
-    private static float XAXISOFSET = 40f;
+    private static float XAXISOFSET = 50f;
     private static float YAXISOFSET = 20f;
     private static float YAXISSPACEBOT = 2.00f;
     private static float YAXISSPACETOP = 2.00f;
@@ -85,12 +85,12 @@ public class Graph extends View {
 
         labelPaint = new Paint();
         labelPaint.setColor(Color.BLACK);
-        labelPaint.setTextSize(16f);
+        labelPaint.setTextSize(Engine.TEXTSIZEBIG);
         labelPaint.setTextAlign(Paint.Align.CENTER);
 
         legendLabelPaint = new Paint();
         legendLabelPaint.setColor(Color.BLACK);
-        legendLabelPaint.setTextSize(16f);
+        legendLabelPaint.setTextSize(Engine.TEXTSIZEBIG);
         legendLabelPaint.setTextAlign(Paint.Align.LEFT);
 
         guidelinePaint = new Paint();

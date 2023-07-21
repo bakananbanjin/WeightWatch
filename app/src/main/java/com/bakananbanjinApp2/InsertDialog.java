@@ -47,14 +47,12 @@ public class InsertDialog extends DialogFragment {
         List<String> autofillWhatList = new ArrayList<>(autofillWhatSet);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, autofillWhatList);
 
-
         Calendar calendar = Calendar.getInstance();
         int year = Calendar.getInstance().get(Calendar.YEAR);
         int month = Calendar.getInstance().get(Calendar.MONTH);
         int day = Calendar.getInstance().get(Calendar.DATE);
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         int min = Calendar.getInstance().get(Calendar.MINUTE);
-
 
         //preset time in insert Window
         TimePicker tpTimepicker = insertView.findViewById(R.id.insert_timePicker);
@@ -66,15 +64,12 @@ public class InsertDialog extends DialogFragment {
         DatePicker dpDatepicker = insertView.findViewById(R.id.insert_datePicker);
         dpDatepicker.init(year, month, day, null);
 
-
         AutoCompleteTextView etInsertWhat = insertView.findViewById(R.id.insert_what);
         etInsertWhat.setAdapter(adapter);
         EditText etInsertCal = insertView.findViewById(R.id.insert_cal);
 
         Button btnInsertCancel = insertView.findViewById(R.id.insert_cancel);
         Button btnInsertOk = insertView.findViewById(R.id.insert_ok);
-
-
 
         btnInsertCancel.setOnClickListener(new View.OnClickListener() {
             @Override

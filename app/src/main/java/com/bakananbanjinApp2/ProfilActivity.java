@@ -5,10 +5,15 @@ import androidx.appcompat.widget.Toolbar;
 
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Scroller;
 import android.widget.TextView;
+
+import java.util.List;
 
 public class ProfilActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -72,8 +77,55 @@ public class ProfilActivity extends AppCompatActivity {
         textViewProfileBMI.setText(getString(R.string.profile_bmi) + " " + mBmi);
 
         textViewProfileAdvice = findViewById(R.id.tv_profile_advise);
-        textViewProfileAdvice.setText(getString(R.string.profile_advice));
+        //code to set advice
+        //get 3 weight data first last and 7 days ago
+        //get all calintake from 7 days
+        //decide message and build string
+        String profile_progress_advice ="";
+        String messageNewUser = "";
+        String messageGreeting = "";
+        String messageWeight = "";
+        String message7days = "";
+        String messageWeightResult = "";
+        String messageCal = "";
+        String messageIntermittent = "";
+        String messageIntermittentResult = "";
+        String messageEncourage = "";
 
+        try {
+            List<Weight> weighList = Engine.profileAdviceWeightNumbers();
+            if(Engine.dayComparison(weighList.get(0).getCalendar(), weighList.get(2).getCalendar()) < 6){
+                //no 7 days weight data new user?
+                messageNewUser = getString(R.string.profile_progress_message_new_user);
+            } else{
+                //at least 7 days weight data is present
+                if(weighList.get(0).getWeight()<weighList.get(1).getWeight()){
+                    //we had weight lost since data recorded
+                    messageGreeting = getString(R.string.profile_progress_greeting_good);
+                    messageWeight = getString(R.string.profile_progress_message_weight,
+                            weighList.get(1).getWeight(),
+                            Engine.calendarToDatetoString(weighList.get(1).getCalendar()),
+                            weighList.get(1).getWeight()-weighList.get(0).getWeight());
+                    float tempfloat = weighList.get(2).getWeight()-weighList.get(0).getWeight();
+                    message7days = getString(R.string.profile_progress_message_weight_7days, tempfloat);
+                    messageWeightResult = getString(R.string.profile_progress_message_weight_result_good);
+                } else {
+
+                }
+            }
+        } catch (Exception e){
+            Log.e("PROFILEPRGRESS", "error " );
+        }
+
+
+
+        profile_progress_advice = messageNewUser + messageGreeting
+                + messageWeight + " " + message7days + " " + messageWeightResult
+                + messageCal + messageIntermittent + messageIntermittentResult
+                + messageEncourage;
+
+        textViewProfileAdvice.setText(profile_progress_advice);
+        textViewProfileAdvice.setMovementMethod(new ScrollingMovementMethod());
         btViewProfileEdit = findViewById(R.id.bt_profile_edit);
         btViewProfileEdit.setOnClickListener(new View.OnClickListener() {
             @Override

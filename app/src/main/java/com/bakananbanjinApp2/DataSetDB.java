@@ -103,7 +103,7 @@ public class DataSetDB {
                 + "'" + dataItem.getmItemName() + "'," + dataItem.getmCal() + ", " + dataItem.getYear() + ", "
                 + dataItem.getMonth() + ", " + dataItem.getDay() + ", " + dataItem.getHour() + ", " + dataItem.getMin()
                 + ");";
-        Log.i("INSERT INTO DB", insertquery);
+        //Log.i("INSERT INTO DB", insertquery);
         mDB.execSQL(insertquery);
     }
 
@@ -144,11 +144,26 @@ public class DataSetDB {
         }
         return tempList;
     }
+    public DataItem selectDataItemByDate(int year, int month , int day){
+        if (!mDB.isOpen()) {
+            mDB = mDBHelper.getWritableDatabase();
+        };
+        String orderBy = DB_ROW_YEAR + " DESC," + DB_ROW_MONTH + " DESC," + DB_ROW_DAY + " DESC,"
+                + DB_ROW_HOUR + " DESC," + DB_ROW_MIN + " DESC";
+        String selection = DB_ROW_YEAR + " = ? AND " + DB_ROW_MONTH + " = ? AND " + DB_ROW_DAY + " = ?";
+        String[] selectionArgs = {String.valueOf(year), String.valueOf(month), String.valueOf(day)};
 
-    public List<DataItem> getLast7DaysValuesList() {
 
-        return null;
+        Cursor cursor = mDB.query(DB_TABLE_NAME, null, selection, selectionArgs, null, null, orderBy);
+        if (cursor.getCount() <= 0){
+            return null;
+        }
+        cursor.moveToLast();
+        return new DataItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
+                cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
+                cursor.getInt(7));
     }
+
     //not implemented yet
     public boolean update() {
         if (!mDB.isOpen()) {
@@ -289,6 +304,12 @@ public class DataSetDB {
                 + " WHERE " + DB_ROW_ID + " = " + id + ";";
         mDB.execSQL(updateQuery);
     }
+    public void deleteWeightById(int id) {
+        if (!mDB.isOpen()) {
+            mDB = mDBHelper.getWritableDatabase();
+        }
+        mDB.delete(DB_TABLE_NAME_WEIGHT, DB_ROW_ID + " = " + id, null);
+    }
 
     //innerclass to create Database
     private class DataSetDBHelper extends SQLiteOpenHelper {
@@ -385,13 +406,13 @@ public class DataSetDB {
         String[] selectionArgs = {String.valueOf(year), String.valueOf(month), String.valueOf(day)};
         Cursor cursor = mDB.rawQuery(query, selectionArgs);
 
-        float sum = 0;
+        float avg = 0;
         if(true){
             if (cursor.moveToFirst()) {
-                sum = cursor.getFloat(0);
+                avg = cursor.getFloat(0);
             }
         }
-        return sum;
+        return avg;
     }
 
 

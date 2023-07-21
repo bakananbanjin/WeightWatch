@@ -15,10 +15,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditDateFrag extends Fragment implements RecyclerViewInterface{
+public class EditDateFrag extends Fragment implements RecyclerViewInterface, OnItemDeleteListener{
 
     private RecyclerView mRecyclerViewEdit;
     private List<DataItem> dataItemList;
@@ -39,13 +41,13 @@ public class EditDateFrag extends Fragment implements RecyclerViewInterface{
         mView = inflater.inflate(R.layout.edit_data_frag, container, false);
         tv_edit_weight = mView.findViewById(R.id.tv_edit_weight);
         TextView tv_edit_meals = mView.findViewById(R.id.tv_edit_data);
+
         tv_edit_weight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
               dataItemView = false;
               weightView(mView);
               reloadFragment();
-              //Log.i("TVEDITWEIGHT", "weight pressed");
             }
         });
         tv_edit_meals.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +56,6 @@ public class EditDateFrag extends Fragment implements RecyclerViewInterface{
                 dataItemView = true;
                 dataItemView(mView);
                 reloadFragment();
-                Log.i("TVEDITMEAL", "meals pressed");
             }
         });
         if(dataItemView){
@@ -80,13 +81,14 @@ public class EditDateFrag extends Fragment implements RecyclerViewInterface{
 
         Log.i("ITEM CLICK", "Item on Position " + position + " got clicked");
     }
+
     public void weightView(View view){
         mRecyclerViewEdit = view.findViewById(R.id.recyclerview);
         mRecyclerViewEdit.setHasFixedSize(true);
         weightList = new ArrayList<>();
         weightList = Engine.mDB.selectAllWeightList();
         mRecyclerViewEdit.setLayoutManager(new LinearLayoutManager(getContext()));
-        myWeightAdapter = new WeightItemAdapter(getContext(), weightList);
+        myWeightAdapter = new WeightItemAdapter(getContext(), weightList, this);
         myWeightAdapter.setItemClickListener(this);
         mRecyclerViewEdit.setAdapter(myWeightAdapter);
     }
@@ -96,7 +98,7 @@ public class EditDateFrag extends Fragment implements RecyclerViewInterface{
         dataItemList = new ArrayList<>();
         dataItemList = Engine.mDB.selectAllDataItem();
         mRecyclerViewEdit.setLayoutManager(new LinearLayoutManager(getContext()));
-        myAdapter = new DataItemAdapter(getContext(), dataItemList);
+        myAdapter = new DataItemAdapter(getContext(), dataItemList, this);
         myAdapter.setItemClickListener(this);
         mRecyclerViewEdit.setAdapter(myAdapter);
     }
@@ -105,5 +107,18 @@ public class EditDateFrag extends Fragment implements RecyclerViewInterface{
         fragmentTransaction.detach(this);
         fragmentTransaction.attach(this);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onDeleteClick(int position) {
+        if(dataItemView) {
+            Engine.mDB.deleteByID(dataItemList.get(position).getId());
+            dataItemList.remove(position);
+            myAdapter.notifyDataSetChanged();
+        } else {
+            Engine.mDB.deleteWeightById(weightList.get(position).getId());
+            weightList.remove(position);
+            myWeightAdapter.notifyDataSetChanged();
+        }
     }
 }

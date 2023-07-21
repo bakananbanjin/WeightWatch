@@ -13,8 +13,6 @@ import android.widget.TextView;
 public class EditActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private TextView textViewToolbar;
-    private ImageView imageViewToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

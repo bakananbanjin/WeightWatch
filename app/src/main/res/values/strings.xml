@@ -4,14 +4,10 @@
     <string name="cancel"> Cancel </string>
     <string name="edit"> Edit </string>
     <string name="app_name">WeightWatch</string>
-
-
-
-
-    <string name="menu_profil">Profil</string>
-    <string name="menu_info">Info</string>
-    <string name="tollbar_welcome">Welcome </string>
-    <string name="menu_edit">Edit</string>
+    <string name="update">update</string>
+    <string name="profil">Profil</string>
+    <string name="info">Info</string>
+    <string name="welcome">Welcome</string>
 
     <!-- toolbar menu -->
     <string name="menu_delete">Delete Data</string>
@@ -40,11 +36,11 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="weekplaner_time">time</string>
-    <string name="planner_time_date">Time/Date</string>
+    <string name="planner_time_date">hh/Date</string>
     <string name="planner_legend_1">current hour</string>
     <string name="planner_legend_2">normal cal intake</string>
     <string name="planner_legend_3">high cal intake</string>
-    <string name="planner_legend_4">16hours no intake</string>
+    <string name="planner_legend_4">Cal Fast: 16h+"</string>
 
 
 
@@ -103,11 +99,55 @@
     <string name="profile_target">Your target is:</string>
     <string name="profile_calroies">Your daily Cal use is:</string>
     <string name="profile_bmi">Your Bmi is:</string>
-    <string name="profile_advice">Here should come some advice text autogenereted from bits.
-                                    But i dont know what to write for now. Maybe text like this:\n
-                                    Your Bmi is BMI and you should try to get it to 25. \nIf you can
-                                    generate a 500Cal deficit a day you will reach you target in around
-                                    DAY. \nThis is only a approximate.</string>
+
+    <string name="profile_progress_greeting_good">
+        Congratulations on your progress!\n\n
+    </string>
+    <string name="profile_progress_greeting_bad">
+        You can do it, don\'t give up!\n\n
+    </string>
+    <string name="profile_progress_message_weight">
+        Your current weight is %1$.1f kg, and since %2$s, you\'ve lost %3$.1f kg.
+    </string>
+    <string name="profile_progress_message_weight_7days">
+        The last 7 days amounted to a weight change of %1$.1f kg.
+    </string>
+    <string name="profile_progress_message_weight_result_good">
+        Weight fluctuations during a diet are normal, but it\'s always encouraging to see some progress.\n\n
+    </string>
+    <string name="profile_progress_message_weight_result_bad">
+        Weight fluctuations during a diet are normal, and it\'s normal to face challenges along the way.\n\n
+    </string>
+    <string name="profile_progress_message_cal">
+        You maintained an average calorie intake of %1$.1f per day, which means you had an average calorie deficit of %2$.1f per day.\n\n
+    </string>
+    <string name="profile_progress_message_intermittent">
+        You\'ve successfully practiced intermittent fasting on %1$d out of the last 7 days.
+        Intermittent fasting has been shown to improve metabolism and promote weight loss.
+    </string>
+    <string name="profile_progress_message_intermittent_bad">
+        Intermittent fasting may be difficult but the benefits should outweigh the difficulties, so let\'s do our best.\n\n
+    </string>
+    <string name="profile_progress_message_intermittent_good">
+        Keep up the good work!\n\n
+    </string>
+    <string name="profile_progress_message_encourage_good">
+        Remember, weight loss is a unique journey, and results may vary. Stay consistent, stay positive, and let\'s achieve your health goals
+        together!\n\nKeep up the great work, and you\'ll reach your target weight of %1$.1f in around %2$d days!
+    </string>
+    <string name="profile_progress_message_encourage_bad">
+        Remember, weight loss is a unique journey, and results may vary. Stay consistent, stay positive, stay committed to your goals,
+        and try implementing intermittent fasting and an calorie deficit in the next 7days. Stay committed to your journey,
+        and with time, effort, and our app\'s support, you\'ll achieve your health goals!\n\nKeep up the great work so you can reach
+        your weight goal of %1$.1f.
+    </string>
+    <string name="profile_progress_message_new_user">
+        Welcome to our weight and calorie tracker app!\n\nAs a new user, we don\'t have enough data yet to
+        provide a further information here. But don\'t worry, you\'re taking the first step towards a healthier lifestyle!\n\nSet your health goals, track your
+        weight and calorie intake regularly, and practice intermittent fasting to see positive changes.\n\nRemember, it\'s all about consistency and dedication.
+        Stay committed to your journey, and with time, effort, and our app\'s support, you\'ll achieve your health goals!\n\nKeep up the great work, and let\'s
+        embark on this transformative journey together!
+    </string>
 
     <!--Info Activity Strings-->
     <string name="info_toolbar_text">Info</string>
@@ -118,7 +158,4 @@
         \n\na. Enhanced fat burning:\nBy extending the fasting period, the body exhausts its readily available energy from food, prompting the utilization of stored fat for fuel. This promotes fat burning and aids in weight loss.\n\nb. Insulin regulation:\nIntermittent fasting can improve insulin sensitivity, which helps regulate blood sugar levels. This, in turn, reduces the risk of insulin resistance and supports better weight management.\n\nc. Appetite control:\nRestricting the eating window to 8 hours can help regulate hunger hormones and curb excessive snacking. This can result in better portion control, reduced calorie intake, and ultimately contribute to weight loss goals.
         \n\nAchieving sustainable weight loss requires a multifaceted approach that includes creating a calorie deficit and implementing effective strategies. Maintaining a calorie deficit through mindful calorie tracking and a balanced diet is essential for consistent weight loss. Additionally, the 16+8 intermittent fasting approach offers a beneficial framework for enhancing fat burning, regulating insulin levels, and controlling appetite.\n\nIt is important to note that weight loss journeys are individualized, and what works for one person may not work for another. Consulting a healthcare professional or a registered dietitian is recommended to personalize weight loss plans and ensure overall well-being. With dedication, patience, and a holistic approach, achieving and maintaining a healthy weight becomes an attainable goal for everyone.
     </string>
-    <string name="update">update</string>
-
-
 </resources>

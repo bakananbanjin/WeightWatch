@@ -158,11 +158,11 @@ public class DataReaderWriter {
 
             String line;
             while((line = br.readLine()) != null){
-                Log.i("LINE", line);
+                //Log.i("LINE", line);
                 fileLines.add(line);
             }
         } catch (FileNotFoundException e) {
-            Log.i("FILE NOT FOUND", "Reader could not find File");
+            Log.e("FILE NOT FOUND", "Reader could not find File");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -179,7 +179,7 @@ public class DataReaderWriter {
                 //item toSting to check delete at relase
                 dataItemList.add(tempDataItem);
             } else {
-                Log.i("READ ERROR", "Read dataItem wrong length");
+                Log.e("READ ERROR", "Read dataItem wrong length");
             }
         }
 
@@ -198,7 +198,7 @@ public class DataReaderWriter {
 
             String line;
             while((line = br.readLine()) != null){
-                Log.i("LINE", line);
+                //Log.i("LINE", line);
                 fileLines.add(line);
             }
         } catch (FileNotFoundException e) {

@@ -34,23 +34,18 @@ public class DataItem {
         mCalendar = Calendar.getInstance();
         mCalendar.set(year, month, day, hour, min, 0 );
     }
-
     public String getmItemName() {
         return mItemName;
     }
-
     public void setmItemName(String mItemName) {
         this.mItemName = mItemName;
     }
-
     public int getmId() {
         return mId;
     }
-
     public void setmId(int mId) {
         this.mId = mId;
     }
-
     public int getmCal() {
         return mCal;
     }
@@ -60,7 +55,6 @@ public class DataItem {
     public Calendar getmCalendar() {
         return mCalendar;
     }
-
     public int getYear(){
         return mCalendar.get(Calendar.YEAR);
     }
@@ -114,7 +108,6 @@ public class DataItem {
                 + "\n";
         return output;
     }
-
     public String getDateTime() {
 
         //check if hour or min is only single digit and add a 0 before
@@ -132,7 +125,6 @@ public class DataItem {
         String dateTime = this.getYear() + "/" + this.getMonth() + "/" + this.getDay() + "\n" + tempTime;
         return dateTime;
     }
-
     public int getId() {
         return this.mId;
     }

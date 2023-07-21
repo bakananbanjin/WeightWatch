@@ -56,7 +56,7 @@ public class User {
     public float getUserWeight() {
         return userWeight;
     }
-    public void setUserWeight(int userWeight) {
+    public void setUserWeight(float userWeight) {
         this.userWeight = userWeight;
     }
 

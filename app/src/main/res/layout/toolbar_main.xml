@@ -32,7 +32,7 @@
             android:id="@+id/toolbar_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tollbar_welcome"
+            android:text="@string/welcome"
             android:textColor="@color/black"
             android:textSize="24sp"
             tools:layout_editor_absoluteX="56dp"

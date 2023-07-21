@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -13,17 +14,23 @@ import java.util.Date;
 import java.util.List;
 
 public class Engine {
+    public static float TEXTSIZETINY = 12f;
+    public static float TEXTSIZEBIG = 24f;
+    public static float TEXTSIZENORMAL = 16;
+    public static float TEXTSIZESMALL = 12f;
     public static String FILENAME_USER = "user";
     public static String FILENAME_DATA = "data";
     public static String FILENAME_WEIGHT = "weight";
     public static String FOLDER_NAME = "Data";
     public static DataSetDB mDB;
     private static Engine engine;
-    private Context mContext;
+    private static Context mContext;
     public Engine(Context context) {
         mContext = context;
         mDB = new DataSetDB(context);
         engine = this;
+        getTextSize(context);
+
     }
     //function gets called when insert btn in Insertfield is pressed
     //class needs to be initialised
@@ -81,7 +88,7 @@ public class Engine {
     }
     public static User getPref(){
 
-        Log.i("PREFERENCE", MainActivity.mPrefs.getAll().toString());
+        //Log.i("PREFERENCE", MainActivity.mPrefs.getAll().toString());
         return new User(MainActivity.mPrefs.getString(MainActivity.USER, "ERROR"),
                 MainActivity.mPrefs.getBoolean(MainActivity.ISMAN, true),
                 MainActivity.mPrefs.getInt(MainActivity.AGE, 0),
@@ -130,7 +137,7 @@ public class Engine {
                 cursor.moveToPosition(i);
                 adapterString.add(cursor.getString(0));
             } catch (Exception e) {
-                Log.i("CURSOR", cursor.toString() +"****"+ cursor.getCount());
+                Log.e("CURSOR", cursor.toString() +"****"+ cursor.getCount());
             }
 
         }
@@ -196,15 +203,15 @@ public class Engine {
         List<DataItem> dataItemList = DataReaderWriter.readFileData(engine.mContext);
         //check if list is empty if not clear Table and insert new data
         if(dataItemList.isEmpty()){
-            Log.i("NODATAITEM", "There where no items to read");
+            Log.e("NODATAITEM", "There where no items to read");
         }
         List<Weight> weightList = DataReaderWriter.readFileWeight(engine.mContext);
         if(weightList.isEmpty()){
-            Log.i("NOWEIGHTDATA", "There where no weight to read");
+            Log.e("NOWEIGHTDATA", "There where no weight to read");
         }
         User user = DataReaderWriter.readFileUser(engine.mContext);
         if(user == null){
-            Log.i("NOUSER", "There where no user to read");
+            Log.e("NOUSER", "There where no user to read");
             return false;
         }
         //clear all data from DB
@@ -355,5 +362,81 @@ public class Engine {
         int green = (int) (Color.green(startColor) * (1 - ratio) + Color.green(endColor) * ratio);
         int blue = (int) (Color.blue(startColor) * (1 - ratio) + Color.blue(endColor) * ratio);
         return Color.rgb(red, green, blue);
+    }
+    public static float getLastWeight() {
+        Cursor cursor = mDB.getAllWeightOrderdByDate();
+        cursor.moveToFirst();
+
+        return cursor.getFloat(DataSetDB.WEIGHTTABELWEIGHT);
+    }
+    public static void getTextSize(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float screenWidth = displayMetrics.widthPixels;
+        float screenHeigth = displayMetrics.heightPixels;
+
+        // Calculate the desired text size based on the screen width
+        float scalingFactor;
+        if(screenWidth>screenHeigth) {
+            scalingFactor = screenWidth / 720f;
+        } else {
+            scalingFactor = screenHeigth / 720f;
+        }
+        /*
+        TEXTSIZEBIG = 24f * scalingFactor;
+        TEXTSIZENORMAL = 16f * scalingFactor;
+        TEXTSIZESMALL = 12f * scalingFactor;
+        TEXTSIZETINY = 8f * scalingFactor;
+        */
+
+
+    }
+    public static List<Weight> profileAdviceWeightNumbers(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - 7);
+        List <Weight> returnList = new ArrayList<>();
+        Cursor cursor = mDB.getAllWeightOrderdByDate();
+        cursor.moveToFirst();
+        returnList.add(cursorToWeight(cursor));
+        cursor.moveToLast();
+        returnList.add(cursorToWeight(cursor));
+        Float weight7daysAgo  = mDB.calculateAvgByDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), DataSetDB.DB_TABLE_NAME_WEIGHT, DataSetDB.TABLEWEIGHT_ROW_WEIGHT);
+        returnList.add(new Weight(weight7daysAgo, calendar));
+        for(Weight i :  returnList)
+            Log.i("TAG", i.toString());
+
+        return returnList;
+    }
+    private static Weight cursorToWeight(Cursor cursor) {
+        try{
+            return new Weight(cursor.getInt(0), cursor.getFloat(1), cursor.getInt(2),
+                    cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6));
+        } catch(Exception e){
+            Log.e("CURSORTOWEIGHT", "Wrong Cursor, empty data");
+            return null;
+        }
+    }
+    public static int dayComparison(Calendar calendar1, Calendar calendar2){
+        long timeInMillis1 = calendar1.getTimeInMillis();
+        long timeInMillis2 = calendar2.getTimeInMillis();
+        // Calculate the difference in milliseconds
+        long differenceInMillis = Math.abs(timeInMillis2 - timeInMillis1);
+
+        // Convert milliseconds to days
+        long daysDifference = differenceInMillis / (24 * 60 * 60 * 1000);
+        return  Math.abs((int)daysDifference);
+    }
+    public static int dayComparison(int year1, int month1, int day1, int year2, int month2, int day2){
+        Calendar calendar1 = Calendar.getInstance();
+        Calendar calendar2 = Calendar.getInstance();
+        calendar1.set(year1, month1, day1);
+        calendar2.set(year2, month2, day2);
+        return dayComparison(calendar1, calendar2);
+    }
+    public static String calendarToDatetoString(Calendar calendar){
+        return yearMonthDaytoString(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    public static String yearMonthDaytoString(int year, int month, int day) {
+        return (year + "/" + month + "/" + day);
     }
 }

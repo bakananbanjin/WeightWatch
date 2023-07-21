@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 public class Overview extends Fragment {
     private TextView overviewCalLeft;
+    private TextView overviewWeight;
     private ImageView ivAddWeight;
     private ImageView ivAddCal;
     private int intCal;
@@ -31,7 +32,7 @@ public class Overview extends Fragment {
 
         TextView overviewBMI = view.findViewById(R.id.overview_bmi);
         TextView overviewCal = view.findViewById(R.id.overview_cal_day);
-        TextView overviewWeight = view.findViewById(R.id.overview_weight);
+        overviewWeight = view.findViewById(R.id.overview_weight);
         overviewCalLeft = view.findViewById(R.id.overview_cal_left);
         ivAddWeight = view.findViewById(R.id.iv_overview_add_weight);
         ivAddCal = view.findViewById(R.id.iv_overview_add_cal);
@@ -81,7 +82,7 @@ public class Overview extends Fragment {
             public void onClick(View view) {
                 InsertWeightDialog insertWeightDialog = new InsertWeightDialog();
                 insertWeightDialog.show(getParentFragmentManager(),"");
-                Log.i("ADDWEIGHT", "add weight pressed");
+                //Log.i("ADDWEIGHT", "add weight pressed");
             }
         });
 
@@ -104,6 +105,14 @@ public class Overview extends Fragment {
         }
         String stringOverviewCalLeft = getText(R.string.overview_cal_left) + "\n" + intCalLeft;
         overviewCalLeft.setText(stringOverviewCalLeft);
+
+        //get last weight save in preference and update overview
+        float newWeight = Engine.getLastWeight();
+        MainActivity.user.setUserWeight(newWeight);
+        MainActivity.mEditor.putFloat(MainActivity.WEIGHT, newWeight);
+        MainActivity.mEditor.commit();
+        String stringOverviewWeight = getText(R.string.overview_weight) + "\n" + newWeight;
+        overviewWeight.setText(stringOverviewWeight);
     }
 
 }
