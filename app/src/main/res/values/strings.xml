@@ -26,6 +26,7 @@
     <!--- Graph Strings!-->
     <string name="graph_legend_weight">WEIGHT</string>
     <string name="graph_legend_base_cal">DAILY CAL. BURN</string>
+    <string name="graph_title">%1$d day graph View</string>
 
     <!--- Weekplaner Strings !-->
     <string name="sunday">Sunday</string>

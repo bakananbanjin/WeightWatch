@@ -20,12 +20,12 @@
 
         <ImageView
             android:id="@+id/toolbar_imageview"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:layout_gravity="start"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/toolbar_icon"
             android:textAlignment="viewStart"
-            android:translationX="-50dp"
+            android:translationX="0dp"
             tools:layout_editor_absoluteX="16dp" />
 
         <TextView

@@ -14,6 +14,31 @@
     <color name="boarder_round_corner_view">#FF2299FF</color>
 
 
+    <!-- Primary Colors -->
+    <color name="colorPrimary">#03A9F4</color>      <!-- Material Light Blue -->
+    <color name="colorPrimaryDark">#0288D1</color>  <!-- Darker shade of Light Blue -->
+    <color name="colorAccent">#FF5722</color>       <!-- Material Deep Orange -->
+
+    <!-- Background Colors -->
+    <color name="colorBackground">#FFFFFF</color>   <!-- White background -->
+    <color name="colorBackgroundDark">#F5F5F5</color> <!-- Slightly darker shade of white -->
+
+    <!-- Text Colors -->
+    <color name="colorTextPrimary">#000000</color>   <!-- Black text -->
+    <color name="colorTextSecondary">#757575</color> <!-- Grey text -->
+    <color name="colorTextPrimaryNight">#F5F5F5</color>   <!-- Black text -->
+    <color name="colorTextSecondaryNight">#F0F0F0</color> <!-- Grey text -->
+
+    <!-- Button Colors -->
+    <color name="colorButtonNormal">#03A9F4</color>   <!-- Material Light Blue -->
+    <color name="colorButtonPressed">#0288D1</color>  <!-- Darker shade of Material Light Blue -->
+    <color name="colorButtonRipple">#80DEEA</color>   <!-- Light shade of Material Light Blue for ripple effect -->
+
+    <!-- Divider Color -->
+    <color name="colorDivider">#BDBDBD</color>        <!-- Grey divider -->
+
+
+
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
     <color name="LightYellow">#FFFFE0</color>

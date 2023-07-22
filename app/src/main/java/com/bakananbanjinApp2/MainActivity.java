@@ -40,7 +40,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     public static float TEXTSIZE;
     public static int DIAGRAMMDAYS = 7;
     public static final String USER = "user";
@@ -81,8 +81,6 @@ public class MainActivity extends AppCompatActivity {
         mPrefs = getSharedPreferences("WeightWatch", MODE_PRIVATE);
         mEditor = mPrefs.edit();
 
-
-
         //initialise Toolbar
         textViewToolbar = findViewById(R.id.toolbar_textview);
         textViewToolbar.setText(getString(R.string.welcome));
@@ -96,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
             frag = new Overview();
             fragmentManager.beginTransaction().add(R.id.fragment_container, frag).commit();
         }
-
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -126,10 +123,6 @@ public class MainActivity extends AppCompatActivity {
             mEditor.clear().commit();
             user = new User("user", true, 0, 0, 0, 0, 0);
         }
-        /*
-         * TEST CODEf
-         *
-         */
 
         Engine.initGraphFromDB();
         graphQuery();
@@ -156,6 +149,26 @@ public class MainActivity extends AppCompatActivity {
             weightList.add(Engine.mDB.calculateAvgByDate(i.year, i.month, i.day, DataSetDB.DB_TABLE_NAME_WEIGHT, DataSetDB.TABLEWEIGHT_ROW_WEIGHT));
         }
         graph.setData(xAxisLabelList, weightList, calList, Engine.calcCalNeed(user));
+        graph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //switch range of graph and put visibility of column Label
+                switch(DIAGRAMMDAYS){
+                    case 7:
+                        DIAGRAMMDAYS = 14;
+                        graph.setLabelVisible(false);
+                        break;
+                    case 14:
+                        DIAGRAMMDAYS = 28;
+                        graph.setLabelVisible(false);
+                        break;
+                    default:
+                        DIAGRAMMDAYS = 7;
+                        graph.setLabelVisible(true);
+                }
+                graphQuery();
+            }
+        });
 
     }
     @Override
@@ -256,5 +269,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
-
 }

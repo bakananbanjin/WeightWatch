@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.icu.text.DateFormat;
+import android.icu.text.DecimalFormat;
 import android.icu.text.SimpleDateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Engine {
+    public static float TEXTSIZHUGE = 36f;
     public static float TEXTSIZETINY = 12f;
     public static float TEXTSIZEBIG = 24f;
     public static float TEXTSIZENORMAL = 16;
@@ -435,8 +437,11 @@ public class Engine {
     public static String calendarToDatetoString(Calendar calendar){
         return yearMonthDaytoString(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     }
-
     public static String yearMonthDaytoString(int year, int month, int day) {
         return (year + "/" + month + "/" + day);
+    }
+    public static String floatToString(float value){
+        DecimalFormat decimalFormat = new DecimalFormat("#.1");
+        return decimalFormat.format(value);
     }
 }

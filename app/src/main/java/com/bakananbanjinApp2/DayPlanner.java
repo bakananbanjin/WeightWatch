@@ -32,12 +32,14 @@ public class DayPlanner {
     private static final int NUMROWS = 25;
     private static final int NUMCOLS = 9;
     private static TableLayout dayPlanner;
+    public static int getIntermittenfast = 0;
 
 
 
     public static TableLayout generateTable(Context context) {
         dayPlanner = null;
         dayPlanner = new TableLayout(context);
+        getIntermittenfast = 0;
 
         //id for all cells beginning at 1 unique in tablelayout
         int cellId = 0;
@@ -164,6 +166,7 @@ public class DayPlanner {
             while(start < end - 1){
                 changeCellFormat(idToCellId(++start), 1, dayPlanner);
             }
+            getIntermittenfast++;
         }
     }
     public static void generateTabelDescriptions(View view, Context context){

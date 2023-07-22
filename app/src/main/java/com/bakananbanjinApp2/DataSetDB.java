@@ -398,6 +398,9 @@ public class DataSetDB {
         }
         return sum;
     }
+    public float calculateSumByDate(Calendar calendar, String tableName, String sumFiled) {
+        return calculateSumByDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), tableName, sumFiled);
+    }
     public float calculateAvgByDate(int year, int month, int day, String tableName, String sumFiled) {
         if (!mDB.isOpen()) {
             mDB = mDBHelper.getWritableDatabase();

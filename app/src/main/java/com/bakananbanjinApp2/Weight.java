@@ -42,6 +42,14 @@ public class Weight {
         return calendar;
     }
 
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
+
     public String toString() {
         return (this.weight + " " + Engine.calendarToDatetoString(this.calendar));
     }
