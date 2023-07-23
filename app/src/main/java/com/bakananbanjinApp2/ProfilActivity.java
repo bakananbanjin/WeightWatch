@@ -1,22 +1,22 @@
 package com.bakananbanjinApp2;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Scroller;
 import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.List;
 
 public class ProfilActivity extends AppCompatActivity {
+    public static final String PROFILEPICTURE = "profil.jpg";
     private Toolbar toolbar;
     private ImageView imageViewProfile;
     private TextView textViewProfileName;
@@ -31,6 +31,8 @@ public class ProfilActivity extends AppCompatActivity {
     private User mUser;
     private int mCalDay;
     private int mBmi;
+
+    private ActivityResultLauncher<String> imagePickerLauncher;
 
 
     @Override
@@ -49,12 +51,23 @@ public class ProfilActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         imageViewProfile = findViewById(R.id.imageview_profil);
-        if(!mUser.ismIsMan()){
-            imageViewProfile.setImageDrawable(getDrawable(R.drawable.usermale));
-        } else {
-            imageViewProfile.setImageDrawable(getDrawable(R.drawable.userfemale));
-        }
 
+        if(DataReaderWriter.readFileImage(getBaseContext(), PROFILEPICTURE) != null){
+            imageViewProfile.setImageBitmap(DataReaderWriter.readFileImage(getBaseContext(), PROFILEPICTURE));
+        } else {
+            if (!mUser.ismIsMan()) {
+                imageViewProfile.setImageDrawable(getDrawable(R.drawable.usermale));
+            } else {
+                imageViewProfile.setImageDrawable(getDrawable(R.drawable.userfemale));
+            }
+        }
+        imageViewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //loead image and save it to mPrefernce
+                openImagePicker();
+            }
+        });
 
         textViewProfileName = findViewById(R.id.tv_profile_name);
         textViewProfileName.setText(mUser.getUserName());
@@ -104,7 +117,7 @@ public class ProfilActivity extends AppCompatActivity {
                     //we had weight lost since data recorded at least 1%
                     messageGreeting = getString(R.string.profile_progress_greeting_good);
                     messageWeight = getString(R.string.profile_progress_message_weight,
-                            weighList.get(1).getWeight(),
+                            MainActivity.user.getUserWeight(),
                             Engine.calendarToDatetoString(weighList.get(1).getCalendar()),
                             weighList.get(1).getWeight()-weighList.get(0).getWeight());
                     float tempfloat = weighList.get(2).getWeight()-weighList.get(0).getWeight();
@@ -116,7 +129,7 @@ public class ProfilActivity extends AppCompatActivity {
                     //we had weigh lose less then 1 %
                     messageGreeting = getString(R.string.profile_progress_greeting_bad);
                     messageWeight = getString(R.string.profile_progress_message_weight,
-                            weighList.get(1).getWeight(),
+                            MainActivity.user.getUserWeight(),
                             Engine.calendarToDatetoString(weighList.get(1).getCalendar()),
                             weighList.get(1).getWeight()-weighList.get(0).getWeight());
                     messageWeightResult = " " + getString(R.string.profile_progress_message_weight_result_bad);
@@ -155,10 +168,8 @@ public class ProfilActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception e){
-            Log.e("PROFILEPRGRESS", "error " );
+            //Log.e("PROFILEPRGRESS", "error " );
         }
-
-
 
         profile_progress_advice = messageNewUser + messageGreeting
                 + messageWeight +  message7days +  messageWeightResult
@@ -175,6 +186,17 @@ public class ProfilActivity extends AppCompatActivity {
                 createUserDialog.show(getSupportFragmentManager(), "");
             }
         });
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.GetContent(),
+                uri -> {if (uri != null) {
+                        DataReaderWriter.writeBitmapToJPG(DataReaderWriter.getBitmap(uri, getBaseContext()), getBaseContext());
+                    try {
+                        imageViewProfile.setImageBitmap(DataReaderWriter.readFileImage(getBaseContext(), PROFILEPICTURE));
+                    } catch (Exception e) {
+
+                    }
+                    }
+                });
     }
     public void onBackPressed() {
         super.onBackPressed();
@@ -182,5 +204,12 @@ public class ProfilActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    /*
+        +++++++TEST++++++
+         */
+    public void openImagePicker() {
+        imagePickerLauncher.launch("image/*");
     }
 }

@@ -1,0 +1,148 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--- Wiederverwendbare Zeichenketten -->
+    <string name="ok"> OK </string>
+    <string name="cancel"> Abbrechen </string>
+    <string name="edit"> Bearbeiten </string>
+    <string name="app_name">WeightWatch</string>
+    <string name="update">update</string>
+    <string name="profil">Profil</string>
+    <string name="info">Info</string>
+    <string name="welcome">Hallo</string>
+
+    <!-- Menüleiste -->
+    <string name="menu_delete">Daten löschen</string>
+    <string name="menu_backup">Daten sichern</string>
+
+    <!-- Gewicht eintragen -->
+    <string name="insert_weight_title">Bitte Gewicht eingeben!</string>
+    <string name="insert_weight_kg">kilo</string>
+    <string name="insert_weight_gram">,  gram </string>
+
+    <!-- Navigationsmenü MainActivity -->
+    <string name="backup_information_title">Sicherung erfolgreich</string>
+    <string name="backup_information">Die Daten wurden in root/Data gespeichert.</string>
+    <string name="backup_information_fail">Die Sicherung ist fehlgeschlagen, bitte erneut versuchen. Stellen Sie sicher, dass alle erforderlichen Berechtigungen erteilt wurden.</string>
+
+    <!--- Graph Strings!-->
+    <string name="graph_legend_weight">GEWICHT</string>
+    <string name="graph_legend_base_cal">Kalorienbedarf</string>
+    <string name="graph_title">%1$d-Tage-Diagramm</string>
+
+    <!--- Weekplaner Strings !-->
+    <string name="sunday">Sonntag</string>
+    <string name="monday">Montag</string>
+    <string name="tuesday">Dienstag</string>
+    <string name="wednesday">Mittwoch</string>
+    <string name="thursday">Donnerstag</string>
+    <string name="friday">Freitag</string>
+    <string name="saturday">Samstag</string>
+    <string name="weekplaner_time">Uhrzeit</string>
+    <string name="planner_time_date">Zeit/Datum</string>
+    <string name="planner_legend_1">aktuelle Zeit</string>
+    <string name="planner_legend_2">normale kcal</string>
+    <string name="planner_legend_3">hohe kcal</string>
+    <string name="planner_legend_4">Fasten 16h+</string>
+
+    <!--- Overview Strings!-->
+    <string name="overview_cal_day">kcal Tag</string>
+    <string name="overview_cal_left">Verbl. kcal</string>
+    <string name="overview_bmi">BMI:</string>
+    <string name="overview_weight">Gewicht:</string>
+
+    <!--- Edit Strings!-->
+    <string name="edit_weight">Gewicht</string>
+    <string name="edit_meals">Mahlzeiten</string>
+
+    <!--- InsertWindow Strings!-->
+    <string name="insert_meal">Bitte geben Sie Namen und kcal ein:</string>
+    <string name="hint_insert_what">Bitte Beschreibung eingeben</string>
+    <string name="hint_insert_cal">Bitte kcal eingeben</string>
+    <string name="insert_date_format">Datum (YYYY-MM-DD)</string>
+    <string name="insert_time_format">Uhrzeit (HH:mm)</string>
+    <string name="insert_no_input">Bitte Name und Kalorien eingeben</string>
+
+    <!--- CreateUser Window Strings !-->
+    <string name="createUser_Title">Neuen Benutzer erstellen</string>
+    <string name="createUser_name">Bitte Namen eingeben</string>
+    <string name="createUser_weight">Bitte Gewicht in Kg eingeben</string>
+    <string name="createUser_CalUse">Geschätzter kcal-Bedarf\npro Tag:</string>
+    <string name="createUser_CalTarget"></string>
+    <string name="createUser_height">Bitte Größe in cm eingeben</string>
+    <string name="createUser_target_weight">Bitte Wunschgewicht eingeben</string>
+    <string name="createUser_Age">Bitte Alter eingeben</string>
+    <string name="createUser_Bmi">Ihr BMI ist: </string>
+    <string name="createUser_targetBmi">Ihr BMI beim Wunschgewicht ist: </string>
+    <string name="createUser_Man">männlich</string>
+    <string name="createUser_activity_low">niedrig</string>
+    <string name="createUser_activity_medium">mittel</string>
+    <string name="createUser_activity_high">hoch</string>
+    <string name="createUser_activity_label">Aktivität:</string>
+    <string name="title_activity_edit">Bearbeiten</string>
+
+    <!-- Delete Data Dialogbox Strings !-->
+    <string name="delet_dialogbox_warning">Sind Sie sicher, dass Sie den Benutzer und alle Daten löschen möchten? Die Daten können nicht wiederhergestellt werden.\n
+    (Backup-Daten werden nicht gelöscht und müssen aus dem root/Data gelöscht werden)</string>
+    <string name="delet_dialogbox_title">Daten löschen Warnung</string>
+
+    <!-- Edit Activity Strings !-->
+    <string name="editActivity_toolbarMessage">Bearbeiten</string>
+    <!-- Profile Activity Strings !-->
+    <string name="profilActivity_toolbarMessage">Profil</string>
+    <string name="profile_target">Ihr Ziel ist:</string>
+    <string name="profile_calroies">tägl. kcal-verbrauch:</string>
+    <string name="profile_bmi">Ihr BMI ist:</string>
+
+    <string name="profile_progress_greeting_good">
+        Herzlichen Glückwunsch zu Ihrem Fortschritt!\n\n
+    </string>
+    <string name="profile_progress_greeting_bad">
+        Sie können es schaffen, geben Sie nicht auf!\n\n
+    </string>
+    <string name="profile_progress_message_weight">
+        Ihr aktuelles Gewicht beträgt %1$.1f kg und seit %2$s haben Sie %3$.1f kg verloren.
+    </string>
+    <string name="profile_progress_message_weight_7days">
+        In den letzten 7 Tagen ergab sich eine Gewichtsveränderung von %1$.1f kg.
+    </string>
+    <string name="profile_progress_message_weight_result_good">
+        Gewichtsschwankungen während einer Diät sind normal, aber es ist immer ermutigend, Fortschritte zu sehen.\n\n
+    </string>
+    <string name="profile_progress_message_weight_result_bad">
+        Gewichtsschwankungen während einer Diät sind normal, und es ist auch normal, dass man Herausforderungen bewältigen muss.\n\n
+    </string>
+    <string name="profile_progress_message_cal">
+        Sie hatten in den letzten sieben Tagen eine durchschnittliche Kalorienzufuhr von %1$.1f pro Tag, was einem Kaloriendefizit von %2$.1f pro Tag bedeutet.\n\n
+    </string>
+    <string name="profile_progress_message_intermittent">
+        Sie haben an %1$d von 7 Tagen erfolgreich Intervallfasten praktiziert.
+        Es wurde bewiesen, dass Intervallfasten den Stoffwechsel verbessert und somit den Gewichtsverlust fördert.
+    </string>
+    <string name="profile_progress_message_intermittent_bad">
+        Intervallfasten mag schwierig sein, aber die Vorteile sollten überwiegen, also geben Sie Ihr Bestes.\n\n
+    </string>
+    <string name="profile_progress_message_intermittent_good">
+        Machen Sie weiter so!\n\n
+    </string>
+    <string name="profile_progress_message_encourage_good">
+        Denken Sie daran, dass Gewichtsverlust eine individuelle Reise ist und die Ergebnisse variieren können. Bleiben Sie konsequent und positiv, so erreichen wir gemeinsam Ihre Gesundheitsziele!
+        \n\nMachen Sie weiter so und Sie erreichen Ihr Wunschgewicht von %1$.1f in etwa %2$d Tagen!
+    </string>
+    <string name="profile_progress_message_encourage_bad">
+        Denken Sie daran, dass Gewichtsverlust eine individuelle Reise ist und die Ergebnisse variieren können. Bleiben Sie konsequent, positiv und engagiert, und versuchen Sie, in den nächsten 7 Tagen Intervallfasten und ein Kaloriendefizit umzusetzen. Bleiben Sie Ihrer Reise verpflichtet, und mit Zeit, Anstrengung und Unterstützung unserer App werden Sie Ihre Gesundheitsziele erreichen!\n\nMachen Sie weiter so, damit Sie Ihr Gewichtsziel von %1$.1f erreichen können.
+    </string>
+    <string name="profile_progress_message_new_user">
+    Willkommen bei unserer App
+    </string>
+
+    <!--Info Activity Strings-->
+    <string name="info_toolbar_text">Info</string>
+
+    <string name="essay_weight_loss">
+    Der Schlüssel zum effektiven Gewichtsverlust: Kaloriendefizit und der 16+8 Ansatz\n\nIn der heutigen schnelllebigen Welt ist der Gewichtsverlust zu einem vorherrschenden Anliegen für viele Menschen geworden, die ihre Gesundheit und ihr Wohlbefinden verbessern möchten. Während verschiedene Methoden und Strategien existieren, stehen zwei wesentliche Aspekte im Mittelpunkt, die zu einem erfolgreichen Gewichtsverlust führen: das Aufrechterhalten eines Kaloriendefizits und das Befolgen des 16+8 Intervallfasten-Ansatzes.\n\n1. Kaloriendefizit:\n\na. Energiebilanz:\nGewichtsverlust tritt auf, wenn der Energieverbrauch des Körpers den Energieeinlass übertrifft. Dies führt dazu, dass der Körper gespeichertes Fett als Energiequelle nutzt und letztendlich zu Gewichtsverlust führt.
+    \n\nb. Kalorienverfolgung:\nDas Überwachen der täglichen Kalorienzufuhr und des Kalorienverbrauchs ist entscheidend, um ein Kaloriendefizit aufrechtzuerhalten. Indem man den Nährwert von Lebensmitteln genau bewertet und körperliche Aktivitäten verfolgt, können Personen fundierte Entscheidungen treffen, um ein nachhaltiges Defizit zu gewährleisten.\n\nc. Ausgewogene Ernährung:\nObwohl es wichtig ist, ein Kaloriendefizit zu schaffen, ist es ebenso wichtig, eine ausgewogene Ernährung beizubehalten. Die Priorisierung von nährstoffreichen Lebensmitteln, einschließlich magerem Protein, Vollkornprodukten, Obst und Gemüse, kann die Gesundheit unterstützen und essentielle Vitamine und Mineralien liefern, während die Kalorienzufuhr im Gleichgewicht bleibt.\n\n2. 16+8 Intervallfasten:
+    \n\na. Verbesserte Fettverbrennung:\nDurch die Verlängerung der Fastenperiode erschöpft der Körper seine sofort verfügbare Energie aus der Nahrung und greift auf gespeichertes Fett als Energiequelle zurück. Dies fördert die Fettverbrennung und hilft beim Gewichtsverlust.\n\nb. Regulierung des Insulins:\nIntervallfasten kann die Insulinsensitivität verbessern, was dazu beiträgt, den Blutzuckerspiegel zu regulieren. Dadurch wird das Risiko von Insulinresistenz reduziert und eine bessere Gewichtsregulierung unterstützt.\n\nc. Appetitkontrolle:\nDurch die Begrenzung des Essensfensters auf 8 Stunden kann der Hunger reguliert und übermäßiges Snacking reduziert werden. Dies kann zu einer besseren Portionierung, einer reduzierten Kalorienaufnahme und letztendlich zu Gewichtsabnahmeprozessen beitragen.
+    \n\nNachhaltiger Gewichtsverlust erfordert einen vielschichtigen Ansatz, der ein Kaloriendefizit und effektive Strategien umfasst. Ein Kaloriendefizit durch eine bewusste Kalorienverfolgung und eine ausgewogene Ernährung ist entscheidend für einen konsistenten Gewichtsverlust. Darüber hinaus bietet der 16+8 Intervallfasten-Ansatz eine vorteilhafte Grundlage zur Steigerung der Fettverbrennung, zur Regulierung des Insulinspiegels und zur Kontrolle des Appetits.\n\nEs ist wichtig zu beachten, dass Gewichtsverlustreisen individuell sind und was für eine Person funktioniert, möglicherweise nicht für eine andere funktioniert. Es wird empfohlen, einen Gesundheitsfachmann oder einen registrierten Ernährungsberater zu konsultieren, um Gewichtsverlustpläne zu individualisieren und das allgemeine Wohlbefinden zu gewährleisten.
+    Mit Engagement, Geduld und einem ganzheitlichen Ansatz wird das Erreichen und Aufrechterhalten eines gesunden Gewichts zu einem erreichbaren Ziel für jeden.\n\n
+
+    </string>
+</resources>

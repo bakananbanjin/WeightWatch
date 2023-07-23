@@ -8,22 +8,18 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.icu.text.Edits;
-import android.provider.CalendarContract;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
 
 public class DayPlanner {
@@ -212,7 +208,7 @@ public class DayPlanner {
             }
             return Integer.parseInt(temp);
         } catch (Exception e) {
-            Log.e("GETCELLCALCOUNT", "cell not found or no value " + id );
+            //Log.e("GETCELLCALCOUNT", "cell not found or no value " + id );
             return 0;
         }
     }
@@ -223,7 +219,7 @@ public class DayPlanner {
             TextView cell = view.findViewById(id);
             cell.setText(text);
         } catch (Exception e) {
-            Log.e("CHANGECELLTEXT", "cell not found");
+            //Log.e("CHANGECELLTEXT", "cell not found");
         }
     }
     private static void changeCellFormat(int id, View view){
@@ -233,7 +229,7 @@ public class DayPlanner {
             cell.setBackgroundResource(R.drawable.black_boarder_gray_background);
             cell.setTypeface(null, Typeface.BOLD);
         } catch (Exception e) {
-            Log.e("CHANGECELLFORMAT", "cell not found id " + id);
+            //Log.e("CHANGECELLFORMAT", "cell not found id " + id);
         }
     }
     private static void changeCellFormat(int id, int color, View view){
@@ -262,7 +258,7 @@ public class DayPlanner {
 
 
         } catch (Exception e) {
-            Log.e("CHANGECELLFORMAT", "cell not found id " + id);
+            //Log.e("CHANGECELLFORMAT", "cell not found id " + id);
         }
     }
     private static void changeCellColor(int id, int color, View view, Context context){
@@ -274,7 +270,7 @@ public class DayPlanner {
             TextView cell = view.findViewById(id);
             cell.setBackground(shape);
         } catch (Resources.NotFoundException e) {
-            Log.e("CHANGECELLCOLOR", "cell not found id " + id);
+            //Log.e("CHANGECELLCOLOR", "cell not found id " + id);
         }
     }
     private static int getNextCellId(int startId){

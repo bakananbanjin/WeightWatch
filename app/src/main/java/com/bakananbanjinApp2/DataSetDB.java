@@ -5,12 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
 
 import androidx.annotation.Nullable;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -290,7 +288,7 @@ public class DataSetDB {
                 + c.get(Calendar.MINUTE)
                 +");";
 
-        Log.i("INSERT INTO DB", insertquery);
+        //Log.i("INSERT INTO DB", insertquery);
         mDB.execSQL(insertquery);
     }
     public void updatetWeightData(int id, float weight, int year, int month, int day, int hour, int minute) {
@@ -351,7 +349,7 @@ public class DataSetDB {
                 + DB_ROW_HOUR + " = " + dataItem.getHour() + ", "
                 + DB_ROW_MIN + " = " + dataItem.getMin()
                 + " WHERE " + DB_ROW_ID + " = " + dataItem.getId() + ";";
-        Log.i("UPDATE INTO DB", updateQuery);
+        //Log.i("UPDATE INTO DB", updateQuery);
         mDB.execSQL(updateQuery);
 
     }
@@ -361,7 +359,7 @@ public class DataSetDB {
                 + TABLEWEIGHT_ROW_WEIGHT + " = " + weight
                 + " WHERE " + DB_ROW_ID + " = " + weightId + ";";
 
-        Log.i("UPDATE INTO DB", updateQuery);
+        //Log.i("UPDATE INTO DB", updateQuery);
 
         mDB.execSQL(updateQuery);
     }

@@ -37,7 +37,7 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="weekplaner_time">time</string>
-    <string name="planner_time_date">hh/Date</string>
+    <string name="planner_time_date">hh/date</string>
     <string name="planner_legend_1">current hour</string>
     <string name="planner_legend_2">normal cal intake</string>
     <string name="planner_legend_3">high cal intake</string>
@@ -81,12 +81,6 @@
     <string name="createUser_activity_high">high</string>
     <string name="createUser_activity_label">activity:</string>
     <string name="title_activity_edit">EditActivity</string>
-
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
     <!-- Delete Data Dialogbox Strings !-->
     <string name="delet_dialogbox_warning">Are you sure that you want to delete User and all data? Data can not be recovered.\n

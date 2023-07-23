@@ -122,7 +122,7 @@ public class DataItem {
 
         }
         tempTime += getMin();
-        String dateTime = this.getYear() + "/" + this.getMonth() + "/" + this.getDay() + "\n" + tempTime;
+        String dateTime = this.getYear() + "/" + (this.getMonth()+1) + "/" + this.getDay() + "\n" + tempTime;
         return dateTime;
     }
     public int getId() {

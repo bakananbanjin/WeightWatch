@@ -1,9 +1,13 @@
 package com.bakananbanjinApp2;
 
+import static java.lang.System.out;
+
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Environment;
-import android.util.Log;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,9 +15,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DataReaderWriter {
@@ -22,15 +28,11 @@ public class DataReaderWriter {
     public static String FILENAME_WEIGHT = "weight";
     public static String FOLDER_NAME = "Data";
 
-    private static BufferedReader br;
-    private static String line;
-    private static String split;
 
     public DataReaderWriter() {
 
     }
     //read Database from file
-
     public static boolean writeFileWeight(String file, Context context, Cursor cursor) {
         File root = context.getFilesDir();
         File dir = new File(root + "/Data");
@@ -63,6 +65,15 @@ public class DataReaderWriter {
             return false;
         }
     }
+
+    public static void deleteProfilpicture(Context context) {
+        File root = context.getFilesDir();
+        File dir = new File(root + "/Data");
+        dir.mkdir();
+        File fileToDelete = new File(dir, ProfilActivity.PROFILEPICTURE);
+        fileToDelete.delete();
+    }
+
     public boolean writeFileData(String file, Context context, List<DataItem> dataItemList){
 
         //get Application storage
@@ -162,7 +173,7 @@ public class DataReaderWriter {
                 fileLines.add(line);
             }
         } catch (FileNotFoundException e) {
-            Log.e("FILE NOT FOUND", "Reader could not find File");
+            //Log.e("FILE NOT FOUND", "Reader could not find File");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -179,7 +190,7 @@ public class DataReaderWriter {
                 //item toSting to check delete at relase
                 dataItemList.add(tempDataItem);
             } else {
-                Log.e("READ ERROR", "Read dataItem wrong length");
+                //Log.e("READ ERROR", "Read dataItem wrong length");
             }
         }
 
@@ -202,7 +213,7 @@ public class DataReaderWriter {
                 fileLines.add(line);
             }
         } catch (FileNotFoundException e) {
-            Log.i("FILE NOT FOUND", "Reader could not find File");
+            //Log.e("FILE NOT FOUND", "Reader could not find File");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -217,7 +228,7 @@ public class DataReaderWriter {
                                 Integer.parseInt(tempString[6]));
                 dataWeightList.add(tempDataWeight);
             } else {
-                Log.i("READ ERROR", "Read dataItem wrong length");
+                //Log.e("READ ERROR", "Read dataItem wrong length");
             }
         }
         return dataWeightList;
@@ -235,7 +246,7 @@ public class DataReaderWriter {
             lineUser = br.readLine();
             //we only handle one user atm
             if(lineUser == null){
-                Log.e("NOUSER", "no user or file Found");
+                //Log.e("NOUSER", "no user or file Found");
                 throw new FileNotFoundException();
             }
             String[] tempString = lineUser.split(";");
@@ -244,11 +255,78 @@ public class DataReaderWriter {
                     Float.parseFloat(tempString[6]));
             return user;
         } catch (FileNotFoundException e) {
-            Log.i("FILE NOT FOUND", "Reader could not find File");
+            //Log.i("FILE NOT FOUND", "Reader could not find File");
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
+    public static boolean writeBitmapToJPG(Bitmap bitmap, Context context){
+        File root = context.getFilesDir();
+        File dir = new File(root + "/Data");
+        dir.mkdir();
+        //save pic as profil.jpg in DataFolder
+        File newFile = new File(dir, ProfilActivity.PROFILEPICTURE);
 
+        try{
+            FileOutputStream f = new FileOutputStream(newFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, f);
+            f.flush();
+            f.close();
+        } catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+    public static Bitmap readFileImage(Context context, String fileName){
+        Bitmap imageBitmap = null;
+        File fileDataItem = new File(context.getFilesDir() + File.separator + FOLDER_NAME, fileName);
+        //absolut or relativ?
+        imageBitmap = BitmapFactory.decodeFile(fileDataItem.getPath());
+        return imageBitmap;
+    }
+    public static Bitmap getBitmap(Uri uri, Context context){
+        int desiredWidth = 200;
+        int desiredHeight = 200;
+
+        try {
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(inputStream, null, options);
+            if ((options.outWidth == -1) || (options.outHeight == -1)) {
+                return null;
+            }
+            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+            bitmapOptions.inSampleSize = calculateInSampleSize(options, desiredWidth, desiredHeight);
+            inputStream = context.getContentResolver().openInputStream(uri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, bitmapOptions);
+            inputStream.close();
+            return bitmap;
+
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException e){
+            return null;
+        }
+    }
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of the image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
 }

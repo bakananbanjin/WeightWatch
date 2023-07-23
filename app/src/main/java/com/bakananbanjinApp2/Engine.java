@@ -3,15 +3,13 @@ package com.bakananbanjinApp2;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.icu.text.DateFormat;
 import android.icu.text.DecimalFormat;
-import android.icu.text.SimpleDateFormat;
+
 import android.util.DisplayMetrics;
-import android.util.Log;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class Engine {
@@ -40,7 +38,7 @@ public class Engine {
         //1.insert new Data Item in to DB
         //2.update overview Calorie left
         if(engine == null){
-            Log.e("ERROR ENGINE", "Engine is not initialized");
+            //Log.e("ERROR ENGINE", "Engine is not initialized");
             return false;
         }
         mDB.insert(dataItem);
@@ -85,6 +83,7 @@ public class Engine {
     }
     public static void deleteData(){
         MainActivity.mEditor.clear().commit();
+        DataReaderWriter.deleteProfilpicture(mContext);
         mDB.deleteAll();
         mDB.update();
     }
@@ -139,7 +138,7 @@ public class Engine {
                 cursor.moveToPosition(i);
                 adapterString.add(cursor.getString(0));
             } catch (Exception e) {
-                Log.e("CURSOR", cursor.toString() +"****"+ cursor.getCount());
+                //Log.e("CURSOR", cursor.toString() +"****"+ cursor.getCount());
             }
 
         }
@@ -164,7 +163,7 @@ public class Engine {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("INSERT WEIGHT", "error insert weight");
+            //Log.e("INSERT WEIGHT", "error insert weight");
             return false;
         }
     }
@@ -179,7 +178,7 @@ public class Engine {
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("INSERT WEIGHT", "error insert weight");
+                //Log.e("INSERT WEIGHT", "error insert weight");
                 return false;
             }
         } else {//WEIGHT TABLE IS EMPTY we create a entrance for the first time
@@ -195,7 +194,7 @@ public class Engine {
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("INSERT WEIGHT", "error insert weight");
+                //Log.e("INSERT WEIGHT", "error insert weight");
                 return false;
             }
         }
@@ -205,15 +204,15 @@ public class Engine {
         List<DataItem> dataItemList = DataReaderWriter.readFileData(engine.mContext);
         //check if list is empty if not clear Table and insert new data
         if(dataItemList.isEmpty()){
-            Log.e("NODATAITEM", "There where no items to read");
+            //Log.e("NODATAITEM", "There where no items to read");
         }
         List<Weight> weightList = DataReaderWriter.readFileWeight(engine.mContext);
         if(weightList.isEmpty()){
-            Log.e("NOWEIGHTDATA", "There where no weight to read");
+            //Log.e("NOWEIGHTDATA", "There where no weight to read");
         }
         User user = DataReaderWriter.readFileUser(engine.mContext);
         if(user == null){
-            Log.e("NOUSER", "There where no user to read");
+            //Log.e("NOUSER", "There where no user to read");
             return false;
         }
         //clear all data from DB
@@ -240,7 +239,7 @@ public class Engine {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("INSERT WEIGHT", "error insert weight");
+            //Log.e("INSERT WEIGHT", "error insert weight");
             return false;
         }
     }
@@ -403,8 +402,7 @@ public class Engine {
         returnList.add(cursorToWeight(cursor));
         Float weight7daysAgo  = mDB.calculateAvgByDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), DataSetDB.DB_TABLE_NAME_WEIGHT, DataSetDB.TABLEWEIGHT_ROW_WEIGHT);
         returnList.add(new Weight(weight7daysAgo, calendar));
-        for(Weight i :  returnList)
-            Log.i("TAG", i.toString());
+
 
         return returnList;
     }
@@ -413,7 +411,7 @@ public class Engine {
             return new Weight(cursor.getInt(0), cursor.getFloat(1), cursor.getInt(2),
                     cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6));
         } catch(Exception e){
-            Log.e("CURSORTOWEIGHT", "Wrong Cursor, empty data");
+            //Log.e("CURSORTOWEIGHT", "Wrong Cursor, empty data");
             return null;
         }
     }
@@ -435,7 +433,7 @@ public class Engine {
         return dayComparison(calendar1, calendar2);
     }
     public static String calendarToDatetoString(Calendar calendar){
-        return yearMonthDaytoString(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        return yearMonthDaytoString(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
     }
     public static String yearMonthDaytoString(int year, int month, int day) {
         return (year + "/" + month + "/" + day);

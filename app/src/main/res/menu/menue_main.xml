@@ -13,10 +13,6 @@
         android:title="@string/info">
     </item>
     <item
-        android:id="@+id/menu_Backup"
-        android:title="@string/menu_backup">
-    </item>
-    <item
         android:id="@+id/menu_Delete"
         android:title="@string/menu_delete">
     </item>

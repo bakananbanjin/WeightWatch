@@ -7,21 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
+
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -31,13 +26,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+
 
 
 public class MainActivity extends AppCompatActivity{
@@ -119,7 +110,7 @@ public class MainActivity extends AppCompatActivity{
                     mPrefs.getFloat(ACTIVITYLEVEL, 1.2f));
             textViewToolbar.setText(getString(R.string.welcome) + " " + user.getUserName());
         } catch (Exception e) {
-            Log.e("NOUSER", "no user found");
+            //Log.e("NOUSER", "no user found");
             mEditor.clear().commit();
             user = new User("user", true, 0, 0, 0, 0, 0);
         }
@@ -180,7 +171,6 @@ public class MainActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int selectedId = item.getItemId();
         if (selectedId == R.id.menu_Profil) {
-            Log.i("MENU", "Profil selected");
             Intent intent = new Intent(this, ProfilActivity.class);
             startActivity(intent);
             return true;
@@ -192,16 +182,16 @@ public class MainActivity extends AppCompatActivity{
             Intent intent = new Intent(this, EditActivity.class);
             startActivity(intent);
             return true;
-        } else if (selectedId == R.id.menu_Backup) {
+        } /*else if (selectedId == R.id.menu_Backup) {
             if (Engine.backupAll(user)) {
                 Toast.makeText(this, getText(R.string.backup_information), Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, getText(R.string.backup_information_fail), Toast.LENGTH_LONG).show();
             }
 
-            Log.i("MENU", "Backup selected");
             return true;
-        } else if (selectedId == R.id.menu_Delete) {
+        } */
+        else if (selectedId == R.id.menu_Delete) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(getString(R.string.delet_dialogbox_title));
             builder.setMessage(getString(R.string.delet_dialogbox_warning));

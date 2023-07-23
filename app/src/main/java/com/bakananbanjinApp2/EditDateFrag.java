@@ -1,8 +1,7 @@
 package com.bakananbanjinApp2;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,7 @@ public class EditDateFrag extends Fragment implements RecyclerViewInterface, OnI
     public static DataItemAdapter myAdapter;
     public static WeightItemAdapter myWeightAdapter;
     public static TextView tv_edit_weight;
+    public static TextView tv_edit_meals;
     private View mView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +40,10 @@ public class EditDateFrag extends Fragment implements RecyclerViewInterface, OnI
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.edit_data_frag, container, false);
         tv_edit_weight = mView.findViewById(R.id.tv_edit_weight);
-        TextView tv_edit_meals = mView.findViewById(R.id.tv_edit_data);
+
+        tv_edit_meals = mView.findViewById(R.id.tv_edit_data);
+        tv_edit_meals.setBackgroundResource(R.drawable.round_corner_view);
+        tv_edit_weight.setBackgroundResource(R.drawable.round_corner_view);
 
         tv_edit_weight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +82,7 @@ public class EditDateFrag extends Fragment implements RecyclerViewInterface, OnI
             }
         }
 
-        Log.i("ITEM CLICK", "Item on Position " + position + " got clicked");
+        //Log.i("ITEM CLICK", "Item on Position " + position + " got clicked");
     }
 
     public void weightView(View view){
@@ -91,6 +94,8 @@ public class EditDateFrag extends Fragment implements RecyclerViewInterface, OnI
         myWeightAdapter = new WeightItemAdapter(getContext(), weightList, this);
         myWeightAdapter.setItemClickListener(this);
         mRecyclerViewEdit.setAdapter(myWeightAdapter);
+        tv_edit_weight.setBackgroundResource(R.drawable.round_corner_view_light);
+        tv_edit_meals.setBackgroundResource(R.drawable.round_corner_view);
     }
     public void dataItemView(View view){
         mRecyclerViewEdit = view.findViewById(R.id.recyclerview);
@@ -101,6 +106,8 @@ public class EditDateFrag extends Fragment implements RecyclerViewInterface, OnI
         myAdapter = new DataItemAdapter(getContext(), dataItemList, this);
         myAdapter.setItemClickListener(this);
         mRecyclerViewEdit.setAdapter(myAdapter);
+        tv_edit_weight.setBackgroundResource(R.drawable.round_corner_view);
+        tv_edit_meals.setBackgroundResource(R.drawable.round_corner_view_light);
     }
     private void reloadFragment() {
         FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();

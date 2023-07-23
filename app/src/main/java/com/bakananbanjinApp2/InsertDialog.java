@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -112,7 +111,7 @@ public class InsertDialog extends DialogFragment {
                     }
                     dismiss();
                 } catch (Exception e) {
-                    Log.e("INSERT WRONG TYPE", "insert wrong type in INSERT FIELD");
+                    //Log.e("INSERT WRONG TYPE", "insert wrong type in INSERT FIELD");
                     String message = getResources().getString(R.string.insert_no_input);
                     Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
                 }
