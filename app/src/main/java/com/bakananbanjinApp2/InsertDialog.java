@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -38,6 +40,8 @@ public class InsertDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogFragmentStyle);
+
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View insertView = inflater.inflate(R.layout.insert_window, null);
 
@@ -134,5 +138,12 @@ public class InsertDialog extends DialogFragment {
         //setview and retrun Dialog window
         builder.setView(insertView).setMessage(R.string.insert_meal);
         return builder.create();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 }
