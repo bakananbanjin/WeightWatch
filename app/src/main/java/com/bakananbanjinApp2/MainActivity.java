@@ -183,15 +183,12 @@ public class MainActivity extends AppCompatActivity{
             Intent intent = new Intent(this, EditActivity.class);
             startActivity(intent);
             return true;
-        } /*else if (selectedId == R.id.menu_Backup) {
-            if (Engine.backupAll(user)) {
-                Toast.makeText(this, getText(R.string.backup_information), Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, getText(R.string.backup_information_fail), Toast.LENGTH_LONG).show();
-            }
+        } else if (selectedId == R.id.menu_Help) {
+            Intent intent = new Intent(this, ActivityHelp.class);
+            startActivity(intent);
 
             return true;
-        } */
+        }
         else if (selectedId == R.id.menu_Delete) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(getString(R.string.delet_dialogbox_title));

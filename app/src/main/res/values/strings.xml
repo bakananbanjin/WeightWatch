@@ -12,6 +12,7 @@
     <!-- toolbar menu -->
     <string name="menu_delete">Delete Data</string>
     <string name="menu_backup">Backup</string>
+    <string name="menu_help">Help</string>
 
     <!-- insert Weight -->
     <string name="insert_weight_title">Pls insert new weight value!</string>
@@ -42,7 +43,6 @@
     <string name="planner_legend_2">normal cal intake</string>
     <string name="planner_legend_3">high cal intake</string>
     <string name="planner_legend_4">Cal Fast: 16h+"</string>
-
 
 
     <!--- Overview Strings!-->
@@ -153,4 +153,27 @@
         \n\na. Enhanced fat burning:\nBy extending the fasting period, the body exhausts its readily available energy from food, prompting the utilization of stored fat for fuel. This promotes fat burning and aids in weight loss.\n\nb. Insulin regulation:\nIntermittent fasting can improve insulin sensitivity, which helps regulate blood sugar levels. This, in turn, reduces the risk of insulin resistance and supports better weight management.\n\nc. Appetite control:\nRestricting the eating window to 8 hours can help regulate hunger hormones and curb excessive snacking. This can result in better portion control, reduced calorie intake, and ultimately contribute to weight loss goals.
         \n\nAchieving sustainable weight loss requires a multifaceted approach that includes creating a calorie deficit and implementing effective strategies. Maintaining a calorie deficit through mindful calorie tracking and a balanced diet is essential for consistent weight loss. Additionally, the 16+8 intermittent fasting approach offers a beneficial framework for enhancing fat burning, regulating insulin levels, and controlling appetite.\n\nIt is important to note that weight loss journeys are individualized, and what works for one person may not work for another. Consulting a healthcare professional or a registered dietitian is recommended to personalize weight loss plans and ensure overall well-being. With dedication, patience, and a holistic approach, achieving and maintaining a healthy weight becomes an attainable goal for everyone.
     </string>
+
+    <!--Help Activity Strings-->
+    <string name="help_toolbar_text">Help</string>
+    <string name="help_a_title">A. Overview information</string>
+    <string name="help_a1_info">Greetings and Username</string>
+    <string name="help_a2_info">Four icons to indicate your current BMI, your current weight, your daily calorie burn rate and the max calorie you can still intake today before you gain weight.</string>
+    <string name="help_a3_info">Press the X-Button to insert a new weight.</string>
+    <string name="help_a4_info">Opens the menu</string>
+
+    <string name="help_b_title">B. Main graph information</string>
+    <string name="help_b1_info">You see for what time span the graph is set (you can click on the graph to change between 7, 14 and 28 days view) The X-Axis is scaled in kg dependent on your weight.</string>
+    <string name="help_b2_info">The blue line shows your weight over time, every number is your average daily weight.</string>
+    <string name="help_b3_info">The bar charts show your daily calorie intake, they should stay below the red dotted line. The red dotted line is your approximated daily calorie burn rate.</string>
+    <string name="help_b4_info">The Y-Axis is scaled by days 7/14/28 days range. (*point 1)</string>
+
+    <string name="help_c_title">C. Main calendar information</string>
+    <string name="help_c1_info">The calendar shows you your information in a 8 day view. Every row is an time period of 1 hour.\nEvery
+        column is one day. Yellow areas represent times with at least 16 consecutive hours without calorie intake.\nThe numbers show
+        how much calorie was taken in any given hour. The color shows (from green to red) shows the amount of calorie intake.\nThe
+        Blue area is the current hour.</string>
+    <string name="help_d_title">D. Insert new Meal Button</string>
+    <string name="help_d1_info">On the main screen on the bottom right you can press this button to open a new insert window. There you can enter new calorie intake data.</string>
+
 </resources>
