@@ -176,9 +176,10 @@ public class Graph extends View {
         return decimalFormat.format(value);
     }
     private float getMinFromList(List<Float> yValues) {
-        float min = -1f;
+        //not efficient but for now its ok
+        float min = getMaxFromList(yValues);
         for (float value : yValues) {
-            if (value < min && value > 0) {
+            if (value < min && value > 1f) {
                 min = value;
             }
         }

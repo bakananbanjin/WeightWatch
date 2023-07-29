@@ -143,6 +143,46 @@
     \n\na. Verbesserte Fettverbrennung:\nDurch die Verlängerung der Fastenperiode erschöpft der Körper seine sofort verfügbare Energie aus der Nahrung und greift auf gespeichertes Fett als Energiequelle zurück. Dies fördert die Fettverbrennung und hilft beim Gewichtsverlust.\n\nb. Regulierung des Insulins:\nIntervallfasten kann die Insulinsensitivität verbessern, was dazu beiträgt, den Blutzuckerspiegel zu regulieren. Dadurch wird das Risiko von Insulinresistenz reduziert und eine bessere Gewichtsregulierung unterstützt.\n\nc. Appetitkontrolle:\nDurch die Begrenzung des Essensfensters auf 8 Stunden kann der Hunger reguliert und übermäßiges Snacking reduziert werden. Dies kann zu einer besseren Portionierung, einer reduzierten Kalorienaufnahme und letztendlich zu Gewichtsabnahmeprozessen beitragen.
     \n\nNachhaltiger Gewichtsverlust erfordert einen vielschichtigen Ansatz, der ein Kaloriendefizit und effektive Strategien umfasst. Ein Kaloriendefizit durch eine bewusste Kalorienverfolgung und eine ausgewogene Ernährung ist entscheidend für einen konsistenten Gewichtsverlust. Darüber hinaus bietet der 16+8 Intervallfasten-Ansatz eine vorteilhafte Grundlage zur Steigerung der Fettverbrennung, zur Regulierung des Insulinspiegels und zur Kontrolle des Appetits.\n\nEs ist wichtig zu beachten, dass Gewichtsverlustreisen individuell sind und was für eine Person funktioniert, möglicherweise nicht für eine andere funktioniert. Es wird empfohlen, einen Gesundheitsfachmann oder einen registrierten Ernährungsberater zu konsultieren, um Gewichtsverlustpläne zu individualisieren und das allgemeine Wohlbefinden zu gewährleisten.
     Mit Engagement, Geduld und einem ganzheitlichen Ansatz wird das Erreichen und Aufrechterhalten eines gesunden Gewichts zu einem erreichbaren Ziel für jeden.\n\n
-
     </string>
+
+    <!--Hilfe Activity Strings-->
+
+    <string name="help_toolbar_text">Hilfe</string>
+    <string name="help_a_title">A. Übersichtsinformationen</string>
+    <string name="help_a1_info">Begrüßung und Benutzername</string>
+    <string name="help_a2_info">Vier Symbole, die Ihren aktuellen BMI, Ihr aktuelles Gewicht, Ihren täglichen Kalorienverbrauch und die maximale Kalorienaufnahme anzeigen, bevor Sie an Gewicht zunehmen.</string>
+    <string name="help_a3_info">Drücken Sie die X-Taste, um ein neues Gewicht einzugeben.</string>
+    <string name="help_a4_info">Öffnet das Menü</string>
+
+    <string name="help_b_title">B. Hauptgrafik Informationen</string>
+    <string name="help_b1_info">Sie sehen für welchen Zeitraum die Grafik festgelegt ist (Sie können auf die Grafik klicken, um zwischen 7, 14 und 28 Tagen Ansicht zu wechseln). Die X-Achse ist in kg skaliert, abhängig von Ihrem Gewicht.</string>
+    <string name="help_b2_info">Die blaue Linie zeigt Ihr Gewicht im Laufe der Zeit, jede Zahl ist Ihr durchschnittliches tägliches Gewicht.</string>
+    <string name="help_b3_info">Die Balkendiagramme zeigen Ihre tägliche Kalorienaufnahme, sie sollten unterhalb der roten gestrichelten Linie bleiben. Die rote gestrichelte Linie ist Ihre geschätzte tägliche Kalorienverbrennung.</string>
+    <string name="help_b4_info">Die Y-Achse ist nach Tagen 7/14/28 Tagen Bereich skaliert. (Siehe Punkt 1)</string>
+
+    <string name="help_c_title">C. Hauptkalender Informationen</string>
+    <string name="help_c1_info">Der Kalender zeigt Ihnen Ihre Informationen in einer 8-Tage-Ansicht. Jede Zeile ist ein Zeitraum von 1 Stunde. Jede Spalte ist ein Tag. Gelbe Bereiche repräsentieren Zeiten mit mindestens 16 aufeinanderfolgenden Stunden ohne Kalorienaufnahme (Intervallfasten). Die Zahlen zeigen, wie viele Kalorien in einer bestimmten Stunde aufgenommen wurden. Die Farbe zeigt (von grün zu rot) die Menge der Kalorienaufnahme an. Das blaue Zelle ist die aktuelle Stunde.</string>
+
+    <string name="help_d_title">D. Neue Kalorienaufnahme hinzufuegen</string>
+    <string name="help_d1_info">Auf dem Hauptbildschirm unten rechts können Sie auf diese Schaltfläche drücken, um ein neues Eingabefenster zu öffnen. Dort können Sie neue Kalorienaufnahmedaten eingeben.</string>
+
+    <string name="help_e_title">E. Hauptmenü Informationen</string>
+    <string name="help_e1_info">Öffnet das Profilfenster. Hier können Sie Ihre persönlichen Daten anzeigen und bearbeiten. (Siehe Punkt F)</string>
+    <string name="help_e2_info">Öffnet das Bearbeitungsfenster. Hier können Sie alle Ihre eingegebenen Mahlzeiten und Gewichtsdaten anzeigen und bearbeiten. (Siehe Punkt G)</string>
+    <string name="help_e3_info">Öffnet einen kleinen Informationstext über den Kaloriendefizit und den 16+8 Ansatz.</string>
+    <string name="help_e4_info">Löscht alle Ihre eingegebenen Benutzer- und Gewichtsdaten. Wenn Sie dies auswählen, wird eine Warnmeldung angezeigt, ob Sie dies wirklich tun möchten. Kann nicht rückgängig gemacht werden.</string>
+
+    <string name="help_f_title">F. Profilinformationen</string>
+    <string name="help_f1_info">Drücken Sie den Pfeil, um zur Startseite zurückzukehren.</string>
+    <string name="help_f2_info">Sie können das Profilbild durch ein Bild von Ihrem Gerät ersetzen, indem Sie auf das Profilbild drücken.</string>
+    <string name="help_f3_info">Informationen, die Sie eingegeben haben, als Sie die App zum ersten Mal gestartet haben (oder bearbeitet haben, siehe Punkt 5).</string>
+    <string name="help_f4_info">Ein automatisch generierter Text gibt Feedback über Ihren Fortschritt.</string>
+    <string name="help_f5_info">Sie können Ihre persönlichen Informationen ändern, indem Sie auf diese Schaltfläche drücken.</string>
+
+    <string name="help_g_title">G. Bearbeitungsfenster</string>
+    <string name="help_g1_info">Drücken Sie den Pfeil, um zur Startseite zurückzukehren.</string>
+    <string name="help_g2_info">Sie können die angezeigten Daten zwischen Ihren eingefügten Gewichts- und Mahlzeitendaten umschalten, indem Sie die entsprechende Schaltfläche drücken.</string>
+    <string name="help_g3_info">Durch Drücken des blauen Bereichs des Elements können Sie die Daten bearbeiten. Ein Dialogfenster wird angezeigt.</string>
+    <string name="help_g4_info">Durch Drücken des roten X löschen Sie das Element. Das Element wird sofort ohne weitere Überprüfung gelöscht.</string>
+    <string name="help_contact">Wenn Sie weitere Fragen oder Empfehlungen haben, freue ich mich, von Ihnen zu hören. Bitte hinterlassen Sie einen Kommentar im App Store, aus dem Sie diese App heruntergeladen haben. Weitere Funktionen werden hinzugefügt. Vielen Dank, dass Sie Weight Watch verwenden.</string>
 </resources>
