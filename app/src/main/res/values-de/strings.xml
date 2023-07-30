@@ -12,6 +12,7 @@
     <!-- Menüleiste -->
     <string name="menu_delete">Daten löschen</string>
     <string name="menu_backup">Daten sichern</string>
+    <string name="menu_help">Hilfe</string>
 
     <!-- Gewicht eintragen -->
     <string name="insert_weight_title">Bitte Gewicht eingeben!</string>

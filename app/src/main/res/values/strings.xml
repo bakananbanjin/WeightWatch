@@ -9,6 +9,7 @@
     <string name="info">Info</string>
     <string name="welcome">Welcome</string>
 
+
     <!-- toolbar menu -->
     <string name="menu_delete">Delete Data</string>
     <string name="menu_backup">Backup</string>
