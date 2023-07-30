@@ -143,7 +143,11 @@ public class Graph extends View {
         //get max and min Value for yAxsis
         if (weightList == null || weightList.isEmpty()) {
             // Handle empty list case
-            return null;
+
+            for(int i = 0; i < steps; i++){
+                yAxis.add((float)i);
+            }
+            return yAxis;
         }
         float maxValue = getMaxFromList(weightList);
         float minValue = getMinFromList(weightList);
@@ -172,9 +176,10 @@ public class Graph extends View {
         return decimalFormat.format(value);
     }
     private float getMinFromList(List<Float> yValues) {
-        float min = Float.MAX_VALUE;
+        //not efficient but for now its ok
+        float min = getMaxFromList(yValues);
         for (float value : yValues) {
-            if (value < min && value > 0) {
+            if (value < min && value > 1f) {
                 min = value;
             }
         }

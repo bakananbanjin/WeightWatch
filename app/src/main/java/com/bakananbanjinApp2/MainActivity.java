@@ -51,14 +51,6 @@ public class MainActivity extends AppCompatActivity{
     private TableLayout dayPlanner;
     HorizontalScrollView horizontalScrollView;
 
-    //1.
-    //2. Toolbar Textcolor dynamisch anpassen oder eigenen Theme schreiben
-    //3. Icon fuer toolbar anpassen
-    //4.
-    //5. Advise in Engine
-    //6. button to add weight and additonal cal
-    //7. Update Cal need per day on current weight
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //test change for version 2.0
@@ -183,15 +175,12 @@ public class MainActivity extends AppCompatActivity{
             Intent intent = new Intent(this, EditActivity.class);
             startActivity(intent);
             return true;
-        } /*else if (selectedId == R.id.menu_Backup) {
-            if (Engine.backupAll(user)) {
-                Toast.makeText(this, getText(R.string.backup_information), Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, getText(R.string.backup_information_fail), Toast.LENGTH_LONG).show();
-            }
+        } else if (selectedId == R.id.menu_Help) {
+            Intent intent = new Intent(this, ActivityHelp.class);
+            startActivity(intent);
 
             return true;
-        } */
+        }
         else if (selectedId == R.id.menu_Delete) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(getString(R.string.delet_dialogbox_title));
@@ -223,12 +212,6 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-       /*  20.07 21.12 test commented may needs to be reinstaded
-       Overview fragment = (Overview) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        if (fragment != null) {
-            fragment.updateOverview();
-        }
-        graphQuery();*/
     }
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -250,11 +233,6 @@ public class MainActivity extends AppCompatActivity{
         finish();
         startActivity(intent);
     }
-    /*
-    +
-    +  TEST CODE ONLY BELOW
-    +
-     */
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
