@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -27,6 +28,7 @@ public class DayPlanner {
     private static final int INTERMITTENFAST = 16;
     private static final int NUMROWS = 25;
     private static final int NUMCOLS = 9;
+    private static final int DAYCOUNT = 6;
     private static TableLayout dayPlanner;
     public static int getIntermittenfast = 0;
 
@@ -89,7 +91,8 @@ public class DayPlanner {
 
         //get all Cal Items from the last 7days
         List<DataItem> dataItemListLast7days = new ArrayList<>();
-        dataItemListLast7days = Engine.getDataItemNewerThanSorted(6);
+        dataItemListLast7days = Engine.getDataItemSortedLastWeek(DAYCOUNT);
+
 
         if(dataItemListLast7days == null || dataItemListLast7days.isEmpty()) {
             return;
@@ -99,7 +102,7 @@ public class DayPlanner {
         Calendar calendar = Calendar.getInstance();
         int currentComparisonDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-        //make a treeset to store unicq ids with cal intake
+        //make a treeset to store uniq ids with cal intake
         TreeSet<Integer> calIntakeCellIdTreeSet = new TreeSet<>();
 
         int dayColumn = 7;
@@ -109,9 +112,10 @@ public class DayPlanner {
             //set the date to the current selected item
             while(currentComparisonDay != i.getDay()) {
                 //susbstract one day from calander
-                calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - 1);
+                calendar.add(Calendar.DAY_OF_MONTH,  -1);
                 currentComparisonDay = calendar.get(Calendar.DAY_OF_MONTH);
                 dayColumn--;
+                Log.i("DAY", currentComparisonDay + " " + dayColumn);
             }
             int id =((i.getHour() + 1)* 10) + dayColumn;
             int cellCalCount = getCellCalCount(id, dayPlanner);
@@ -143,7 +147,7 @@ public class DayPlanner {
         colorIntermittent(idArray[idArray.length-1], cellIdToId(getCurrentHourCellId()), INTERMITTENFAST, dayPlanner, context);
         //set calander to current day and go back 8 days to get the last food item before the day planner
         calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - 7);
+        calendar.add(Calendar.DAY_OF_MONTH,  -7);
         DataItem lastFoodIntake8daysAgo = Engine.mDB.selectDataItemByDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         if(lastFoodIntake8daysAgo == null){
             //color yellow until first item  no item this will never be reached
@@ -174,7 +178,7 @@ public class DayPlanner {
 
         //set tomorrow (code was later added)
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
         YearMonthDay tomorrow = new YearMonthDay(calendar);
         changeCellText(8, tomorrow.toString(), dayPlanner);
         changeCellFormat(8, dayPlanner);

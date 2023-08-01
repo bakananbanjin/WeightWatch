@@ -22,6 +22,15 @@ public class DataSetDB {
     public static final int WEIGHTTABELHOUR = 5;
     public static final int WEIGHTTABELMIN= 6;
 
+    public static final int DATATABLEID = 0;
+    public static final int DATATABLEITEM = 1;
+    public static final int DATATABLECAL = 2;
+    public static final int DATATABLEYEAR = 3;
+    public static final int DATATABLEMONTH = 4;
+    public static final int DATATABLEDAY = 5;
+    public static final int DATATABLEHOUR = 6;
+    public static final int DATATABLEMIN = 7;
+
     private static final String DATABASE_NAME = "Data.db";
     private static final int DATABASE_VERSION = 1;
     public static final String DB_TABLE_NAME_WEIGHT = "WEIGHT";

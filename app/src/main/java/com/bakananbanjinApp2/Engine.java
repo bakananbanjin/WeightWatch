@@ -1,16 +1,22 @@
 package com.bakananbanjinApp2;
 
+import android.app.Notification;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.icu.text.DecimalFormat;
 
+import android.icu.text.SimpleDateFormat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
+
+import androidx.core.app.NotificationCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.LogRecord;
 
 public class Engine {
     public static float TEXTSIZHUGE = 36f;
@@ -285,7 +291,7 @@ public class Engine {
     public static int calcCalNeed(User user) {
        return calcCalNeed(user.ismIsMan(), user.getUserHeight(), user.getUserWeight(), user.getUserAge(), user.getUserActivity());
     }
-    public static List<DataItem> getDataItemNewerThanSorted(int dayCount){
+    /*public static List<DataItem> getDataItemNewerThanSorted(int dayCount){
         //retrive all items sorted by date time
         //add to list items untill date is reached
         //break loop
@@ -299,7 +305,7 @@ public class Engine {
         int monthOfYear = Calendar.getInstance().get(Calendar.MONTH);
         int year = Calendar.getInstance().get(Calendar.YEAR);
         //day is smaller then day the we also have to go a month back
-        if((dayOfMonth - dayCount) < dayCount){
+        if((dayOfMonth - dayCount) < 0){
             //get all values from current month
             while(monthOfYear == cursor.getInt(4)){
                 returnDataItemList.add(new DataItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
@@ -350,6 +356,78 @@ public class Engine {
 
 
         return returnDataItemList;
+    }*/
+    public static List<DataItem> getDataItemSortedLastWeek(int dayCount){
+        //retrieve all items sorted by date time
+        List<DataItem> returnDataItemList = new ArrayList<>();
+        Cursor cursor = mDB.selectAll();
+        //no data return empty list
+        if(!cursor.moveToFirst()){
+            return returnDataItemList;
+        }
+        //get current date
+        Calendar calendar = Calendar.getInstance();
+        //check if current data is in the future and move until current date
+        while(cursor.getInt(DataSetDB.DATATABLEYEAR)> calendar.get(Calendar.YEAR) ){
+            //year is in te future move to next
+            if(!cursor.moveToNext()){
+                //no valid data return empty list
+                return returnDataItemList;
+            }
+        }
+        while (cursor.getInt(DataSetDB.DATATABLEMONTH) > calendar.get(Calendar.MONTH)){
+            //month is in te future move to next
+            if(!cursor.moveToNext()){
+                //no valid data return empty list
+                return returnDataItemList;
+            }
+        }
+        while (cursor.getInt(DataSetDB.DATATABLEDAY) > calendar.get(Calendar.DAY_OF_MONTH)){
+            //day is in te future move to next
+            if(!cursor.moveToNext()){
+                //no valid data return empty list
+                return returnDataItemList;
+            }
+        }
+        //set a second calendar
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.add(Calendar.DAY_OF_MONTH,  -dayCount);
+        calendar1.set(Calendar.HOUR_OF_DAY, 0);
+        calendar1.set(Calendar.MINUTE, 0);
+        Log.i("CALENDAR!", calendar1.get(Calendar.YEAR) + ":" + calendar1.get(Calendar.MONTH) + ":" + calendar1.get(Calendar.DAY_OF_MONTH)+ " " + calendar1.get(Calendar.HOUR) + ":" + calendar1.get(Calendar.MINUTE));
+        //cursor is current day or older
+        for(int i = cursor.getPosition(); i <= cursor.getCount(); i++){
+            //Log.i("CALENDAR1", calendar1.get(Calendar.YEAR) + ":" + calendar1.get(Calendar.MONTH) + ":" + calendar1.get(Calendar.DAY_OF_MONTH));
+           // Log.i("CALENDAR", calendar.get(Calendar.YEAR) + ":" + calendar.get(Calendar.MONTH) + ":" + calendar.get(Calendar.DAY_OF_MONTH));
+
+            DataItem toAddDataItem = new DataItem(cursor.getInt(DataSetDB.DATATABLEID),
+                    cursor.getString(DataSetDB.DATATABLEITEM),
+                    cursor.getInt(DataSetDB.DATATABLECAL),
+                    cursor.getInt(DataSetDB.DATATABLEYEAR),
+                    cursor.getInt(DataSetDB.DATATABLEMONTH),
+                    cursor.getInt(DataSetDB.DATATABLEDAY),
+                    cursor.getInt(DataSetDB.DATATABLEHOUR),
+                    cursor.getInt(DataSetDB.DATATABLEMIN));
+
+            calendar.set(cursor.getInt(DataSetDB.DATATABLEYEAR),
+                    cursor.getInt(DataSetDB.DATATABLEMONTH),
+                    cursor.getInt(DataSetDB.DATATABLEDAY),
+                    cursor.getInt(DataSetDB.DATATABLEHOUR),
+                    cursor.getInt(DataSetDB.DATATABLEMIN));
+
+            Log.i("DATAITEM", toAddDataItem.toString());
+            if(!cursor.moveToNext() || calendar.compareTo(calendar1) < 0){
+                SimpleDateFormat format = new SimpleDateFormat("EEEE, MMMM d, yyyy 'at' h:mm a");
+                Log.i("CALENDAR1", format.format(calendar1.getTime()));
+                Log.i("CALENDAR", format.format(calendar.getTime()));
+
+                return returnDataItemList;
+            }
+            returnDataItemList.add(toAddDataItem);
+        }
+
+
+        return returnDataItemList;
     }
     public static int interpolateColor(int startColor, int endColor, float minValue, float maxValue, float value) {
         float trueValue = value;
@@ -393,7 +471,7 @@ public class Engine {
     }
     public static List<Weight> profileAdviceWeightNumbers(){
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - 7);
+        calendar.add(Calendar.DAY_OF_MONTH, -7);
         List <Weight> returnList = new ArrayList<>();
         Cursor cursor = mDB.getAllWeightOrderdByDate();
         cursor.moveToFirst();
@@ -441,5 +519,8 @@ public class Engine {
     public static String floatToString(float value){
         DecimalFormat decimalFormat = new DecimalFormat("#.1");
         return decimalFormat.format(value);
+    }
+    public static void setNotification(){
+        //NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
     }
 }
