@@ -1,10 +1,7 @@
 package com.bakananbanjinApp2;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
@@ -32,6 +29,8 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity{
+    private static final String CALORIE_USED_TODAY = "calDay";
+    private static final String CALORIE_BURN_DAY = "calBurn";
     public static float TEXTSIZE;
     public static int DIAGRAMMDAYS = 7;
     public static final String USER = "user";
@@ -41,6 +40,13 @@ public class MainActivity extends AppCompatActivity{
     public static final String ISMAN = "isMan";
     public static final String TARGETWEIGHT = "targetWeight";
     public static final String ACTIVITYLEVEL = "activity";
+    public static final String NOTIFICATION_ENABLED = "notification_enabled";
+    public static final String NOTIFICATION_MORNING = "notification_morning";
+    public static final String NOTIFICATION_EVENING = "notification_evening";
+    public static final String NOTIFICATION_MORNING_HOUR = "notification_morning_hour";
+    public static final String NOTIFICATION_MORNING_MIN = "notification_morning_min";
+    public static final String NOTIFICATION_EVENING_HOUR = "notification_evening_hour";
+    public static final String NOTIFICATION_EVENING_MIN = "notification_evening_min";
     public static SharedPreferences mPrefs;
     public static SharedPreferences.Editor mEditor;
     public static User user;
@@ -61,7 +67,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
-        //shardePreferences for user data
+        //sharedPreferences for user data
         mPrefs = getSharedPreferences("WeightWatch", MODE_PRIVATE);
         mEditor = mPrefs.edit();
 
@@ -85,14 +91,20 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View view) {
                 InsertDialog insertDialog = new InsertDialog();
                 insertDialog.show(getSupportFragmentManager(), "");
+                //update preference for notification
+                mEditor.putInt(CALORIE_USED_TODAY, 0);
+                mEditor.apply();
             }
         });
 
         //if no user is present ask to create one
         if (!mPrefs.contains("user")) {
-            CreateUser createUserDialog = new CreateUser();
-            createUserDialog.show(getSupportFragmentManager(), "");
+            //CreateUser createUserDialog = new CreateUser();
+            //createUserDialog.show(getSupportFragmentManager(), "");
+            Intent intent = new Intent(getApplicationContext(), ActivityCreateUser.class);
+            startActivity(intent);
         }
+        //should be else???
         try {
             user = new User(mPrefs.getString(USER, "user"),
                     mPrefs.getBoolean(ISMAN, true),
@@ -104,8 +116,19 @@ public class MainActivity extends AppCompatActivity{
             textViewToolbar.setText(getString(R.string.welcome) + " " + user.getUserName());
         } catch (Exception e) {
             //Log.e("NOUSER", "no user found");
-            mEditor.clear().commit();
+            mEditor.clear().apply();
             user = new User("user", true, 0, 0, 0, 0, 0);
+        }
+        //check if preference hold values for notifications if not create them
+        if(!mPrefs.contains(NOTIFICATION_ENABLED)){
+            mEditor.putBoolean(NOTIFICATION_ENABLED, false);
+            mEditor.putBoolean(NOTIFICATION_MORNING, false);
+            mEditor.putBoolean(NOTIFICATION_EVENING, false);
+            mEditor.putInt(NOTIFICATION_MORNING_HOUR, 8);
+            mEditor.putInt(NOTIFICATION_MORNING_MIN, 0);
+            mEditor.putInt(NOTIFICATION_EVENING_HOUR, 22);
+            mEditor.putInt(NOTIFICATION_EVENING_MIN, 0);
+            mEditor.commit();
         }
 
         Engine.initGraphFromDB();
@@ -113,6 +136,10 @@ public class MainActivity extends AppCompatActivity{
         horizontalScrollView = findViewById(R.id.main_hscroll_view);
         dayPlanner = DayPlanner.generateTable(this);
         horizontalScrollView.addView(dayPlanner);
+
+        //save preference for Notification
+        mEditor.putInt(CALORIE_BURN_DAY, Engine.calcCalNeed(user));
+        mEditor.apply();
     }
     private void graphQuery() {
         graph = findViewById(R.id.graph);
@@ -181,31 +208,11 @@ public class MainActivity extends AppCompatActivity{
 
             return true;
         }
-        else if (selectedId == R.id.menu_Delete) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle(getString(R.string.delet_dialogbox_title));
-            builder.setMessage(getString(R.string.delet_dialogbox_warning));
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Engine.deleteData();
-                    Engine.getPref();
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-
+        else if (selectedId == R.id.menu_Option) {
+            Intent intent = new Intent(this, ActivityOptions.class);
+            startActivity(intent);
             return true;
+
         }
         return false;
     }
@@ -213,6 +220,22 @@ public class MainActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
     }
+
+    @Override
+    protected void onStop() {
+        mEditor.putInt(CALORIE_USED_TODAY, Engine.calcUsedToday());
+        mEditor.putInt(CALORIE_BURN_DAY, Engine.calcCalNeed(user));
+        mEditor.apply();
+        super.onStop();
+    }
+    @Override
+    protected void onPause() {
+        mEditor.putInt(CALORIE_USED_TODAY, Engine.calcUsedToday());
+        mEditor.putInt(CALORIE_BURN_DAY, Engine.calcCalNeed(user));
+        mEditor.apply();
+        super.onPause();
+    }
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);

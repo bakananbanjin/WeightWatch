@@ -8,12 +8,22 @@
     <string name="profil">Profil</string>
     <string name="info">Info</string>
     <string name="welcome">Welcome</string>
+    <string name="permission_not_granted">Permission was not granted</string>
 
 
     <!-- toolbar menu -->
     <string name="menu_delete">Delete Data</string>
     <string name="menu_backup">Backup</string>
     <string name="menu_help">Help</string>
+    <string name="menu_option">Option</string>
+
+    <!-- Options -->
+    <string name="options_notification_title">Notification Settings</string>
+    <string name="options_notification_enable">Enable Notifications</string>
+    <string name="options_notification_morning">Morning Reminder</string>
+    <string name="options_notification_evening">Evening Summary</string>
+    <string name="options_notification_blocked">Notifications are blocked for this App by the System.\nPlease enable them in your phone settings.</string>
+    <string name="options_other_settings">Other Settings</string>
 
     <!-- insert Weight -->
     <string name="insert_weight_title">Pls insert new weight value!</string>
@@ -77,11 +87,14 @@
     <string name="createUser_Bmi">Your BMI is: </string>
     <string name="createUser_targetBmi">Your BMI at target weight is: </string>
     <string name="createUser_Man">man</string>
+    <string name="createUser_female">female</string>
     <string name="createUser_activity_low">low</string>
     <string name="createUser_activity_medium">medium</string>
     <string name="createUser_activity_high">high</string>
     <string name="createUser_activity_label">activity:</string>
     <string name="title_activity_edit">EditActivity</string>
+    <string name="createUser_toolbar_title">New User</string>
+    <string name="createUser_data_use">Insert data are only locally saved. The app needs the data for calculating your daily calorie burn rate. You can change this data later. (Menu -> Profile -> Edit Profile)</string>
 
     <!-- Delete Data Dialogbox Strings !-->
     <string name="delet_dialogbox_warning">Are you sure that you want to delete User and all data? Data can not be recovered.\n
@@ -181,7 +194,7 @@
     <string name="help_e1_info">Opens the profile window. Here you can see and edit your personal data. (See point F)</string>
     <string name="help_e2_info">Opens the edit window. Here you can see and edit all your entered meal and weight data. (See point G)</string>
     <string name="help_e3_info">Opens a small information text about calorie deficit and the 16+8 approach.</string>
-    <string name="help_e4_info">Deletes all your entered user and weight data.If you select it a warning message will ask you, if you really want to do it. Cant be undone.</string>
+    <string name="help_e4_info">Opens the options window. Here you can turn on and off notifications and delete your data. (See point H)</string>
 
     <string name="help_f_title">F. Profile information</string>
     <string name="help_f1_info">Press the arrow to get back to the main screen.</string>
@@ -195,7 +208,35 @@
     <string name="help_g2_info">You can switch the shown data between your insert weight and meal data, by pressing the corresponding button.</string>
     <string name="help_g3_info">By pressing the blue area of the item you can edit the data. A dialog window will pop up.</string>
     <string name="help_g4_info">By pressing the red X you delete the item. The item will be deleted immediately without an other check.</string>
+
+
+    <string name="help_h_title">H. Options window</string>
+    <string name="help_h1_info">Press the arrow to get back to the main screen.</string>
+    <string name="help_h2_info">With this switch you can enable or disable all notifications.</string>
+    <string name="help_h3_info">Morning Reminder switch activates a morning notification.
+        \nEvening summary switch activates a evening notification with some summary information.
+        \nIf you activate any switch a button will appear, where you can individually set the time
+        for the notification. (see second picture below)</string>
+    <string name="help_h4_info">Deletes all your entered user and weight data.If you select it a warning message will ask you, if you really want to do it. Cant be undone.</string>
+    <string name="help_h5_info">Button with becomes visible if you activate notification. You can press the button to extend a time picker to set an individual time for your notifications. (see point 6 and 7)</string>
+    <string name="help_h6_info">Button with extend time picker view.</string>
+    <string name="help_h7_info">Time picker to set the corresponding notification. Every notification has its own time picker. Only visible if notification is activated and you extend the view.</string>
+
     <string name="help_contact">If you have further questions or recommendations I would be happy the hear from you. Please leave a
         comment at the appstore you downloaded this app. More features will be added.\nThank you for using Weight Watch.</string>
+
+    <!-- Notifications -->
+    <string name="notification_morning_title">Good morning!</string>
+    <string name="notification_morning_text"> Start your day with a smile and give your best!\nDon\'t forget to insert today\'s weight.</string>
+    <string name="notification_evening_title">Good evening her is today\'s summary:</string>
+    <string name="notification_evening_text">Today\'s Calorie Intake: %1$d calories\nCalorie Deficit: %2$d calories
+        \nHave you entered all calorie data today? (Beverages, Snacks, Meals? You can simply enter the data retroactively if you forget it.)</string>
+    <string name="notification_description">Your daily notification is scheduled to show at the specified time.
+        However, please note that some devices restrict background services,
+        which may affect the notification behavior. If you have trouble seeing your notifications, please check battery saver settings and enable autostart.
+        We apologize if the notification doesn\'t show as intended on
+        such devices.</string>
+
+
 
 </resources>

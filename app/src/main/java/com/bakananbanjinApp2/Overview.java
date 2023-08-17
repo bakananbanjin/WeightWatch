@@ -104,7 +104,12 @@ public class Overview extends Fragment {
         overviewCalLeft.setText(stringOverviewCalLeft);
 
         //get last weight save in preference and update overview
-        float newWeight = Engine.getLastWeight();
+        float newWeight = 0f;
+        try{
+         newWeight = Engine.getLastWeight();
+        } catch (Exception e){
+            //no action necessary
+        }
         MainActivity.user.setUserWeight(newWeight);
         MainActivity.mEditor.putFloat(MainActivity.WEIGHT, newWeight);
         MainActivity.mEditor.commit();

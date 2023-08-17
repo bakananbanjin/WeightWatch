@@ -8,11 +8,23 @@
     <string name="profil">Profil</string>
     <string name="info">Info</string>
     <string name="welcome">Hallo</string>
+    <string name="permission_not_granted">Berechtigung wurde nicht erteilt</string>
+
 
     <!-- Menüleiste -->
     <string name="menu_delete">Daten löschen</string>
     <string name="menu_backup">Daten sichern</string>
     <string name="menu_help">Hilfe</string>
+    <string name="menu_option">Optionen</string>
+
+    <!-- Options -->
+    <string name="options_notification_title">Benachrichtigungseinstellungen</string>
+    <string name="options_notification_enable">Benachrichtigungen aktivieren</string>
+    <string name="options_notification_morning">Morgenerinnerung</string>
+    <string name="options_notification_evening">Abendzusammenfassung</string>
+    <string name="options_notification_blocked">Benachrichtigungen für diese App wurden vom System blockiert.\nBitte aktiviere sie diese in den Einstellungen des Telefons.</string>
+    <string name="options_other_settings">Andere Einstellungen</string>
+
 
     <!-- Gewicht eintragen -->
     <string name="insert_weight_title">Bitte Gewicht eingeben!</string>
@@ -74,11 +86,15 @@
     <string name="createUser_Bmi">Ihr BMI ist: </string>
     <string name="createUser_targetBmi">Ihr BMI beim Wunschgewicht ist: </string>
     <string name="createUser_Man">männlich</string>
+    <string name="createUser_female">weiblich</string>
     <string name="createUser_activity_low">niedrig</string>
     <string name="createUser_activity_medium">mittel</string>
     <string name="createUser_activity_high">hoch</string>
     <string name="createUser_activity_label">Aktivität:</string>
     <string name="title_activity_edit">Bearbeiten</string>
+    <string name="createUser_toolbar_title">Neuer Benutzer</string>
+    <string name="createUser_data_use">Die eingegebenen Daten werden nur lokal gespeichert. Die App benötigt die Daten zur Berechnung deines täglichen Kalorienverbrauchs. Du kannst diese Daten später ändern. (Menü -> Profil -> Profil bearbeiten)</string>
+
 
     <!-- Delete Data Dialogbox Strings !-->
     <string name="delet_dialogbox_warning">Sind Sie sicher, dass Sie den Benutzer und alle Daten löschen möchten? Die Daten können nicht wiederhergestellt werden.\n
@@ -171,7 +187,7 @@
     <string name="help_e1_info">Öffnet das Profilfenster. Hier können Sie Ihre persönlichen Daten anzeigen und bearbeiten. (Siehe Punkt F)</string>
     <string name="help_e2_info">Öffnet das Bearbeitungsfenster. Hier können Sie alle Ihre eingegebenen Mahlzeiten und Gewichtsdaten anzeigen und bearbeiten. (Siehe Punkt G)</string>
     <string name="help_e3_info">Öffnet einen kleinen Informationstext über den Kaloriendefizit und den 16+8 Ansatz.</string>
-    <string name="help_e4_info">Löscht alle Ihre eingegebenen Benutzer- und Gewichtsdaten. Wenn Sie dies auswählen, wird eine Warnmeldung angezeigt, ob Sie dies wirklich tun möchten. Kann nicht rückgängig gemacht werden.</string>
+    <string name="help_e4_info">Öffnet die Optionen, indem die Benachrichtigungen eingestellt werden und alle Gewichts und Kalorien daten gelöscht werden können. (Siehe Punkt H)</string>
 
     <string name="help_f_title">F. Profilinformationen</string>
     <string name="help_f1_info">Drücken Sie den Pfeil, um zur Startseite zurückzukehren.</string>
@@ -185,5 +201,36 @@
     <string name="help_g2_info">Sie können die angezeigten Daten zwischen Ihren eingefügten Gewichts- und Mahlzeitendaten umschalten, indem Sie die entsprechende Schaltfläche drücken.</string>
     <string name="help_g3_info">Durch Drücken des blauen Bereichs des Elements können Sie die Daten bearbeiten. Ein Dialogfenster wird angezeigt.</string>
     <string name="help_g4_info">Durch Drücken des roten X löschen Sie das Element. Das Element wird sofort ohne weitere Überprüfung gelöscht.</string>
+
+    <string name="help_h_title">H. Optionen</string>
+    <string name="help_h1_info">Drücken Sie den Pfeil, um zur Hauptansicht zurückzukehren.</string>
+    <string name="help_h2_info">Mit diesem Schalter können Sie alle Benachrichtigungen aktivieren oder deaktivieren.</string>
+    <string name="help_h3_info">Der Schalter für die Morgenerinnerung aktiviert eine Benachrichtigung am Morgen.
+    \nDer Schalter für die Abendzusammenfassung aktivieren.  (Abendbenachrichtigung mit einer zusammenfassung der taeglichen Kalorieaufnahme.)
+    \nWenn Sie einen Schalter aktivieren, erscheint ein Button, mit dem Sie die Uhrzeit für die Benachrichtigung individuell festlegen können.
+    (siehe zweites Bild unten)</string>
+    <string name="help_h4_info">Löscht alle Ihre eingegebenen Benutzer- und Gewichtsdaten. Wenn Sie dies auswählen, wird eine Warnmeldung angezeigt, die Sie fragt, ob Sie dies wirklich tun möchten. Dieser Vorgang kann nicht rückgängig gemacht werden.</string>
+    <string name="help_h5_info">Button wird sichtbar, wenn Sie die Benachrichtigung aktivieren. Sie können den Button drücken, um einen Zeitpicker anzuzeigen, um eine individuelle Uhrzeit für Ihre Benachrichtigungen einzustellen. (siehe Punkt 6 und 7)</string>
+    <string name="help_h6_info">Button zum Anzeigen des Zeitpicker-Dialogs mit ausgefahrenem Zeitpicker.</string>
+    <string name="help_h7_info">Zeitpicker zum Festlegen der entsprechenden Benachrichtigung. Jede Benachrichtigung hat ihren eigenen Zeitpicker. Nur sichtbar, wenn die Benachrichtigung aktiviert ist und Sie die Ansicht mit dem Button ausgefahren haben.</string>
+
+
+
     <string name="help_contact">Wenn Sie weitere Fragen oder Empfehlungen haben, freue ich mich, von Ihnen zu hören. Bitte hinterlassen Sie einen Kommentar im App Store, aus dem Sie diese App heruntergeladen haben. Weitere Funktionen werden hinzugefügt. Vielen Dank, dass Sie Weight Watch verwenden.</string>
+
+
+
+
+    <!-- Notifications -->
+    <string name="notification_morning_title">Guten Morgen!</string>
+    <string name="notification_morning_text">Starte deinen Tag mit einem Lächeln und gib dein Bestes!\nVergiss nicht, dein heutiges Gewicht einzutragen.</string>
+    <string name="notification_evening_title">Guten Abend, hier ist die heutige Zusammenfassung:</string>
+    <string name="notification_evening_text">Heutige Kalorienaufnahme: %1$d Kalorien\nKaloriendefizit: %2$d Kalorien
+    \nHast du alle Kalorien-Daten für heute erfasst? (Getränke, Snacks, Mahlzeiten? Du kannst die Daten einfach nachtragen, falls du sie vergessen hast.)</string>
+    <string name="notification_description">Ihre tägliche Benachrichtigung ist geplant, um zur angegebenen Zeit angezeigt zu werden.
+        Bitte beachten Sie jedoch, dass einige Geräte Hintergrunddienste einschränken, was sich auf das Benachrichtigungsverhalten auswirken kann.
+        Falls Sie Probleme mit dem Anzeigen Ihrer Benachrichtigungen haben, überprüfen Sie bitte die Stromspareinstellungen und
+        aktivieren Sie die Autostart-Funktion. Wir entschuldigen uns, falls die Benachrichtigung auf Ihrem Geräten nicht wie beabsichtigt
+        angezeigt wird.</string>
+
 </resources>

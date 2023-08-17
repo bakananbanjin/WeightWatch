@@ -115,7 +115,7 @@ public class DayPlanner {
                 calendar.add(Calendar.DAY_OF_MONTH,  -1);
                 currentComparisonDay = calendar.get(Calendar.DAY_OF_MONTH);
                 dayColumn--;
-                Log.i("DAY", currentComparisonDay + " " + dayColumn);
+                //Log.i("DAY", currentComparisonDay + " " + dayColumn);
             }
             int id =((i.getHour() + 1)* 10) + dayColumn;
             int cellCalCount = getCellCalCount(id, dayPlanner);
@@ -361,10 +361,7 @@ public class DayPlanner {
     private static class DayPlannerOnclick implements View.OnClickListener{
         @Override
         public void onClick(View view) {
-            int d = cellIdToId(view.getId());
-            int e = idToCellId(d);
-            //Log.i("DAYPLANNER", view.getId() + " " + d + " id " + e );
-        }
+             }
     }
     private class CellIDSorter{
         public int cellID;

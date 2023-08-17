@@ -1,22 +1,20 @@
 package com.bakananbanjinApp2;
 
-import android.app.Notification;
+import static com.bakananbanjinApp2.MainActivity.mEditor;
+import static com.bakananbanjinApp2.MainActivity.mPrefs;
+
+import android.app.NotificationManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.icu.text.DecimalFormat;
 
-import android.icu.text.SimpleDateFormat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
-
-import androidx.core.app.NotificationCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.LogRecord;
 
 public class Engine {
     public static float TEXTSIZHUGE = 36f;
@@ -76,19 +74,19 @@ public class Engine {
         return (int) (calNeed * activity);
     }
     public static void createUserPref(String name, boolean man, int age, int height, float weight, int targetWeight, float activity){
-        MainActivity.mEditor.putString(MainActivity.USER, name);
-        MainActivity.mEditor.putBoolean(MainActivity.ISMAN, man);
-        MainActivity.mEditor.putInt(MainActivity.HEIGHT, height);
-        MainActivity.mEditor.putFloat(MainActivity.WEIGHT, weight);
-        MainActivity.mEditor.putInt(MainActivity.AGE, age);
-        MainActivity.mEditor.putInt(MainActivity.TARGETWEIGHT, targetWeight);
-        MainActivity.mEditor.putFloat(MainActivity.ACTIVITYLEVEL, activity);
+        mEditor.putString(MainActivity.USER, name);
+        mEditor.putBoolean(MainActivity.ISMAN, man);
+        mEditor.putInt(MainActivity.HEIGHT, height);
+        mEditor.putFloat(MainActivity.WEIGHT, weight);
+        mEditor.putInt(MainActivity.AGE, age);
+        mEditor.putInt(MainActivity.TARGETWEIGHT, targetWeight);
+        mEditor.putFloat(MainActivity.ACTIVITYLEVEL, activity);
         //update Mainactivity user for write file etc should be replaced later but for now it should work
         MainActivity.user.updateUser(name, man, age, height, weight, targetWeight, activity);
-        MainActivity.mEditor.commit();
+        mEditor.commit();
     }
     public static void deleteData(){
-        MainActivity.mEditor.clear().commit();
+        mEditor.clear().commit();
         DataReaderWriter.deleteProfilpicture(mContext);
         mDB.deleteAll();
         mDB.update();
@@ -96,7 +94,7 @@ public class Engine {
     public static User getPref(){
 
         //Log.i("PREFERENCE", MainActivity.mPrefs.getAll().toString());
-        return new User(MainActivity.mPrefs.getString(MainActivity.USER, "ERROR"),
+        return new User(MainActivity.mPrefs.getString(MainActivity.USER, "NO USER"),
                 MainActivity.mPrefs.getBoolean(MainActivity.ISMAN, true),
                 MainActivity.mPrefs.getInt(MainActivity.AGE, 0),
                 MainActivity.mPrefs.getInt(MainActivity.HEIGHT, 0),
@@ -124,11 +122,6 @@ public class Engine {
             return false;
         }
         return DataReaderWriter.writeFileWeight(FILENAME_WEIGHT, engine.mContext, mDB.selectAllWeight());
-    }
-    public static String genereteProfilAdvice(User user){
-        String advise = "";
-
-        return advise;
     }
     //get all items insert intow the db for autocompletion
     public static String[] getStringAdaptar() {
@@ -291,72 +284,6 @@ public class Engine {
     public static int calcCalNeed(User user) {
        return calcCalNeed(user.ismIsMan(), user.getUserHeight(), user.getUserWeight(), user.getUserAge(), user.getUserActivity());
     }
-    /*public static List<DataItem> getDataItemNewerThanSorted(int dayCount){
-        //retrive all items sorted by date time
-        //add to list items untill date is reached
-        //break loop
-        List<DataItem> returnDataItemList = new ArrayList<>();
-        Cursor cursor = mDB.selectAll();
-        if(cursor.getCount() < 1){
-            return null;
-        }
-        cursor.moveToFirst();
-        int dayOfMonth = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-        int monthOfYear = Calendar.getInstance().get(Calendar.MONTH);
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        //day is smaller then day the we also have to go a month back
-        if((dayOfMonth - dayCount) < 0){
-            //get all values from current month
-            while(monthOfYear == cursor.getInt(4)){
-                returnDataItemList.add(new DataItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
-                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
-                        cursor.getInt(7)));
-                if(!cursor.moveToNext()){
-                    break;
-                }
-            }
-            if(monthOfYear == 0){
-                //day is smaller then daycount and we are in jan last year
-                //dec has always 31days calc how much days we need from dec
-                int daysNeededInDec = 31 + (dayOfMonth - dayCount);
-                while(daysNeededInDec < cursor.getInt(5)){
-                    returnDataItemList.add(new DataItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
-                            cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
-                            cursor.getInt(7)));
-                    if(!cursor.moveToNext()){
-                        break;
-                    }
-                }
-                return returnDataItemList;
-            }
-            //we are not in jan so we need to get how much days the month has
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.MONTH, monthOfYear - 1);
-            int numberOfDaysInLastMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-            int daysNeeded = numberOfDaysInLastMonth + (dayOfMonth - dayCount);
-            while(daysNeeded < cursor.getInt(5)){
-                returnDataItemList.add(new DataItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
-                        cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
-                        cursor.getInt(7)));
-                if(!cursor.moveToNext()){
-                    break;
-                }
-            }
-            return returnDataItemList;
-        }
-        //day of month is > daycount
-        while((dayOfMonth - dayCount) <= cursor.getInt(5)){
-            returnDataItemList.add(new DataItem(cursor.getInt(0), cursor.getString(1), cursor.getInt(2),
-                    cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6),
-                    cursor.getInt(7)));
-            if(!cursor.moveToNext()){
-                break;
-            }
-        }
-
-
-        return returnDataItemList;
-    }*/
     public static List<DataItem> getDataItemSortedLastWeek(int dayCount){
         //retrieve all items sorted by date time
         List<DataItem> returnDataItemList = new ArrayList<>();
@@ -367,38 +294,28 @@ public class Engine {
         }
         //get current date
         Calendar calendar = Calendar.getInstance();
+        //get calendar for datataitem
+        Calendar calDataItem = Calendar.getInstance();
+        calDataItem.set(cursor.getInt(DataSetDB.DATATABLEYEAR), cursor.getInt(DataSetDB.DATATABLEMONTH), cursor.getInt(DataSetDB.DATATABLEDAY), 0 , 0);
+
         //check if current data is in the future and move until current date
-        while(cursor.getInt(DataSetDB.DATATABLEYEAR)> calendar.get(Calendar.YEAR) ){
-            //year is in te future move to next
+        while(calendar.compareTo(calDataItem) < 0 ){
+            //current date is smaller then the data item date move to next item or return empty list
             if(!cursor.moveToNext()){
                 //no valid data return empty list
                 return returnDataItemList;
             }
-        }
-        while (cursor.getInt(DataSetDB.DATATABLEMONTH) > calendar.get(Calendar.MONTH)){
-            //month is in te future move to next
-            if(!cursor.moveToNext()){
-                //no valid data return empty list
-                return returnDataItemList;
-            }
-        }
-        while (cursor.getInt(DataSetDB.DATATABLEDAY) > calendar.get(Calendar.DAY_OF_MONTH)){
-            //day is in te future move to next
-            if(!cursor.moveToNext()){
-                //no valid data return empty list
-                return returnDataItemList;
-            }
+            //set compare calendar to next item date at 0:00 o clock
+            calDataItem.set(cursor.getInt(DataSetDB.DATATABLEYEAR), cursor.getInt(DataSetDB.DATATABLEMONTH), cursor.getInt(DataSetDB.DATATABLEDAY), 0 , 0);
         }
         //set a second calendar
         Calendar calendar1 = Calendar.getInstance();
         calendar1.add(Calendar.DAY_OF_MONTH,  -dayCount);
         calendar1.set(Calendar.HOUR_OF_DAY, 0);
         calendar1.set(Calendar.MINUTE, 0);
-        Log.i("CALENDAR!", calendar1.get(Calendar.YEAR) + ":" + calendar1.get(Calendar.MONTH) + ":" + calendar1.get(Calendar.DAY_OF_MONTH)+ " " + calendar1.get(Calendar.HOUR) + ":" + calendar1.get(Calendar.MINUTE));
+
         //cursor is current day or older
         for(int i = cursor.getPosition(); i <= cursor.getCount(); i++){
-            //Log.i("CALENDAR1", calendar1.get(Calendar.YEAR) + ":" + calendar1.get(Calendar.MONTH) + ":" + calendar1.get(Calendar.DAY_OF_MONTH));
-           // Log.i("CALENDAR", calendar.get(Calendar.YEAR) + ":" + calendar.get(Calendar.MONTH) + ":" + calendar.get(Calendar.DAY_OF_MONTH));
 
             DataItem toAddDataItem = new DataItem(cursor.getInt(DataSetDB.DATATABLEID),
                     cursor.getString(DataSetDB.DATATABLEITEM),
@@ -415,12 +332,7 @@ public class Engine {
                     cursor.getInt(DataSetDB.DATATABLEHOUR),
                     cursor.getInt(DataSetDB.DATATABLEMIN));
 
-            Log.i("DATAITEM", toAddDataItem.toString());
             if(!cursor.moveToNext() || calendar.compareTo(calendar1) < 0){
-                SimpleDateFormat format = new SimpleDateFormat("EEEE, MMMM d, yyyy 'at' h:mm a");
-                Log.i("CALENDAR1", format.format(calendar1.getTime()));
-                Log.i("CALENDAR", format.format(calendar.getTime()));
-
                 return returnDataItemList;
             }
             returnDataItemList.add(toAddDataItem);
@@ -520,7 +432,57 @@ public class Engine {
         DecimalFormat decimalFormat = new DecimalFormat("#.1");
         return decimalFormat.format(value);
     }
-    public static void setNotification(){
-        //NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
+    public static void setNotification(Context context){
+        //check if notifications are enabled
+        // old code with AlarmManager replaced with WorkManager
+
+        if(mPrefs.getBoolean(MainActivity.NOTIFICATION_ENABLED, false)){
+            NotificationManagerWW managerWW = new NotificationManagerWW();
+            if(mPrefs.getBoolean(MainActivity.NOTIFICATION_MORNING, false)){
+                int hour = mPrefs.getInt(MainActivity.NOTIFICATION_MORNING_HOUR, 8);
+                int min = mPrefs.getInt(MainActivity.NOTIFICATION_MORNING_MIN, 0);
+                //schedule morning notification
+                managerWW.scheduleNotification(context,
+                        hour,
+                        min,
+                        0,
+                        NotificationManagerWW.MORNING_NOTIFICATION_REQUEST_CODE,
+                        NotificationManagerWW.MORNING_NOTIFICATION_ID);
+
+            }
+            if(mPrefs.getBoolean(MainActivity.NOTIFICATION_EVENING, false)){
+                //scheudle evening notification
+                int hour = mPrefs.getInt(MainActivity.NOTIFICATION_EVENING_HOUR, 22);
+                int min = mPrefs.getInt(MainActivity.NOTIFICATION_EVENING_MIN, 0);
+                //schedule morning notification
+                managerWW.scheduleNotification(context,
+                        hour,
+                        min,
+                        0,
+                        NotificationManagerWW.EVENING_NOTIFICATION_REQUEST_CODE,
+                        NotificationManagerWW.EVENING_NOTIFICATION_ID);
+            }
+        }
+    }
+    public static boolean areNotificationsEnabled(Context context) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            return notificationManager.areNotificationsEnabled();
+        }
+        // Return false as a fallback in case the NotificationManager is null
+        return false;
+    }
+    public static void disableAllNotifications(Context context) {
+        disableMorningNotifications(context);
+        disableEveningNotifications(context);
+    }
+    public static void disableMorningNotifications(Context context){
+        NotificationManagerWW managerWW = new NotificationManagerWW();
+        managerWW.cancelNotification(context, NotificationManagerWW.MORNING_NOTIFICATION_REQUEST_CODE);
+    }
+    public static void disableEveningNotifications(Context context){
+        NotificationManagerWW managerWW = new NotificationManagerWW();
+        managerWW.cancelNotification(context, NotificationManagerWW.EVENING_NOTIFICATION_REQUEST_CODE);
+
     }
 }

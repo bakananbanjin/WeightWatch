@@ -17,8 +17,8 @@
         android:title="@string/menu_help">
     </item>
     <item
-        android:id="@+id/menu_Delete"
-        android:title="@string/menu_delete">
+        android:id="@+id/menu_Option"
+        android:title="@string/menu_option">
     </item>
 
 </menu>

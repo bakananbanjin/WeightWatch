@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.Toolbar>
 
+
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -40,6 +41,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/essay_weight_loss"
                 android:textSize="20sp" />
+
         </LinearLayout>
     </ScrollView>
 

@@ -664,6 +664,184 @@
                 android:layout_marginBottom="4dp"
                 android:background="?android:attr/listDivider" />
 
+
+            <TextView
+                android:id="@+id/tv_help_08"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/help_h_title"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/help08" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_help_nrh1"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="right"
+                    android:text="1:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_help_h1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_h1_info"
+                    android:textSize="16sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/tv_help_nrh2"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="right"
+                    android:text="2:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_help_h2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_h2_info"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/tv_help_nrh3"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="right"
+                    android:text="3:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_help_h3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_h3_info"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/tv_help_nrh4"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="right"
+                    android:text="4:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_help_h4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_h4_info"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/help09" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_help_nrh5"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="right"
+                    android:text="5:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_help_h5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_h5_info"
+                    android:textSize="16sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/tv_help_nrh6"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="right"
+                    android:text="6:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_help_h6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_h6_info"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/tv_help_nrh7"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="right"
+                    android:text="7:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_help_h7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/help_h7_info"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <View
+                android:id="@+id/divider8"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="?android:attr/listDivider" />
+
+
             <TextView
                 android:id="@+id/tv_help_contact"
                 android:layout_width="wrap_content"
